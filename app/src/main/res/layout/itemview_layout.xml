@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/background_item_horizontal"
+    android:orientation="horizontal"
+    tools:ignore="MissingPrefix">
+
+
+    <ImageView
+        android:id="@+id/pic_show"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/attach_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/sender_show"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/subject_show"
+            app:srcCompat="@mipmap/attachment" />
+
+        <TextView
+            android:id="@+id/sender_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iransanslight"
+            android:singleLine="true"
+            android:text="فرستنده"
+            android:textColor="@color/black"
+            android:textDirection="rtl"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subject_show" />
+
+        <TextView
+            android:id="@+id/kind"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iransanslight"
+            android:singleLine="true"
+            android:text="نوع:"
+            android:textColor="@color/gray"
+            android:textDirection="rtl"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_show" />
+
+        <TextView
+            android:id="@+id/groups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/iransanslight"
+            android:singleLine="true"
+            android:text="گروه:"
+            android:textColor="@color/gray"
+            android:textDirection="rtl"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/request"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kind" />
+
+        <TextView
+            android:id="@+id/title_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/subject_show"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/iransanslight"
+            android:maxLines="2"
+            android:singleLine="true"
+            android:text="عنوان"
+            android:textColor="@color/gray"
+            android:textDirection="rtl"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.582"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sender_show"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/subject_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:singleLine="true"
+            android:text="موضو"
+            android:textColor="@color/black"
+            android:textDirection="rtl"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/attach_show"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <TextView
+            android:id="@+id/request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/iransans"
+            android:singleLine="true"
+            android:text="تاریخ"
+            android:textAlignment="textEnd"
+            android:textColor="@color/green_dark"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kind" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
+
+
+

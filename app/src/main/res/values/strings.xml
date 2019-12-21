@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">قاصدک</string>
+    <string name="waiting">لطفا منتظر بمانيد&#8230;</string>
+    <string name="warning">توجه!!!</string>
+    <string name="ok">بله</string>
+    <string name="cancel">خیر</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="navigation_drawer_open">close</string>
+    <string name="version">نسخه 1.2.2</string>
+    <!--<string name="LinkServerCartable">"http://185.55.226.168/Dashboard/"</string>-->
+    <string name="LinkServerKnowledge">"http://185.126.202.28/Dashboard/"</string>
+    <string name="LinkServerCartable">"https://nezarat.gilanpdc.ir/"</string>
+    <string name="LinkServerProject">"https://nezarat.gilanpdc.ir/"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="errorData">خطا در دریافت اطلاعات</string>
+    <string name="settings_set">ذخیره</string>
+    <string name="settings_url">https://185.53.141.238/makan</string>
+    <string name="settings_url_hint">آدرس رابط برنامه</string>
+    <string name="settings_howtoload">نحوه بارگیری</string>
+    <string name="action_button_cancel">انصراف</string>
+    <string name="panel_online_search">جستجو..</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mahpad">سامانه ی مدیریت اطلاعات هوشمند پروژه دانشمند</string>
+    <string name="mahpadGilan">سامانه کنترل پروژه شرکت توزیع نیروی برق استان گیلان</string>
+    <string name="Knowledge">ورود به سامانه پایگاه دانش</string>
+    <string name="userError">لطفا نام کاربری را وارد نمائید</string>
+    <string name="passError">لطفا رمز عبور را وارد نمائید</string>
+    <string name="userPassError">نام کاربری و یا رمز عبور اشتباه می باشد</string>
+    <string name="errorProcess"> خطا در ادامه عملیات</string>
+    <string name="errorGetData">خطا در دریافت اطلاعات</string>
+    <string name="errorInternet">خطای ارتباط با شبکه لطفا مجددا سعی نمائید</string>
+    <string name="errorInternet2">خطای ارتباط با شبکه لطفا مجددا سعی نمائید</string>
+    <string name="errorInternet3">خطا در اتصال به اینترنت</string>
+    <string name="noData">اطلاعاتی برای نمایش وجود ندارد</string>
+    <string name="done">✔\u0020\u0020تائید</string>
+    <string name="failed">✖\u0020\u0020عدم تائید</string>
+    <string name="forward">\u0020\u0020گردش</string>
+    <string name="gps_network_not_enabled">برای استفاده از نقشه باید قابلیت مکان‌یابی فعال باشد!\n آیا صفحه تنظیمات مکان باز شود؟</string>
+
+    <string name="explain_message">مشخصات پیام</string>
+    <string name="comment_message">متن پیام</string>
+    <string name="attach_message">ضمیمه</string>
+
+    <string name="select">انتخاب کنید</string>
+    <string name="tryagin">بررسی مجدد</string>
+    <string name="username">نام کاربری</string>
+    <string name="password">رمز عبور</string>
+    <string name="loginTxt">ورود به سامانه</string>
+    <string name="loginMahpad">ورود به سامانه ماکان</string>
+    <string name="setting">تنظیمات</string>
+    <string name="saveSetting">ذخیره تنظیمات</string>
+    <string name="serverAddressText">آدرس سرور</string>
+
+
+    <string name="sender">فرستنده:</string>
+    <string name="reciever">گیرنده:</string>
+    <string name="id">شماره:</string>
+    <string name="date">تاریخ:</string>
+    <string name="status">وضعیت:</string>
+    <string name="request">نوع درخواست:</string>
+    <string name="done2">انجام شد</string>
+
+
+    <string name="sendMessage">آیا مایل به ارسال پیام هستید؟</string>
+    <string name="setApprove">آیا مایل به تائید این درخواست می باشید؟</string>
+    <string name="setDisApprove">آیا مایل به عدم تائید این درخواست می باشید؟</string>
+    <string name="setRequest">آیا از شروع این فرایند اطمینان دارید؟</string>
+    <string name="setDelete">آیا از حذف این درخواست اطمینان دارید؟</string>
+    <string name="setDelete2">آیا از حذف این ردیف اطمینان دارید؟</string>
+    <string name="setDelete3">آیا از حذف این عکس اطمینان دارید؟</string>
+    <string name="setarchive">وضعیت:</string>
+    <string name="setforward">وضعیت:</string>
+
+
+    <string name="getAttachment">آیا مایل به دریافت ضمیمه می باشید؟</string>
+
+
+    <string name="archiveTitle">انتخاب فولدر بایگانی</string>
+    <string name="saveDone">فایل با موفقیت در پوشه Makan بارگذاری شد</string>
+    <string name="title_activity_graph_dashboard">GraphDashboardActivity</string>
+
+
+</resources>

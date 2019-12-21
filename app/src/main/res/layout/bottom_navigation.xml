@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/buttom_5"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:background="@drawable/gradient"
+            android:visibility="visible" />
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottomnav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_nav_item_bg"
+            android:theme="@style/Widget.BottomNavigationView"
+            app:itemIconTint="@drawable/bottom_nav_item_bg"
+            app:itemTextColor="@drawable/bottom_nav_item_bg"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom2">
+
+
+        </android.support.design.widget.BottomNavigationView>
+    </LinearLayout>
+
+
+</LinearLayout>

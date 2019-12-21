@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/border_right_green"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/iransansmedium"
+
+
+                    android:text="تست"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/blue_grey_800"
+                    android:textDirection="rtl"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="فرستنده:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+
+
+                        android:singleLine="false"
+
+                        android:text="نظارت"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="گیرنده:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+
+                        android:singleLine="false"
+                        android:text="نظارت"
+                        android:textColor="@color/grey_700"
+
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@color/light_gray"
+                android:layerType="software"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="عنوان:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="نوع درخواست:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="شماره سیستمی:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="شماره:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="تاریخ:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+                        android:inputType="textMultiLine"
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="وضعیت:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+                        android:inputType="textMultiLine"
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="امور:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+                        android:inputType="textMultiLine"
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="گروه درخواست:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+                        android:inputType="textMultiLine"
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_show2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/iransanslight"
+                        android:singleLine="true"
+                        android:text="شرح:"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="59dp" />
+
+                    <TextView
+                        android:id="@+id/t9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="fill_vertical"
+                        android:inputType="textMultiLine"
+                        android:singleLine="true"
+                        android:text="نظارت"
+
+                        android:textColor="@color/grey_700"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/line_attach4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@color/light_gray"
+                android:layerType="software"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/btn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/border_top_green"
+                    android:fontFamily="@font/iransansbold"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:text="تائید"
+                    android:textColor="@color/green_800"
+                    android:textSize="11sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/border_top_red"
+                    android:fontFamily="@font/iransansbold"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:text="عدم تائید"
+                    android:textColor="@color/red_800"
+                    android:textSize="11sp"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+

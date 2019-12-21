@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="#e9e9eb"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:srcCompat="@mipmap/logo"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/exit_"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/exit_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="خروج از حساب کاربری"
+            android:textColor="@color/darkertext" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/iransanslight"
+        android:gravity="bottom"
+        android:text="نسخه 1.0.0"
+        android:textAlignment="center"
+        android:visibility="invisible" />
+</LinearLayout>
