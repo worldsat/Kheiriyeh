@@ -1,0 +1,78 @@
+package com.atrinfanavaran.kheiriyeh.Domain;
+
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
+
+public class BoxIncome extends BaseDomain {
+    private String factorNumber;
+    private String number;
+    private String price;
+    private String status;
+    private String lat;
+    private String lon;
+    private String registerDate;
+    private int id;
+
+    public String getfactorNumber() {
+        return factorNumber;
+    }
+
+    public int getid() {
+        return id;
+    }
+
+    public void setid(int id) {
+        this.id = id;
+    }
+
+    public void setfactorNumber(String factorNumber) {
+        this.factorNumber = factorNumber;
+    }
+
+    public String getnumber() {
+        return number;
+    }
+
+    public void setnumber(String number) {
+        this.number = number;
+    }
+
+    public String getprice() {
+        return price;
+    }
+
+    public void setprice(String price) {
+        this.price = price;
+    }
+
+    public String getstatus() {
+        return status;
+    }
+
+    public void setstatus(String status) {
+        this.status = status;
+    }
+
+    public String getlat() {
+        return lat;
+    }
+
+    public void setlat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getlon() {
+        return lon;
+    }
+
+    public void setlon(String lon) {
+        this.lon = lon;
+    }
+
+    public String getregisterDate() {
+        return registerDate;
+    }
+
+    public void setregisterDate(String registerDate) {
+        this.registerDate = registerDate;
+    }
+}

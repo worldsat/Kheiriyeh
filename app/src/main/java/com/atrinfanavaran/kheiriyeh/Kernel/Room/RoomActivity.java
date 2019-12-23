@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.atrinfanavaran.kheiriyeh.R;
+import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 
 import java.util.List;
 
@@ -18,7 +19,6 @@ public class RoomActivity extends AppCompatActivity {
 
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-
                 AppDatabase.class, "RoomDb").fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
         db.userDao().deleteByTitle();

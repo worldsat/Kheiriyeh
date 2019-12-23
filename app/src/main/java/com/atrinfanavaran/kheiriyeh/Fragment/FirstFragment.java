@@ -1,5 +1,6 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,14 +15,17 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.atrinfanavaran.kheiriyeh.Adapter.LastDischargeListAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.QuickListAdapter;
+import com.atrinfanavaran.kheiriyeh.Adapter.RouteListHorizontalAdapter;
+import com.atrinfanavaran.kheiriyeh.Domain.Route;
 import com.atrinfanavaran.kheiriyeh.Domain.Sliders;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.TinyDB;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -29,6 +33,7 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class FirstFragment extends Fragment {
@@ -44,6 +49,7 @@ public class FirstFragment extends Fragment {
     private RecyclerView.Adapter adapter1, adapter2;
     private Controller controller;
     private TinyDB tinydb;
+    private AppDatabase db;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +81,9 @@ public class FirstFragment extends Fragment {
         tinydb = new TinyDB(getActivity());
         controller = new Controller(getActivity());
 
+        db = Room.databaseBuilder(getActivity(),
+                AppDatabase.class, "RoomDb").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+
         getSlider();
         quickList();
         lastDischarge();
@@ -84,26 +93,18 @@ public class FirstFragment extends Fragment {
 
     private void lastDischarge() {
         progressBar2.setVisibility(View.VISIBLE);
-        controller.Get(Sliders.class, null, 0, 0, true, new CallbackGet() {
-            @Override
-            public <T> void onSuccess(ArrayList<T> result, int count) {
 
-                responseLastDischarge.addAll((Collection<? extends Sliders>) result);
 
-                adapter2 = new LastDischargeListAdapter(responseLastDischarge);
-                row2.setAdapter(adapter2);
+//                responseLastDischarge.addAll((Collection<? extends Sliders>) result);
+        List<RouteR> routes = db.RouteDao().getAll();
+        adapter2 = new RouteListHorizontalAdapter(routes);
+        row2.setAdapter(adapter2);
 
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                row2.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        row2.setLayoutManager(linearLayoutManager);
 
-                progressBar2.setVisibility(View.GONE);
-            }
+        progressBar2.setVisibility(View.GONE);
 
-            @Override
-            public void onError(String error) {
-                progressBar2.setVisibility(View.GONE);
-            }
-        });
 
     }
 
@@ -118,7 +119,7 @@ public class FirstFragment extends Fragment {
                 response.addAll((Collection<? extends Sliders>) result);
 
                 for (int i = 0; i < response.size(); i++) {
-                    String Url ="https://"+ response.get(i).getlink();
+                    String Url = "https://" + response.get(i).getlink();
                     DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
                     DefaultSliderView
                             .setOnSliderClickListener(slider -> {

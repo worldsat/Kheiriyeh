@@ -1,6 +1,5 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -14,10 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.atrinfanavaran.kheiriyeh.Activity.Map2Activity;
+import com.atrinfanavaran.kheiriyeh.Domain.BoxIncome;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome2;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,16 +30,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
 
 
-public class MapFragment extends Fragment implements  LocationListener, GoogleMap.OnMapLoadedCallback {
-
+public class AddBoxIncomeFragment2 extends Fragment implements LocationListener, GoogleMap.OnMapLoadedCallback {
+    private Button btn2Save;
+    private onCallBackBoxIncome2 onCallBackBoxIncome2;
     private GoogleMap googlemap;
     private LatLng safecompPOS;
     private GoogleApiClient mGoogleApiClient;
@@ -46,9 +45,24 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
     private ProgressBar progressBar;
     private Context context;
     private MapView mMapView;
+    private BoxIncome boxIncome;
+    private boolean editable = false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            boxIncome = (BoxIncome) bundle.get("BoxIncome");
+            editable = (boolean) bundle.get("editable");
+
+            if (boxIncome != null) {
+                Toast.makeText(getActivity(), boxIncome.getprice(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
 
@@ -56,7 +70,7 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+        View rootView = inflater.inflate(R.layout.activity_discharge2, container, false);
 
         return rootView;
 
@@ -66,6 +80,26 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btn2Save = view.findViewById(R.id.btn_2);
+        btn2Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (boxIncome == null) {
+                    Toast.makeText(context, "خطا در انجام عملیات", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    if (boxIncome.getlat() == null) {
+                        Toast.makeText(context, "خطا در دریافت موقعیت", Toast.LENGTH_SHORT).show();
+                    } else {
+                        onCallBackBoxIncome2.SaveBoxIncome2(boxIncome,editable);
+                    }
+                }
+
+
+//                onCallBackBoxIncome2.SaveBoxIncome2();
+            }
+        });
+
 
         context = getActivity();
 
@@ -100,6 +134,24 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
                 });
                 googlemap.getUiSettings().setMyLocationButtonEnabled(true);
                 googlemap.getUiSettings().setZoomControlsEnabled(true);
+//                googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
+//                googlemap.setOnCameraIdleListener(() -> {
+//                    Log.i("moh3n", "onCameraIdle: ");
+
+//                });
+                GoogleMap.OnMyLocationChangeListener myLocationChangeListener = location -> {
+                    LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                    double lat = loc.latitude;
+                    double lng = loc.longitude;
+                    String latStr = String.valueOf(lat);
+                    String lngStr = String.valueOf(lng);
+                    boxIncome.setlat(latStr);
+                    boxIncome.setlon(lngStr);
+
+                    googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+
+                    Log.i("moh3n", "onMyLocationChange: ");
+                };
                 googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
                 // For dropping a marker at a point on the Map
 //                LatLng sydney = new LatLng(-34, 151);
@@ -119,36 +171,9 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
                 .addApi(LocationServices.API)
                 .build();
 
-
-
         createLocationRequest();
 
     }
-
-
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//
-//        googlemap = googleMap;
-//
-//        googlemap.setOnCameraIdleListener(() -> {
-//
-////                addItemsToMap(yourMarkerList);
-//            //     final LatLng POS_center = googlemap.getCameraPosition().target;
-//
-//
-//        });
-//        googlemap.setOnCameraMoveStartedListener(i -> {
-//            googlemap.setOnMapLoadedCallback(this);
-//            progressBar.setVisibility(View.VISIBLE);
-//        });
-//
-//
-//        googlemap.getUiSettings().setMyLocationButtonEnabled(true);
-//        googlemap.getUiSettings().setZoomControlsEnabled(true);
-//        googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
-//
-//    }
 
     GoogleApiClient.ConnectionCallbacks connectionListener = new GoogleApiClient.ConnectionCallbacks() {
 
@@ -207,6 +232,7 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
             mGoogleApiClient.disconnect();
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -230,6 +256,7 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+
     @Override
     public void onMapLoaded() {
         //TODO: Hide your progress indicator
@@ -243,7 +270,7 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
         mLastLocation = location;
         Log.i("moh3n", "onLocationChanged: " + mLastLocation);
         safecompPOS = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-//        googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
+        googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
     }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
@@ -256,5 +283,14 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
             }
         }
     };
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
+        if (getActivity() instanceof onCallBackBoxIncome2)
+            onCallBackBoxIncome2 = (onCallBackBoxIncome2) getActivity();
+    }
+
 
 }

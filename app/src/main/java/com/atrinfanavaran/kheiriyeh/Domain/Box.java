@@ -3,32 +3,23 @@ package com.atrinfanavaran.kheiriyeh.Domain;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
 
 public class Box extends BaseDomain {
-    private String id;
-    private String number;
     private String fullName;
+    private String number;
     private String mobile;
-    private String assignmentDate;
-    private String dischargeRouteId;
-    private String dischargeRoute;
+    private String code;
+    private String registerDate;
+    private int id;
 
-    public Box() {
-        setApiAddress("api/Box");
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
+    public Box() {
+        setApiAddress("api/Box");
     }
 
     public String getFullName() {
@@ -39,6 +30,14 @@ public class Box extends BaseDomain {
         this.fullName = fullName;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public String getMobile() {
         return mobile;
     }
@@ -47,27 +46,19 @@ public class Box extends BaseDomain {
         this.mobile = mobile;
     }
 
-    public String getAssignmentDate() {
-        return assignmentDate;
+    public String getCode() {
+        return code;
     }
 
-    public void setAssignmentDate(String assignmentDate) {
-        this.assignmentDate = assignmentDate;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getDischargeRouteId() {
-        return dischargeRouteId;
+    public String getRegisterDate() {
+        return registerDate;
     }
 
-    public void setDischargeRouteId(String dischargeRouteId) {
-        this.dischargeRouteId = dischargeRouteId;
-    }
-
-    public String getDischargeRoute() {
-        return dischargeRoute;
-    }
-
-    public void setDischargeRoute(String dischargeRoute) {
-        this.dischargeRoute = dischargeRoute;
+    public void setRegisterDate(String registerDate) {
+        this.registerDate = registerDate;
     }
 }
