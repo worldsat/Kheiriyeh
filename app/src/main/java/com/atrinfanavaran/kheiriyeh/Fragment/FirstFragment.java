@@ -16,8 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Adapter.QuickListAdapter;
-import com.atrinfanavaran.kheiriyeh.Adapter.RouteListHorizontalAdapter;
-import com.atrinfanavaran.kheiriyeh.Domain.Route;
+import com.atrinfanavaran.kheiriyeh.Adapter.BoxIncomeListHorizontalAdapter;
 import com.atrinfanavaran.kheiriyeh.Domain.Sliders;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
@@ -25,7 +24,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.TinyDB;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
-import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -96,8 +95,8 @@ public class FirstFragment extends Fragment {
 
 
 //                responseLastDischarge.addAll((Collection<? extends Sliders>) result);
-        List<RouteR> routes = db.RouteDao().getAll();
-        adapter2 = new RouteListHorizontalAdapter(routes);
+        List<BoxIncomeR> routes = db.BoxIncomeDao().getAll();
+        adapter2 = new BoxIncomeListHorizontalAdapter(routes);
         row2.setAdapter(adapter2);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);

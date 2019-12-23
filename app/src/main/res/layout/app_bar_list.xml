@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="55dp"
     android:background="@color/red_800"
     app:contentInsetStartWithNavigation="0dp"
     app:layout_scrollFlags="scroll|enterAlways"

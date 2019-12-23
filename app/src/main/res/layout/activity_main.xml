@@ -11,7 +11,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+      >
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/linearLayout12"
@@ -20,14 +20,9 @@
 
 
             <include
-                android:id="@+id/include"
-                layout="@layout/app_bar_list"
 
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                layout="@layout/app_bar_list"
+                />
 
             <FrameLayout
                 android:id="@+id/main_container"
@@ -35,10 +30,12 @@
                 android:layout_height="0dp"
                 android:layout_alignWithParentIfMissing="false"
                 android:layout_centerInParent="false"
+                android:layout_marginTop="55dp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/include2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <View
                     android:id="@+id/view5"
@@ -56,6 +53,7 @@
                 layout="@layout/bottom_navigation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -67,7 +65,9 @@
                 android:id="@+id/view6"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                android:layout_marginTop="55dp"
                 android:background="@drawable/gradient_small"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

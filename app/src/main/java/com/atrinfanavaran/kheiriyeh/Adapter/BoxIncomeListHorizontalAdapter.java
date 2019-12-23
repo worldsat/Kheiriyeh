@@ -11,18 +11,18 @@ import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
-import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-public class RouteListHorizontalAdapter extends RecyclerView.Adapter<RouteListHorizontalAdapter.ViewHolder> {
+public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxIncomeListHorizontalAdapter.ViewHolder> {
 
-    private final List<RouteR> array_object;
+    private final List<BoxIncomeR> array_object;
 
 
-    public RouteListHorizontalAdapter(List<RouteR> result) {
+    public BoxIncomeListHorizontalAdapter(List<BoxIncomeR> result) {
 
         this.array_object = result;
     }

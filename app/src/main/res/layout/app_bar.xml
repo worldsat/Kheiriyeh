@@ -5,6 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    android:background="@color/amber_900"
     app:contentInsetStartWithNavigation="0dp"
     app:layout_scrollFlags="scroll|enterAlways"
-    app:titleTextColor="@color/cardview_light_background" />
+    app:titleTextColor="@color/amber_500" />
