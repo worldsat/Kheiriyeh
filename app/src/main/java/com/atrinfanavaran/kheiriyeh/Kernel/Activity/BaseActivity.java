@@ -20,7 +20,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Helper.ExceptionHandler;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.ListBuilder;
 import com.atrinfanavaran.kheiriyeh.R;
 
-import org.osmdroid.util.GeoPoint;
+
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -76,14 +76,7 @@ public class BaseActivity extends AppCompatActivity {
         return new ListBuilder(BaseActivity.this);
     }
 
-    public Location getLocationFromGeoPoint(GeoPoint geoPoint) {
 
-        Location location = new Location("");//provider name is unnecessary
-        location.setLatitude(geoPoint.getLatitude());
-        location.setLongitude(geoPoint.getLongitude());
-
-        return location;
-    }
 
     public Boolean isONLINE(Context context) {
         SettingsBll settingsBll = new SettingsBll(context);

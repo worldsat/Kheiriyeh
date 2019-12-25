@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
+
         </HorizontalScrollView>
 
         <ScrollView
@@ -65,28 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tools">
 
-            <com.github.irshulx.Editor
-                android:id="@+id/edt2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/background_circle_white"
-                android:ems="10"
-                android:focusableInTouchMode="true"
-                android:fontFamily="@font/iranyekanwebregular"
-                android:gravity="right|top"
-                android:inputType="textMultiLine"
-                android:lines="10"
 
-                android:maxLines="1"
-                android:minHeight="300dp"
-                android:textColor="@color/grey_800"
-                android:textColorHint="@color/blue_grey_400"
-                android:textDirection="rtl"
-
-                android:textSize="12sp"
-                app:placeholder="تایپ کنید..."
-                app:render_type="Editor" />
         </ScrollView>
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

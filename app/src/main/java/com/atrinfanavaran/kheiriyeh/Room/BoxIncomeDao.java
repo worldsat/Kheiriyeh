@@ -21,6 +21,9 @@ public interface BoxIncomeDao {
             "registerDate=(:registerDate),status=:status WHERE id like (:id)")
     void update(String factorNumber, String lat, String lon, String number, String price, String registerDate, String status, int id);
 
+    @Query("Delete from  BoxIncomeR  " +
+            " WHERE id like (:id)")
+    void delete(int id);
 
     @Insert
     void insertBoxIncome(BoxIncomeR boxIncome);

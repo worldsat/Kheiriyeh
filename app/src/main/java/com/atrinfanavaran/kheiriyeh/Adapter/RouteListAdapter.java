@@ -42,22 +42,7 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
 
-//        RequestOptions requestOptions = new RequestOptions();
-//        requestOptions.placeholder(R.mipmap.profile_pic3);
-//        requestOptions.error(R.mipmap.profile_pic3);
 
-
-        Glide.with(holder.itemView.getContext())
-//                .setDefaultRequestOptions(requestOptions)
-                .load(Url)
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.pic);
-        holder.editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCallBackRouteEdit.EditRoute(array_object.get(position));
-            }
-        });
     }
 
     @Override
@@ -80,7 +65,7 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
 
         TextView date, code, name, price, address;
         ImageView pic;
-        Button editBtn;
+
         private ViewHolder(View itemView) {
             super(itemView);
 
@@ -90,7 +75,7 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
             price = itemView.findViewById(R.id.price);
             address = itemView.findViewById(R.id.address);
             pic = itemView.findViewById(R.id.pic);
-            editBtn = itemView.findViewById(R.id.editBtn);
+
         }
     }
 }

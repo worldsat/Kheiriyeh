@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.R;
 
 import java.util.ArrayList;
@@ -15,10 +16,11 @@ import java.util.ArrayList;
 public class QuickListAdapter extends RecyclerView.Adapter<QuickListAdapter.ViewHolder> {
 
     private final ArrayList<String> array_object;
+    private onCallBackQuickList onCallBackQuickList;
 
-
-    public QuickListAdapter(ArrayList<String> result) {
+    public QuickListAdapter(ArrayList<String> result, onCallBackQuickList onCallBackQuickList) {
         this.array_object = result;
+        this.onCallBackQuickList = onCallBackQuickList;
     }
 
     @NonNull
@@ -34,20 +36,24 @@ public class QuickListAdapter extends RecyclerView.Adapter<QuickListAdapter.View
 
         holder.title.setText(array_object.get(position));
         switch (position) {
-            case 1: {
+            case 0: {
                 holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.exteactcir));
+                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("0"));
+                break;
+            }
+            case 1: {
+                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addcir));
+                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("1"));
                 break;
             }
             case 2: {
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addcir));
+                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addresscir));
+                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("2"));
                 break;
             }
             case 3: {
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addresscir));
-                break;
-            }
-            case 4: {
                 holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.add_address));
+                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("3"));
                 break;
             }
         }

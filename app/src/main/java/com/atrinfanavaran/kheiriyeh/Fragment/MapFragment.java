@@ -1,6 +1,5 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -15,9 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.atrinfanavaran.kheiriyeh.Activity.Map2Activity;
+import com.atrinfanavaran.kheiriyeh.Domain.BoxIncomeApi;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,15 +31,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Locale;
 
 
-public class MapFragment extends Fragment implements  LocationListener, GoogleMap.OnMapLoadedCallback {
+public class MapFragment extends Fragment implements LocationListener, GoogleMap.OnMapLoadedCallback {
 
     private GoogleMap googlemap;
     private LatLng safecompPOS;
@@ -46,6 +49,8 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
     private ProgressBar progressBar;
     private Context context;
     private MapView mMapView;
+    private TextView titleToolbar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,11 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initView(view);
         context = getActivity();
+
+        titleToolbar = getActivity().findViewById(R.id.titleToolbar);
+        titleToolbar.setText("آدرس ها");
 
         String languageToLoad = "fa_IR";
         Locale locale = new Locale(languageToLoad);
@@ -102,9 +111,9 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
                 googlemap.getUiSettings().setZoomControlsEnabled(true);
                 googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
                 // For dropping a marker at a point on the Map
-//                LatLng sydney = new LatLng(-34, 151);
+//                LatLng sydney = new LatLng(32.7154899, 51.698559);
 //                googlemap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
+                getBoxesOnline();
                 // For zooming automatically to the location of the marker
 //                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
 //                googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -120,9 +129,12 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
                 .build();
 
 
-
         createLocationRequest();
 
+    }
+
+    private void initView(View view) {
+//        progressBar=view.findViewById(R.id.)
     }
 
 
@@ -207,6 +219,7 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
             mGoogleApiClient.disconnect();
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -230,6 +243,7 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+
     @Override
     public void onMapLoaded() {
         //TODO: Hide your progress indicator
@@ -257,4 +271,54 @@ public class MapFragment extends Fragment implements  LocationListener, GoogleMa
         }
     };
 
+    private void getBoxesOnline() {
+//        progressBar.setVisibility(View.VISIBLE);
+        Controller controller = new Controller(getActivity());
+        controller.Get(BoxIncomeApi.class, null, 0, 0, true, new CallbackGet() {
+            @Override
+            public <T> void onSuccess(ArrayList<T> result, int count) {
+
+                ArrayList<BoxIncomeApi> response = new ArrayList<>((Collection<? extends BoxIncomeApi>) result);
+
+                for (int i = 0; i < response.size(); i++) {
+                    if (response.get(i).getlat() == null || response.get(i).getlon() == null)
+                        return;
+                    double lat = Double.valueOf(response.get(i).getlat());
+                    double lng = Double.valueOf(response.get(i).getlon());
+
+                    LatLng location = new LatLng(lat, lng);
+                    String statusStr = "";
+                    float coloredMarker = BitmapDescriptorFactory.HUE_RED;
+                    switch (response.get(i).getstatus()) {
+                        case "1": {
+                            statusStr = "عدم حضور";
+                            coloredMarker = BitmapDescriptorFactory.HUE_ORANGE;
+                            break;
+                        }
+                        case "2": {
+                            statusStr = "عدم موجودی";
+                            coloredMarker = BitmapDescriptorFactory.HUE_RED;
+                            break;
+                        }
+                        case "3": {
+                            statusStr = "تخلیه شده";
+                            coloredMarker = BitmapDescriptorFactory.HUE_GREEN;
+                            break;
+                        }
+                    }
+
+                    googlemap.addMarker(new MarkerOptions().position(location).snippet(statusStr).title("Marker Title").icon(BitmapDescriptorFactory.defaultMarker(coloredMarker)));
+                }
+
+
+//                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(context, "خطا در دریافت اطلاعات", Toast.LENGTH_SHORT).show();
+//                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
 }

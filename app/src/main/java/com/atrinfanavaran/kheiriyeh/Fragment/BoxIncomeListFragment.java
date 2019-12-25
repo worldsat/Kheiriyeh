@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Adapter.BoxIncomeListAdapter;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncomeEdit;
@@ -20,6 +21,7 @@ import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class BoxIncomeListFragment extends Fragment {
@@ -30,6 +32,8 @@ public class BoxIncomeListFragment extends Fragment {
     private onCallBackNewDischarge onCallBackNewDischarge;
     private onCallBackBoxIncomeEdit onCallBackBoxIncomeEdit;
     private FloatingActionButton floatingActionButton1;
+    private TextView titleToolbar;
+    private TextView emptyText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +57,7 @@ public class BoxIncomeListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
-
+        titleToolbar.setText("تخلیه صندوق");
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
                 .fallbackToDestructiveMigration()
@@ -63,7 +67,9 @@ public class BoxIncomeListFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         List<BoxIncomeR> list = db.BoxIncomeDao().getAll();
-
+        if (list.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        }
         adapter = new BoxIncomeListAdapter(list, new onCallBackBoxIncomeEdit() {
             @Override
             public void EditBoxIncome(BoxIncomeR boxIncome) {
@@ -96,5 +102,7 @@ public class BoxIncomeListFragment extends Fragment {
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.view);
         floatingActionButton1 = view.findViewById(R.id.floatingActionButton);
+        titleToolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.titleToolbar);
+        emptyText = view.findViewById(R.id.EmptyWarning);
     }
 }

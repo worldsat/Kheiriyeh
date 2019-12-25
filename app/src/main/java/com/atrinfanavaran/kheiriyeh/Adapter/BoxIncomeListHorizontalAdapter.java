@@ -41,16 +41,7 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
 
-//        RequestOptions requestOptions = new RequestOptions();
-//        requestOptions.placeholder(R.mipmap.profile_pic3);
-//        requestOptions.error(R.mipmap.profile_pic3);
 
-
-        Glide.with(holder.itemView.getContext())
-//                .setDefaultRequestOptions(requestOptions)
-                .load(Url)
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.pic);
 
     }
 
@@ -85,7 +76,7 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
             price = itemView.findViewById(R.id.price);
             address = itemView.findViewById(R.id.address);
             pic = itemView.findViewById(R.id.pic);
-            editBtn = itemView.findViewById(R.id.editBtn);
+
         }
     }
 }

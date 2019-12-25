@@ -150,7 +150,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
 
                     googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
 
-                    Log.i("moh3n", "onMyLocationChange: ");
+                    Log.i("moh3n", "onMyLocationChange: "+lat+" "+lng);
                 };
                 googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
                 // For dropping a marker at a point on the Map

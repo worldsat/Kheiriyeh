@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Adapter.RouteListAdapter;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddRouteNew;
@@ -30,7 +31,8 @@ public class RouteListFragment extends Fragment {
     private onCallBackAddRouteNew onCallBack;
     private onCallBackRouteEdit onCallBackRouteEdit;
     private FloatingActionButton floatingActionButton1;
-
+    private TextView titleToolbar;
+    private TextView emptyText;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,7 @@ public class RouteListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
-
+        titleToolbar.setText("افزودن آدرس");
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
                 .fallbackToDestructiveMigration()
@@ -63,7 +65,9 @@ public class RouteListFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         List<RouteR> list = db.RouteDao().getAll();
-
+        if (list.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        }
         adapter = new RouteListAdapter(list, new onCallBackRouteEdit() {
             @Override
             public void EditRoute(RouteR routerR) {
@@ -92,5 +96,7 @@ public class RouteListFragment extends Fragment {
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.view);
         floatingActionButton1 = view.findViewById(R.id.floatingActionButton);
+        titleToolbar = getActivity().findViewById(R.id.titleToolbar);
+        emptyText = view.findViewById(R.id.EmptyWarning);
     }
 }

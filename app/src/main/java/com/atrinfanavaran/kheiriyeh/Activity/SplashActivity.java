@@ -75,7 +75,7 @@ public class SplashActivity extends BaseActivity {
     private void setVariable() {
         mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
         mProgressBar.setProgress(i);
-        mCountDownTimer=new CountDownTimer(3000,10) {
+        mCountDownTimer=new CountDownTimer(2000,10) {
 
             @Override
             public void onTick(long millisUntilFinished) {

@@ -28,112 +28,122 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
-            android:layout_marginEnd="26dp"
-            android:orientation="vertical">
+            android:layout_marginEnd="26dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="30dp"
+
+            <ImageView
+                android:id="@+id/circle1"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="64dp"
                 android:layout_marginBottom="16dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                app:layout_constraintBottom_toBottomOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@mipmap/circlegray1" />
 
-                <ImageView
-                    android:id="@+id/circle1"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.33"
-                    app:srcCompat="@mipmap/circlegray1" />
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/circle2"
+                app:layout_constraintEnd_toStartOf="@+id/circle2"
+                app:layout_constraintHorizontal_bias="0.209"
+                app:layout_constraintStart_toEndOf="@+id/circle1"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:layout_constraintVertical_bias="0.52"
+                app:srcCompat="@color/black" />
 
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@color/grey_400" />
+            <ImageView
+                android:id="@+id/circle2"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="64dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.18"
+                app:srcCompat="@mipmap/circlered2" />
 
-                <ImageView
-                    android:id="@+id/circle2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.33"
-                    app:srcCompat="@mipmap/circlered2" />
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/circle2"
+                app:layout_constraintEnd_toStartOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="@+id/circle2"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:srcCompat="@android:color/darker_gray" />
 
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    app:srcCompat="@android:color/darker_gray" />
+            <ImageView
+                android:id="@+id/circle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/circle2"
+                app:layout_constraintEnd_toStartOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="@+id/circle2"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:srcCompat="@mipmap/circlegray3" />
 
-                <ImageView
-                    android:id="@+id/circle3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.33"
-                    android:visibility="gone"
-                    app:srcCompat="@mipmap/circlegray3" />
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/iransanslight"
+                android:text="مشخصات صندوق"
+                android:textColor="@color/grey_600"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/circle1"
+                app:layout_constraintStart_toStartOf="@+id/circle1"
+                app:layout_constraintTop_toBottomOf="@+id/circle1"
+                app:layout_constraintVertical_bias="0.0" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/iransanslight"
+                android:gravity="end"
+                android:text="انتخاب آدرس از روی نقشه"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="@+id/circle2"
+                app:layout_constraintTop_toBottomOf="@+id/circle2" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/iransanslight"
-                    android:text="مشخصات صندوق"
-                    android:textColor="@color/grey_600"
-                    android:textSize="10sp" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iransanslight"
+                android:text="انتخاب آدرس از روی نقشه"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintEnd_toStartOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/textView3" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/iransanslight"
-                    android:gravity="end"
-                    android:text="انتخاب آدرس از روی نقشه"
-                    android:textColor="@color/black"
-                    android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/iransanslight"
-                    android:text="انتخاب آدرس از روی نقشه"
-                    android:textAlignment="viewEnd"
-                    android:textSize="10sp"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

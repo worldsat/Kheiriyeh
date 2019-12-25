@@ -25,8 +25,7 @@ import android.widget.TimePicker;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
-import com.github.irshulx.Editor;
-import com.github.irshulx.models.EditorTextStyle;
+
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.SpinnerDomain;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
@@ -42,7 +41,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import top.defaults.colorpicker.ColorPickerPopup;
+
 
 public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int EDIT_TEXT = 0;
@@ -59,7 +58,7 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private HashMap<Integer, ArrayList<SpinnerDomain>> spinnerData = new HashMap<>();
     private Activity Activity;
     private String dateFinal = "", hourFinal = "";
-    private Editor edt2;
+
     public GenericEditAdapter(Activity activity, ArrayList<DomainInfo> domainInfos, HashMap<String, String> decodedData) {
         this.domainInfos = domainInfos;
         this.data = decodedData;
@@ -94,9 +93,7 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (viewType == TEXT_VIEW) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_edit_tv, parent, false);
             return new TextViewViewHolder(view);
-        } else if (viewType == HTML_EDIT_TEXT) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_edit_html, parent, false);
-            return new HtmlEditTextViewHolder(view);
+
         } else {
             throw new RuntimeException("only three view types are allowed: spinner, editText and checkbox");
         }
@@ -118,42 +115,9 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             initCheckBox((CheckBoxViewHolder) holder, position);
         } else if (holder instanceof SpinnerViewHolder) {
             initSpinner((SpinnerViewHolder) holder, position);
-        } else if (holder instanceof HtmlEditTextViewHolder) {
-            initHtmlEditText((HtmlEditTextViewHolder) holder, position);
-        } else if (holder instanceof TextViewViewHolder) {
-            initTextView((TextViewViewHolder) holder, position);
         }
     }
 
-    private void initHtmlEditText(HtmlEditTextViewHolder holder, int position) {
-        holder.title.setText(domainInfos.get(position).getTitle());
-//        EditorWYSIWYG( holder.itemView.getContext());
-
-//        holder.h1.setOnClickListener(v ->  holder.editText.updateTextStyle(EditorTextStyle.H1));
-//        if (!data.isEmpty()) {
-//            String value = data.get(domainInfos.get(position).getId());
-//            if (value != null)
-//                holder.editText.setContentDescription(value.replace("null", ""));
-//        }
-//        holder.editText.render();
-//        holder.editText.setEditorListener(new EditorListener() {
-//            @Override
-//            public void onTextChanged(EditText editText, Editable text) {
-//                data.put(domainInfos.get(holder.getAdapterPosition()).getId(), text.toString());
-//                Log.i("moh3n", "onTextChanged: " + text.toString());
-//            }
-//
-//            @Override
-//            public void onUpload(Bitmap image, String uuid) {
-//
-//            }
-//
-//            @Override
-//            public View onRenderMacro(String name, Map<String, Object> props, int index) {
-//                return null;
-//            }
-//        });
-    }
 
     private void initTextView(TextViewViewHolder holder, int position) {
         holder.title.setText(domainInfos.get(position).getTitle());
@@ -573,19 +537,6 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    class HtmlEditTextViewHolder extends RecyclerView.ViewHolder {
-        private Editor editText;
-        private TextView title;
-        private Button h1;
-
-        HtmlEditTextViewHolder(@NonNull View itemView) {
-            super(itemView);
-            editText = (Editor) itemView.findViewById(R.id.edt2);
-            title = itemView.findViewById(R.id.title);
-//            h1 = itemView.findViewById(R.id.action_h1);
-//            editText.render();
-        }
-    }
 
     class DateEditTextViewHolder extends RecyclerView.ViewHolder {
         private EditText editText;
@@ -660,41 +611,7 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    private void EditorWYSIWYG( Context context) {
-        Activity a = (Activity) (context);
-        edt2 = (Editor) a.findViewById(R.id.edt2);
-        a.findViewById(R.id.action_h1).setOnClickListener(v -> edt2.updateTextStyle(EditorTextStyle.H1));
-        a.findViewById(R.id.action_h2).setOnClickListener(v -> edt2.updateTextStyle(EditorTextStyle.H2));
-        a.findViewById(R.id.action_h3).setOnClickListener(v -> edt2.updateTextStyle(EditorTextStyle.H3));
-        a.findViewById(R.id.action_bold).setOnClickListener(v -> edt2.updateTextStyle(EditorTextStyle.BOLD));
-        a.findViewById(R.id.action_Italic).setOnClickListener(v -> edt2.updateTextStyle(EditorTextStyle.ITALIC));
-        a.findViewById(R.id.action_indent).setOnClickListener(v -> edt2.updateTextStyle(EditorTextStyle.INDENT));
-        a.findViewById(R.id.action_outdent).setOnClickListener(v -> edt2.updateTextStyle(EditorTextStyle.OUTDENT));
-        a.findViewById(R.id.action_bulleted).setOnClickListener(v -> edt2.insertList(false));
-        a.findViewById(R.id.action_unordered_numbered).setOnClickListener(v -> edt2.insertList(true));
-        a.findViewById(R.id.action_hr).setOnClickListener(v -> edt2.insertDivider());
-        a.findViewById(R.id.action_color).setOnClickListener(view -> new ColorPickerPopup.Builder(context)
-                .initialColor(Color.RED) // Set initial color
-                .enableAlpha(true) // Enable alpha slider or not
-                .okTitle("تائید")
-                .cancelTitle("لغو")
-                .showIndicator(true)
-                .showValue(true)
-                .build()
-                .show(a.findViewById(android.R.id.content), new ColorPickerPopup.ColorPickerObserver() {
-                    @Override
-                    public void onColorPicked(int color) {
-                        //Toast.makeText(DisApproveActivity.this, "picked" + colorHex(color), Toast.LENGTH_LONG).show();
-                        edt2.updateTextColor(colorHex(color));
-                    }
 
-                    @Override
-                    public void onColor(int color, boolean fromUser) {
-
-                    }
-                }));
-        edt2.render();
-    }
 
     private String colorHex(int color) {
         int r = Color.red(color);

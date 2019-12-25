@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Adapter.BoxListAdapter;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBoxNew;
@@ -30,7 +31,8 @@ public class BoxListFragment extends Fragment {
     private onCallBackAddBoxNew onCallBackAddBoxNew;
     private onCallBackBoxEdit onCallBackBoxEdit;
     private FloatingActionButton floatingActionButton1;
-
+    private TextView titleToolbar;
+    private TextView emptyText;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class BoxListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
+        titleToolbar.setText("افزودن صندوق");
 
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
@@ -63,7 +66,9 @@ public class BoxListFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         List<BoxR> list = db.BoxDao().getAll();
-
+        if (list.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        }
         adapter = new BoxListAdapter(list, new onCallBackBoxEdit() {
             @Override
             public void EditBox(BoxR boxR) {
@@ -93,5 +98,7 @@ public class BoxListFragment extends Fragment {
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.view);
         floatingActionButton1 = view.findViewById(R.id.floatingActionButton);
+        titleToolbar = getActivity().findViewById(R.id.titleToolbar);
+        emptyText = view.findViewById(R.id.EmptyWarning);
     }
 }

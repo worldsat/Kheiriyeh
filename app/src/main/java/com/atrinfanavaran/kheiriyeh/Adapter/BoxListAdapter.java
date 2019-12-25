@@ -1,20 +1,22 @@
 package com.atrinfanavaran.kheiriyeh.Adapter;
 
+import android.arch.persistence.room.Room;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_boxincome_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_box_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -43,21 +45,44 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
 
-//        RequestOptions requestOptions = new RequestOptions();
-//        requestOptions.placeholder(R.mipmap.profile_pic3);
-//        requestOptions.error(R.mipmap.profile_pic3);
+        holder.fullName.setText(array_object.get(position).fullName);
+        holder.number.setText(array_object.get(position).number);
+        holder.mobile.setText(array_object.get(position).mobile);
+        holder.code.setText(array_object.get(position).code);
+        holder.registerDate.setText(array_object.get(position).registerDate);
 
+        holder.moreOption.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 
-        Glide.with(holder.itemView.getContext())
-//                .setDefaultRequestOptions(requestOptions)
-                .load(Url)
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.pic);
-        holder.editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCallBackBoxEdit.EditBox(array_object.get(position));
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.popup_edit:
+                        onCallBackBoxEdit.EditBox(array_object.get(position));
+
+                        return true;
+                    case R.id.popup_delete:
+                        AppDatabase db = Room.databaseBuilder(holder.itemView.getContext(),
+                                AppDatabase.class, "RoomDb")
+                                .fallbackToDestructiveMigration()
+                                .allowMainThreadQueries()
+                                .build();
+                        db.BoxDao().delete(array_object.get(position).id);
+
+                        array_object.remove(holder.getAdapterPosition());
+
+                        notifyItemRemoved(holder.getAdapterPosition());
+                        notifyItemRangeChanged(holder.getAdapterPosition(), array_object.size());
+                        return true;
+
+                    default:
+                        return false;
+                }
+            });
+            popup.inflate(R.menu.popup_image_options);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                popup.setGravity(Gravity.RIGHT);
             }
+            popup.show();
         });
     }
 
@@ -79,20 +104,18 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date, code, name, price, address;
-        ImageView pic;
-        Button editBtn;
+        TextView fullName, number, mobile, code, registerDate;
+        ImageView moreOption;
 
         private ViewHolder(View itemView) {
             super(itemView);
-
-            date = itemView.findViewById(R.id.date);
+            moreOption = itemView.findViewById(R.id.more_options);
+            fullName = itemView.findViewById(R.id.name);
+            number = itemView.findViewById(R.id.number);
+            mobile = itemView.findViewById(R.id.mobile);
             code = itemView.findViewById(R.id.code);
-            name = itemView.findViewById(R.id.name);
-            price = itemView.findViewById(R.id.price);
-            address = itemView.findViewById(R.id.address);
-            pic = itemView.findViewById(R.id.pic);
-            editBtn = itemView.findViewById(R.id.editBtn);
+            registerDate = itemView.findViewById(R.id.registerDate);
+
         }
     }
 }

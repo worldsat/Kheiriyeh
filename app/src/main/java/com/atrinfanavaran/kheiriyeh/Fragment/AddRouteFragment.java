@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Domain.Route;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute;
@@ -48,6 +49,7 @@ public class AddRouteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
+
         if (route != null) {
             edt1_1.setText(route.getCode());
             edt1_2.setText(route.getDay());
@@ -79,5 +81,6 @@ public class AddRouteFragment extends Fragment {
         edt1_1 = view.findViewById(R.id.edt1_1);
         edt1_2 = view.findViewById(R.id.edt1_2);
         edt1_3 = view.findViewById(R.id.edt1_3);
+
     }
 }

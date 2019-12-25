@@ -43,7 +43,7 @@
             android:fontFamily="@font/iransans"
             android:gravity="center_vertical"
             android:text="خروج از حساب کاربری"
-            android:textColor="@color/darkertext" />
+             />
 
     </LinearLayout>
 

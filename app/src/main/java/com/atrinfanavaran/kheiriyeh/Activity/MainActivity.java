@@ -37,6 +37,7 @@ import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome1;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome2;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncomeEdit;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackNewDischarge;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRouteEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
@@ -48,7 +49,7 @@ import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox {
+public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackQuickList, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox {
 
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
@@ -170,6 +171,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void onBackPressed() {
 
+
         if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
             finishAffinity();
             return;
@@ -177,7 +179,8 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
             Toast.makeText(MainActivity.this, "به منظور خروج دوباره کلیک کنید", Toast.LENGTH_SHORT).show();
         }
         TimeBackPressed = System.currentTimeMillis();
-    }
+
+}
 
 
     @Override
@@ -295,6 +298,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         bottomNavigation.getMenu().getItem(1).setCheckable(true);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_container, fragment).commit();
+
     }
 
     @Override
@@ -332,6 +336,29 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         bundle.putBoolean("editable", true);
         fragment.setArguments(bundle);
 
+        setFragment();
+    }
+
+    @Override
+    public void goTo(String page) {
+        switch (page){
+            case "0":{
+                fragment = new BoxIncomeListFragment();
+                break;
+            }
+            case "1":{
+                fragment = new BoxListFragment();
+                break;
+            }
+            case "2":{
+                fragment = new MapFragment();
+                break;
+            }
+            case "3":{
+                fragment = new RouteListFragment();
+                break;
+            }
+        }
         setFragment();
     }
 }

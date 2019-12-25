@@ -21,10 +21,14 @@ public interface BoxDao {
             " WHERE id like (:id)")
     void update(String fullName, String number, String mobile, String code, String registerDate, int id);
 
+    @Query("Delete from  BoxR  " +
+            " WHERE id like (:id)")
+    void delete(int id);
+
 
     @Insert
     void insertBox(BoxR boxR);
 
     @Delete
-    void delete(BoxR boxR);
+    void delete2(BoxR boxR);
 }

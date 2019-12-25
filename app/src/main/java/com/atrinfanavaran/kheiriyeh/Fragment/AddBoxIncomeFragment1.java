@@ -9,12 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.alirezaafkar.sundatepicker.DatePicker;
+import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxIncome;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome1;
 import com.atrinfanavaran.kheiriyeh.R;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class AddBoxIncomeFragment1 extends Fragment {
@@ -27,6 +33,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
     private String status;
     private BoxIncome boxIncome;
     private boolean editable = false;
+    private ImageView calendarBtn;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +63,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
+
         statusGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.radioButton1:
@@ -105,6 +113,22 @@ public class AddBoxIncomeFragment1 extends Fragment {
             onCallBackBoxIncome1.SaveBoxIncome1(boxIncome, editable);
         });
 
+
+        calendarBtn.setOnClickListener(v -> {
+            DatePicker.Builder builder = new DatePicker
+                    .Builder()
+                    .theme(R.style.DialogTheme)
+                    .future(true);
+            Date mDate = new Date();
+            builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
+            builder.build((id, calendar, day, month, year) -> {
+
+                mDate.setDate(day, month, year);
+                edt1_4.setText(year + "/" + month + "/" + day);
+
+            }).show(getActivity().getSupportFragmentManager(), "");
+
+        });
     }
 
     @Override
@@ -124,5 +148,18 @@ public class AddBoxIncomeFragment1 extends Fragment {
         radio1 = view.findViewById(R.id.radioButton1);
         radio2 = view.findViewById(R.id.radioButton2);
         radio3 = view.findViewById(R.id.radioButton3);
+        calendarBtn = view.findViewById(R.id.calendar);
+    }
+
+    class Date extends DateItem {
+        String getDate() {
+            Calendar calendar = getCalendar();
+            return String.format(Locale.US,
+                    "%d/%d/%d",
+                    getYear(), getMonth(), getDay(),
+                    calendar.get(Calendar.YEAR),
+                    +calendar.get(Calendar.MONTH) + 1,
+                    +calendar.get(Calendar.DAY_OF_MONTH));
+        }
     }
 }

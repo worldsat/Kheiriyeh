@@ -15,9 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.atrinfanavaran.kheiriyeh.Adapter.QuickListAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.BoxIncomeListHorizontalAdapter;
+import com.atrinfanavaran.kheiriyeh.Adapter.QuickListAdapter;
 import com.atrinfanavaran.kheiriyeh.Domain.Sliders;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
@@ -36,7 +37,7 @@ import java.util.List;
 
 
 public class FirstFragment extends Fragment {
-
+    private onCallBackQuickList onCallBackQuickList;
     private static final int TAKE = 100;
     private int SKIP = 0;
     private RecyclerView row1, row2;
@@ -49,7 +50,7 @@ public class FirstFragment extends Fragment {
     private Controller controller;
     private TinyDB tinydb;
     private AppDatabase db;
-
+    private TextView titleToolbar;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +77,12 @@ public class FirstFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBarRow);
         progressBar2 = view.findViewById(R.id.progressBarRow2);
         warningTxt = view.findViewById(R.id.warninTxt1);
-
+        titleToolbar = getActivity().findViewById(R.id.titleToolbar);
         tinydb = new TinyDB(getActivity());
         controller = new Controller(getActivity());
 
+
+        titleToolbar.setText("قاصدک");
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb").fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
@@ -146,16 +149,30 @@ public class FirstFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
+        if (getActivity() instanceof onCallBackQuickList)
+            onCallBackQuickList = (onCallBackQuickList) getActivity();
+    }
+
     private void quickList() {
         ArrayList<String> list = new ArrayList<>();
         list.add("تخلیه");
         list.add("افزودن");
         list.add("آدرس ها");
         list.add("افزودن آدرس");
-        adapter1 = new QuickListAdapter(list);
+        adapter1 = new QuickListAdapter(list, new onCallBackQuickList() {
+            @Override
+            public void goTo(String page) {
+                onCallBackQuickList.goTo(page);
+            }
+        });
         row1.setAdapter(adapter1);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         row1.setLayoutManager(linearLayoutManager);
+
     }
 
 }
