@@ -66,7 +66,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="دریافت اطلاعات"
             android:textSize="13sp" />
@@ -99,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="ارسال اطلاعات"
             android:textSize="13sp" />
@@ -132,7 +132,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="نحوه فعالیت"
             android:textSize="13sp" />
@@ -165,7 +165,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="قوانین و مقررات"
             android:textSize="13sp" />
@@ -198,7 +198,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="تماس با ما"
             android:textSize="13sp" />
@@ -231,7 +231,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="درباره ما"
             android:textSize="13sp" />
@@ -264,7 +264,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="درباره سازنده"
             android:textSize="13sp" />
@@ -297,7 +297,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:fontFamily="@font/iransans"
+            android:fontFamily="@font/behdad"
             android:gravity="center_vertical"
             android:text="خروج از حساب کاربری"
             android:textSize="13sp" />
@@ -305,11 +305,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/version"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
-        android:fontFamily="@font/iransanslight"
+        android:fontFamily="@font/behdad"
         android:gravity="bottom"
         android:text="اپلیکیشن قاصدک نسخه 1"
         android:textAlignment="center"

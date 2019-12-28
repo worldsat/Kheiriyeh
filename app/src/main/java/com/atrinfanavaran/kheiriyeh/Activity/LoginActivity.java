@@ -1,17 +1,28 @@
 package com.atrinfanavaran.kheiriyeh.Activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
 import com.atrinfanavaran.kheiriyeh.Domain.Login;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.karumi.dexter.Dexter;
@@ -23,12 +34,15 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends BaseActivity {
     private EditText userEdt, passEdt;
     private ProgressBar waitingProgressbar;
     private Button loginBtn;
+    private TextView rulesBtn;
+    private SettingsBll settingsBll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +53,9 @@ public class LoginActivity extends BaseActivity {
         initView();
         setVariable();
         RunPermissionDownload();
+        checkVersion();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -47,6 +63,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void setVariable() {
+        settingsBll = new SettingsBll(this);
+
         loginBtn.setOnClickListener(v -> {
 
             waitingProgressbar.setVisibility(View.VISIBLE);
@@ -71,9 +89,9 @@ public class LoginActivity extends BaseActivity {
                 controller().LoginApi(this, MainActivity.class, new Login().getApiAddress(), loginObject.toString(), new CallbackOperation() {
                     @Override
                     public void onSuccess(String result) {
-
-                        waitingProgressbar.setVisibility(View.GONE);
+                        settingsBll.setLoging(true);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        waitingProgressbar.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -84,6 +102,8 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         });
+
+        rulesBtn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RulesActivity.class)));
     }
 
     private void initView() {
@@ -91,6 +111,7 @@ public class LoginActivity extends BaseActivity {
         passEdt = findViewById(R.id.passEdt);
         loginBtn = findViewById(R.id.loginBtn);
         waitingProgressbar = findViewById(R.id.progressBar3);
+        rulesBtn = findViewById(R.id.rules);
 
     }
 
@@ -148,4 +169,69 @@ public class LoginActivity extends BaseActivity {
             }
         }
     }
+
+    private void checkVersion() {
+
+
+        Controller controller = new Controller(this);
+        controller.Get(AndroidVersion.class, null, 0, 0, true, new CallbackGet() {
+            @Override
+            public <T> void onSuccess(ArrayList<T> result, int count) {
+                Log.i("moh3n", "version: " + result);
+                ArrayList<AndroidVersion> response = (ArrayList<AndroidVersion>) result;
+
+                if (response.size() > 0) {
+
+                    int lastVerisionCode = Integer.valueOf(response.get(response.size() - 1).getcurrVersion());
+                    String link = response.get(response.size() - 1).getappAndroidUrl();
+
+                    try {
+                        PackageInfo phoneVersion = LoginActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
+
+                        if (phoneVersion.versionCode < lastVerisionCode) {
+                            alertQuestion(LoginActivity.this, link);
+                        }
+                        Log.i("moh3n", phoneVersion.versionCode + " " + lastVerisionCode);
+                    } catch (Exception e) {
+                        Log.i("moh3n", "error versionConde:" + e);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+
+    }
+
+    private void alertQuestion(final Context context, String link) {
+        final MaterialDialog question_dialog = new MaterialDialog.Builder(context)
+                .customView(R.layout.alert_warning_update, false)
+                .autoDismiss(false)
+                .backgroundColor(Color.parseColor("#01000000"))
+                .show();
+
+        TextView ok_btn = (TextView) question_dialog.findViewById(R.id.ok);
+        TextView cancel_btn = (TextView) question_dialog.findViewById(R.id.cancel);
+        final TextView warningTxt = (TextView) question_dialog.findViewById(R.id.warning_alert);
+
+
+        warningTxt.setText("نسخه جدید از نرم افزار موجود است،آیا مایل به بروزرسانی میباشید؟");
+
+        ok_btn.setOnClickListener(v -> {
+
+            String Address = link;
+            Log.i("moh3n", "onClick: " + Address);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(Address));
+            startActivity(i);
+
+        });
+        cancel_btn.setOnClickListener(v -> question_dialog.dismiss());
+
+    }
+
+
 }

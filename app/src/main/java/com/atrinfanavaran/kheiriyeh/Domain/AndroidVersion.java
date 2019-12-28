@@ -8,30 +8,30 @@ public class AndroidVersion extends BaseDomain {
     private String currVersion;
 
     public AndroidVersion() {
-        setApiAddress("AndroidVersion");
+        setApiAddress("api/AndroidVersion");
     }
 
-    public String getId() {
+    public String getid() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setid(String id) {
         this.id = id;
     }
 
-    public String getAppAndroidUrl() {
+    public String getappAndroidUrl() {
         return appAndroidUrl;
     }
 
-    public void setAppAndroidUrl(String appAndroidUrl) {
+    public void seappAndroidUrl(String appAndroidUrl) {
         this.appAndroidUrl = appAndroidUrl;
     }
 
-    public String getCurrVersion() {
+    public String getcurrVersion() {
         return currVersion;
     }
 
-    public void setCurrVersion(String currVersion) {
+    public void setcurrVersion(String currVersion) {
         this.currVersion = currVersion;
     }
 }

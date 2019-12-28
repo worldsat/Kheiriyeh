@@ -12,7 +12,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="0.4"
-        android:fontFamily="@font/iransans"
+        android:fontFamily="@font/behdad"
         android:gravity="start|center_vertical"
         android:text="TextView" />
 

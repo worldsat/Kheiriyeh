@@ -91,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="4dp"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/behdad"
                         android:text="مشخصات صندوق"
                         android:textColor="@color/black"
                         android:textSize="10sp"
@@ -106,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/behdad"
                         android:gravity="end"
                         android:text="انتخاب آدرس از روی نقشه"
                         android:textColor="@color/grey_600"
@@ -120,7 +120,7 @@
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/behdad"
                         android:text="انتخاب آدرس از روی نقشه"
                         android:textAlignment="viewEnd"
                         android:textSize="10sp"
@@ -154,7 +154,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:fontFamily="@font/iransans"
+                        android:fontFamily="@font/behdad"
                         android:hint="شماره فاکتور"
                         android:inputType="phone"
                         android:maxLength="11"
@@ -185,7 +185,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:fontFamily="@font/iransans"
+                        android:fontFamily="@font/behdad"
                         android:hint="شماره"
                         android:inputType="phone"
                         android:maxLength="11"
@@ -216,7 +216,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:fontFamily="@font/iransans"
+                        android:fontFamily="@font/behdad"
                         android:hint="مبلغ"
                         android:inputType="phone"
                         android:maxLength="11"
@@ -251,7 +251,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:fontFamily="@font/iransans"
+                            android:fontFamily="@font/behdad"
                             android:hint="تاریخ واگذاری"
                             android:inputType="number"
                             android:maxLength="11"
@@ -284,7 +284,7 @@
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/behdad"
                         android:text="نوع"
                         android:textSize="12sp" />
 
@@ -301,27 +301,30 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:fontFamily="@font/iransanslight"
+                            android:fontFamily="@font/behdad"
                             android:text="عدم حضور"
-                            android:textColor="@color/grey_700" />
+                            android:textColor="@color/grey_700"
+                            android:textSize="12sp" />
 
                         <RadioButton
                             android:id="@+id/radioButton2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:fontFamily="@font/iransanslight"
+                            android:fontFamily="@font/behdad"
                             android:text="عدم موجودی"
-                            android:textColor="@color/grey_700" />
+                            android:textColor="@color/grey_700"
+                            android:textSize="12sp" />
 
                         <RadioButton
                             android:id="@+id/radioButton3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:fontFamily="@font/iransanslight"
+                            android:fontFamily="@font/behdad"
                             android:text="سایر موارد"
-                            android:textColor="@color/grey_700" />
+                            android:textColor="@color/grey_700"
+                            android:textSize="12sp" />
                     </RadioGroup>
 
                 </LinearLayout>
@@ -333,7 +336,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
                     android:background="@drawable/background_circle_red2"
-                    android:fontFamily="@font/iransansbold"
+                    android:fontFamily="@font/behdad"
                     android:text="مرحله بعدی"
                     android:textColor="@color/white"
                     android:textSize="14sp" />

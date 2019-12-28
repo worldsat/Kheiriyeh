@@ -23,10 +23,12 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.kheiriyeh.Activity.AboutActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.ActivityDesigner;
 import com.atrinfanavaran.kheiriyeh.Activity.ContactUsActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.LoginActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.RulesActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.StirActivity;
+import com.atrinfanavaran.kheiriyeh.BuildConfig;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxApi;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxIncomeApi;
 import com.atrinfanavaran.kheiriyeh.Domain.RouteApi;
@@ -150,10 +152,11 @@ public class NavigationDrawerFragment extends Fragment {
             startActivity(intent);
         });
         btn5.setOnClickListener(v -> {
-//            Intent intent = new Intent(getActivity(), StirActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getActivity(), ActivityDesigner.class);
+            startActivity(intent);
         });
         btn6.setOnClickListener(v -> {
+            settingsBll.logout();
             getActivity().finish();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
@@ -162,6 +165,10 @@ public class NavigationDrawerFragment extends Fragment {
 
         drawer1.setOnClickListener(v -> sendDischargeRoute());
         drawer2.setOnClickListener(v -> getRoutes());
+
+        TextView version = view.findViewById(R.id.version);
+        String versionName = BuildConfig.VERSION_NAME;
+        version.setText("اپلیکیشن قاصدک نسخه " + versionName);
 
     }
 
@@ -242,7 +249,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.i("moh3n", "onSuccess: " + result);
-                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.RouteDao().deleteAll();
                 wait.dismiss();
                 sendBox();
@@ -285,7 +292,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.i("moh3n", "onSuccess: " + result);
-                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.BoxDao().deleteAll();
                 wait.dismiss();
                 sendBoxIncome();
@@ -333,7 +340,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.i("moh3n", "onSuccess: " + result);
-                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.BoxIncomeDao().deleteAll();
                 wait.dismiss();
             }

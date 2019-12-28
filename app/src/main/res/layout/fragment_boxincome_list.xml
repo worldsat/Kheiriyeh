@@ -34,7 +34,7 @@
         android:id="@+id/EmptyWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/iransansmedium"
+        android:fontFamily="@font/behdad"
         android:text="لیست خالی است"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -58,9 +58,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
             boxIncome = (BoxIncome) bundle.get("BoxIncome");
             editable = (boolean) bundle.get("editable");
 
-            if (boxIncome != null) {
-                Toast.makeText(getActivity(), boxIncome.getprice(), Toast.LENGTH_SHORT).show();
-            }
+
         }
 
     }

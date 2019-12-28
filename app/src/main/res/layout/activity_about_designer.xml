@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#D4EFFA"
+              android:orientation="vertical"
+             >
+
+
+    <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            app:srcCompat="@mipmap/logo_atrin"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:fontFamily="@font/behdad"
+        android:gravity="center"
+        android:text="گروه آترین فناوران با به‌ کارگیری آخرین استانداردهای تکنولوژی در زمینه طراحی سایت و اپلیکیشن موبایل می کوشد، خدمات خود را با امکانات بسیار ویژه و منحصر به فرد طراحی و اجرا نماید.
+هدف ما همواره افزایش سطح رضایتمندی و اعتماد مشتریان بوده است، از این جهت نیازهای مشتریان را در نظر گرفته و سپس با تحلیل، طراحی و پیاده سازی سعی می نماییم تا سایت ها و اپلیکیشن هایی با گرافیک زیبا در عین سادگی و عاری از هر گونه اشکال و خطا، آماده نماییم."
+        android:textColor="#4d4d4d" />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="ارتباط با ما"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="25dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:orientation="horizontal">
+
+
+        <ImageView
+                android:id="@+id/instagram"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:srcCompat="@mipmap/instagram"
+                android:padding="10dp"
+        />
+        <ImageView
+                android:id="@+id/telegram"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:srcCompat="@mipmap/telegram"
+                android:padding="10dp"
+        />
+        <ImageView
+                android:id="@+id/whtasap"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:srcCompat="@mipmap/whatsapp"
+                android:padding="10dp"
+        />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

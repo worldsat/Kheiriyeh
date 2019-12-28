@@ -276,7 +276,7 @@ public class Controller {
                     JSONArray array = jsonRootObject.optJSONArray("data");
                     Method[] declaredMethods = domain.getDeclaredMethods();
 
-                    if (array.length() > 0) {
+                    if (array!=null && array.length() > 0) {
 
                         for (int i = 0; i < array.length(); i++) {
 

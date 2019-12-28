@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_weight="0.4"
-        android:fontFamily="@font/iransans"
+        android:fontFamily="@font/behdad"
         android:gravity="start|center_vertical"
         android:text="TextView" />
 
@@ -24,7 +24,7 @@
         android:layout_marginStart="5dp"
         android:layout_weight="0.4"
         android:background="@drawable/background_edittext_gray"
-        android:fontFamily="@font/iransans"
+        android:fontFamily="@font/behdad"
 
         android:gravity="center"
         android:hint="تاریخ"
@@ -43,7 +43,7 @@
         android:layout_weight="0.2"
         android:background="@drawable/background_edittext_gray"
         android:ems="10"
-        android:fontFamily="@font/iransans"
+        android:fontFamily="@font/behdad"
         android:gravity="center"
         android:hint="ساعت"
         android:maxLength="5"

@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
             bottomNavigation.getMenu().getItem(1).setCheckable(true);
 
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_container, fragment).commit();
+            transaction.replace(R.id.main_container, fragment, "mainPage").addToBackStack(null).commit();
             return true;
         });
 
@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         bottomNavigation.getMenu().getItem(1).setCheckable(false);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_container, fragment).commit();
+        transaction.replace(R.id.main_container, fragment, "mainPage").addToBackStack(null).commit();
 
         //end set default
 
@@ -171,25 +171,30 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void onBackPressed() {
 
-//        if (getFragmentManager().getBackStackEntryCount() != 0) {
-//            getFragmentManager().popBackStack();
-//        } else {
-//            if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
-//                finishAffinity();
-//                return;
-//            } else {
-//                Toast.makeText(MainActivity.this, "به منظور خروج دوباره کلیک کنید", Toast.LENGTH_SHORT).show();
-//            }
-//            TimeBackPressed = System.currentTimeMillis();
-//        }
-//
-//        getFragmentManager().popBackStackImmediate();
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment hm = getSupportFragmentManager().findFragmentByTag("subPage");
+
+        if (hm != null) {
+            if (hm.isVisible()) {
+                if (fm.getBackStackEntryCount() > 1) {
+                    fm.popBackStack();
+                }
+            }
+        } else {
+            if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
+                finishAffinity();
+                return;
+            } else {
+                Toast.makeText(MainActivity.this, "به منظور خروج دوباره کلیک کنید", Toast.LENGTH_SHORT).show();
+            }
+            TimeBackPressed = System.currentTimeMillis();
+        }
     }
 
 
     @Override
     public void SaveBoxIncome2(BoxIncome boxIncome, boolean editable) {
-        Toast.makeText(this, boxIncome.getlat(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, boxIncome.getlat(), Toast.LENGTH_SHORT).show();
         BoxIncomeR boxIncomeR = new BoxIncomeR();
         boxIncomeR.factorNumber = boxIncome.getfactorNumber();
         boxIncomeR.lat = boxIncome.getlat();
@@ -301,7 +306,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         bottomNavigation.getMenu().getItem(0).setCheckable(true);
         bottomNavigation.getMenu().getItem(1).setCheckable(true);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_container, fragment).commit();
+        transaction.replace(R.id.main_container, fragment, "subPage").addToBackStack(null).commit();
 
     }
 

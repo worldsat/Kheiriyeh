@@ -6,7 +6,7 @@
 
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:fontFamily="@font/iransans"
+    android:fontFamily="@font/behdad"
     android:gravity="center"
 
     android:paddingTop="6dp"

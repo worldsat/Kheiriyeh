@@ -15,7 +15,7 @@
       android:layout_height="40dp"
 
       android:background="@drawable/transparent_up_padding_green"
-      android:fontFamily="@font/iransansbold"
+      android:fontFamily="@font/behdad"
       android:gravity="center_vertical"
       android:paddingRight="30dp"
       android:text="جدید"
@@ -34,7 +34,7 @@
       android:layout_marginBottom="8dp"
 
       android:background="@drawable/background_search_edittext"
-      android:fontFamily="@font/iransansbold"
+      android:fontFamily="@font/behdad"
       android:gravity="center"
 
       android:text="اعمال"

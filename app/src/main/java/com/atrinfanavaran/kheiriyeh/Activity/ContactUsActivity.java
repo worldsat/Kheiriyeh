@@ -19,6 +19,7 @@ public class ContactUsActivity extends BaseActivity {
     //    RecyclerView recyclerView;
     ProgressBar progressBar;
     private TextView phone, pageTelegramUrl, pageInstagramUrl, pageTwitterUrl, email, androidVersion;
+    private LinearLayout informationLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class ContactUsActivity extends BaseActivity {
         pageTwitterUrl = findViewById(R.id.pageTwitterUrl);
         email = findViewById(R.id.email);
         androidVersion = findViewById(R.id.androidVersion);
+        informationLayout = findViewById(R.id.information);
     }
 
     private void getData() {
@@ -62,6 +64,7 @@ public class ContactUsActivity extends BaseActivity {
                             ContactUs response = gson.fromJson(str, ContactUs.class);
                             if (response.getid() == null) return;
 
+                            informationLayout.setVisibility(View.VISIBLE);
                             phone.setText(response.getphone());
                             pageTelegramUrl.setText(response.getpageTelegramUrl());
                             pageInstagramUrl.setText(response.getpageInstagramUrl());
