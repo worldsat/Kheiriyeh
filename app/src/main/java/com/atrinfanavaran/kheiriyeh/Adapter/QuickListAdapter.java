@@ -52,7 +52,7 @@ public class QuickListAdapter extends RecyclerView.Adapter<QuickListAdapter.View
                 break;
             }
             case 3: {
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.add_address));
+                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addroute));
                 holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("3"));
                 break;
             }

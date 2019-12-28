@@ -15,7 +15,7 @@ public interface BoxDao {
     List<BoxR> getAll();
 
     @Query("delete FROM BoxR")
-    void deleteByTitle();
+    void deleteAll();
 
     @Query("update  BoxR set fullName=:fullName,number=:number,mobile=:mobile,code=:code,registerDate=:registerDate" +
             " WHERE id like (:id)")

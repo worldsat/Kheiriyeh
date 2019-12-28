@@ -5,22 +5,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxIncomeListHorizontalAdapter.ViewHolder> {
 
     private final List<BoxIncomeR> array_object;
 
+    private DecimalFormat formatter = new DecimalFormat("###,###,###,###");
 
     public BoxIncomeListHorizontalAdapter(List<BoxIncomeR> result) {
 
@@ -39,8 +38,33 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
-        String Url = settingsBll.getUrlAddress();
+        settingsBll.getUrlAddress();
 
+        holder.factorNumber.setText(array_object.get(position).factorNumber);
+        holder.number.setText(array_object.get(position).number);
+        if (array_object.get(position).price != null) {
+            holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
+        }
+        holder.registerDate.setText(array_object.get(position).registerDate);
+        holder.name.setText(settingsBll.getName());
+        holder.codeUser.setText("کد: " + settingsBll.getUserId());
+
+        String statusStr = "";
+        switch (array_object.get(position).status) {
+            case "1": {
+                statusStr = "عدم حضور";
+                break;
+            }
+            case "2": {
+                statusStr = "عدم موجودی";
+                break;
+            }
+            case "3": {
+                statusStr = "سایر موارد";
+                break;
+            }
+        }
+        holder.status.setText(statusStr);
 
 
     }
@@ -63,19 +87,20 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date, code, name, price, address;
-        ImageView pic;
-        Button editBtn;
+        TextView factorNumber, number, price, status, registerDate, name, codeUser;
+        ImageView moreOption;
 
         private ViewHolder(View itemView) {
             super(itemView);
 
-            date = itemView.findViewById(R.id.date);
-            code = itemView.findViewById(R.id.code);
-            name = itemView.findViewById(R.id.name);
+            factorNumber = itemView.findViewById(R.id.factorNumber);
+            number = itemView.findViewById(R.id.code);
             price = itemView.findViewById(R.id.price);
-            address = itemView.findViewById(R.id.address);
-            pic = itemView.findViewById(R.id.pic);
+            status = itemView.findViewById(R.id.status);
+            registerDate = itemView.findViewById(R.id.registerDate);
+            moreOption = itemView.findViewById(R.id.more_options);
+            name = itemView.findViewById(R.id.name);
+            codeUser = itemView.findViewById(R.id.codeUser);
 
         }
     }

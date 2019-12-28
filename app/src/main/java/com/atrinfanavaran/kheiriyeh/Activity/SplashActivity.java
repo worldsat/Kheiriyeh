@@ -59,7 +59,7 @@ public class SplashActivity extends BaseActivity {
                             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                             startActivity(intent);
 //                        }
-                    }, 3000);
+                    }, 2000);
 //
                 });
                 runOnUiThread(() -> {
@@ -90,7 +90,7 @@ public class SplashActivity extends BaseActivity {
                 //Do what you want
                 i++;
                 mProgressBar.setProgress(100);
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         };

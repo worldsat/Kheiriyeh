@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
@@ -9,21 +8,47 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        app:srcCompat="@mipmap/logo"
-        tools:visibility="visible" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/red_700"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/exit_"
+        android:id="@+id/getData"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="2dp"
         android:orientation="horizontal"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/imageView11"
@@ -33,6 +58,238 @@
             android:layout_marginStart="10dp"
             android:layout_weight="0.1"
             android:alpha="0.8"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/getDataBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="دریافت اطلاعات"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/exit_"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/exit_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="ارسال اطلاعات"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/exit_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="نحوه فعالیت"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/exit_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="قوانین و مقررات"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/exit_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="تماس با ما"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/exit_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="درباره ما"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn5"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/exit_drawer" />
+
+        <TextView
+            android:id="@+id/exit_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/iransans"
+            android:gravity="center_vertical"
+            android:text="درباره سازنده"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn6"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:alpha="0.8"
+            android:visibility="invisible"
             app:srcCompat="@mipmap/exit_drawer" />
 
         <TextView
@@ -43,7 +300,7 @@
             android:fontFamily="@font/iransans"
             android:gravity="center_vertical"
             android:text="خروج از حساب کاربری"
-             />
+            android:textSize="13sp" />
 
     </LinearLayout>
 
@@ -54,7 +311,8 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/iransanslight"
         android:gravity="bottom"
-        android:text="نسخه 1.0.0"
+        android:text="اپلیکیشن قاصدک نسخه 1"
         android:textAlignment="center"
-        android:visibility="invisible" />
+        android:textSize="10sp"
+        android:visibility="visible" />
 </LinearLayout>

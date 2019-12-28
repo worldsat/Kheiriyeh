@@ -21,10 +21,10 @@ import com.atrinfanavaran.kheiriyeh.Domain.BoxIncome;
 import com.atrinfanavaran.kheiriyeh.Domain.Route;
 import com.atrinfanavaran.kheiriyeh.Fragment.AddBoxFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.AddBoxIncomeFragment1;
+import com.atrinfanavaran.kheiriyeh.Fragment.AddBoxIncomeFragment2;
 import com.atrinfanavaran.kheiriyeh.Fragment.AddRouteFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.BoxIncomeListFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.BoxListFragment;
-import com.atrinfanavaran.kheiriyeh.Fragment.AddBoxIncomeFragment2;
 import com.atrinfanavaran.kheiriyeh.Fragment.FirstFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.MapFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
@@ -171,16 +171,20 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void onBackPressed() {
 
-
-        if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
-            finishAffinity();
-            return;
-        } else {
-            Toast.makeText(MainActivity.this, "به منظور خروج دوباره کلیک کنید", Toast.LENGTH_SHORT).show();
-        }
-        TimeBackPressed = System.currentTimeMillis();
-
-}
+//        if (getFragmentManager().getBackStackEntryCount() != 0) {
+//            getFragmentManager().popBackStack();
+//        } else {
+//            if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
+//                finishAffinity();
+//                return;
+//            } else {
+//                Toast.makeText(MainActivity.this, "به منظور خروج دوباره کلیک کنید", Toast.LENGTH_SHORT).show();
+//            }
+//            TimeBackPressed = System.currentTimeMillis();
+//        }
+//
+//        getFragmentManager().popBackStackImmediate();
+    }
 
 
     @Override
@@ -341,24 +345,27 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
     @Override
     public void goTo(String page) {
-        switch (page){
-            case "0":{
+        switch (page) {
+            case "0": {
                 fragment = new BoxIncomeListFragment();
                 break;
             }
-            case "1":{
+            case "1": {
                 fragment = new BoxListFragment();
                 break;
             }
-            case "2":{
+            case "2": {
                 fragment = new MapFragment();
                 break;
             }
-            case "3":{
+            case "3": {
                 fragment = new RouteListFragment();
                 break;
             }
+
         }
         setFragment();
     }
+
+
 }

@@ -172,7 +172,7 @@
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/iransanslight"
                     android:gravity="start"
-                    android:text="232323"
+                    android:text="-"
                     android:textColor="@color/green_700"
                     android:textSize="14sp" />
 

@@ -1,20 +1,22 @@
 package com.atrinfanavaran.kheiriyeh.Adapter;
 
+import android.arch.persistence.room.Room;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRouteEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_boxincome_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_routes_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,8 +43,43 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
 
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
+        holder.address.setText(array_object.get(position).address);
+        holder.code.setText(array_object.get(position).code);
+        holder.day.setText(array_object.get(position).day);
 
+        holder.moreOption.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.popup_edit:
+                        onCallBackRouteEdit.EditRoute(array_object.get(position));
+
+                        return true;
+                    case R.id.popup_delete:
+                        AppDatabase db = Room.databaseBuilder(holder.itemView.getContext(),
+                                AppDatabase.class, "RoomDb")
+                                .fallbackToDestructiveMigration()
+                                .allowMainThreadQueries()
+                                .build();
+                        db.RouteDao().delete(array_object.get(position).id);
+
+                        array_object.remove(holder.getAdapterPosition());
+
+                        notifyItemRemoved(holder.getAdapterPosition());
+                        notifyItemRangeChanged(holder.getAdapterPosition(), array_object.size());
+                        return true;
+
+                    default:
+                        return false;
+                }
+            });
+            popup.inflate(R.menu.popup_image_options);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                popup.setGravity(Gravity.RIGHT);
+            }
+            popup.show();
+        });
     }
 
     @Override
@@ -63,19 +100,15 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date, code, name, price, address;
-        ImageView pic;
+        TextView code, day, address;
+        ImageView moreOption;
 
         private ViewHolder(View itemView) {
             super(itemView);
-
-            date = itemView.findViewById(R.id.date);
             code = itemView.findViewById(R.id.code);
-            name = itemView.findViewById(R.id.name);
-            price = itemView.findViewById(R.id.price);
+            day = itemView.findViewById(R.id.day);
             address = itemView.findViewById(R.id.address);
-            pic = itemView.findViewById(R.id.pic);
-
+            moreOption = itemView.findViewById(R.id.more_options);
         }
     }
 }

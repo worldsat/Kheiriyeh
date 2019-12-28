@@ -237,63 +237,6 @@ public class Controller {
                                 int take, int skip, boolean allData, CallbackGet callbackGet) throws JSONException {
 
 
-//        if (filters != null && filters.size() > 0) {
-//            for (Filter filter : filters) {
-//
-//                if (filter.getField().endsWith("Date") || filter.getField().endsWith("DateTime")) {
-//                    DateConverter converter = new DateConverter();
-//                    if (filter.getApiAddress().contains("-")) {
-//                        String[] dates = filter.getApiAddress().split("-");
-//                        if (dates.length == 2) {
-//                            String[] startDate = dates[0].split("/");
-//
-//                            int year = Integer.parseInt(startDate[0]);
-//                            int month = Integer.parseInt(startDate[1]);
-//                            int day = Integer.parseInt(startDate[2]);
-//                            converter.persianToGregorian(year, month, day);
-//                            String startDateEn =
-//                                    String.format("%02d", converter.getYear()) +
-//                                            "/" + String.format("%02d", converter.getMonth()) +
-//                                            "/" + String.format("%02d", converter.getDay());
-//
-//
-//                            String[] endDate = dates[1].split("/");
-//
-//                            converter.persianToGregorian(
-//                                    Integer.parseInt(endDate[0]),
-//                                    Integer.parseInt(endDate[1]),
-//                                    Integer.parseInt(endDate[2])
-//                            );
-//                            String endDateEn =
-//                                    String.format("%02d", converter.getYear()) +
-//                                            "/" + String.format("%02d", converter.getMonth()) +
-//                                            "/" + String.format("%02d", converter.getDay());
-//
-//                            filter.setApiAddress(startDateEn + "-" + endDateEn);
-//
-//                        }
-//                    } else {
-//                        String[] startDate = filter.getApiAddress().split("/");
-//
-//                        converter.persianToGregorian(
-//                                Integer.parseInt(startDate[0]),
-//                                Integer.parseInt(startDate[1]),
-//                                Integer.parseInt(startDate[2])
-//                        );
-//
-//
-//                        String startDateEn =
-//                                String.format("%02d", converter.getYear()) +
-//                                        "/" + String.format("%02d", converter.getMonth()) +
-//                                        "/" + String.format("%02d", converter.getDay());
-//
-//
-//                        filter.setApiAddress(startDateEn);
-//                    }
-//
-//                }
-//            }
-//        }
 
         Gson gson = new Gson();
         String filterStr = "[]";

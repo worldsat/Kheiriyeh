@@ -49,10 +49,12 @@ public class BoxIncomeListAdapter extends RecyclerView.Adapter<BoxIncomeListAdap
 
         holder.factorNumber.setText(array_object.get(position).factorNumber);
         holder.number.setText(array_object.get(position).number);
-        holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
+        if (array_object.get(position).price != null) {
+            holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
+        }
         holder.registerDate.setText(array_object.get(position).registerDate);
         holder.name.setText(settingsBll.getName());
-        holder.codeUser.setText("کد: "+settingsBll.getUserId());
+        holder.codeUser.setText("کد: " + settingsBll.getUserId());
 
         String statusStr = "";
         switch (array_object.get(position).status) {

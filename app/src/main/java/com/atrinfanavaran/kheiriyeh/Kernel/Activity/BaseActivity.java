@@ -3,12 +3,11 @@ package com.atrinfanavaran.kheiriyeh.Kernel.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.FnValidColumnListBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
@@ -19,8 +18,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Domain.FnValidColumnList;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.ExceptionHandler;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.ListBuilder;
 import com.atrinfanavaran.kheiriyeh.R;
-
-
+import com.bumptech.glide.Glide;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -57,6 +55,23 @@ public class BaseActivity extends AppCompatActivity {
         return waiting_dialog;
     }
 
+    public static MaterialDialog alertWaiting2(Context context, String str) {
+
+        MaterialDialog waiting_dialog = new MaterialDialog.Builder(context)
+                .customView(R.layout.alert_waiting, false)
+                .autoDismiss(false)
+                .backgroundColor(Color.parseColor("#01000000"))
+                .build();
+        TextView warning = (TextView) waiting_dialog.findViewById(R.id.ok);
+        warning.setText(str);
+        ImageView loading_circle = (ImageView) waiting_dialog.findViewById(R.id.loading_circle_alert);
+
+        Glide.with(context)
+                .load(R.mipmap.loading)
+                .into(loading_circle);
+        return waiting_dialog;
+    }
+
     protected <T extends BaseActivity> T getActivity() {
         return (T) this;
     }
@@ -75,7 +90,6 @@ public class BaseActivity extends AppCompatActivity {
     public ListBuilder listBuilder() {
         return new ListBuilder(BaseActivity.this);
     }
-
 
 
     public Boolean isONLINE(Context context) {

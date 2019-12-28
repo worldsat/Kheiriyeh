@@ -41,7 +41,7 @@ public class StirActivity extends BaseActivity {
         LinearLayout backIcon = findViewById(R.id.backButton);
         backIcon.setVisibility(View.VISIBLE);
         backIcon.setOnClickListener(v -> finish());
-        title.setText("نحوه قعالیت ");
+        title.setText("نحوه فعالیت ");
     }
 
     private void initView() {

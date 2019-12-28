@@ -15,7 +15,7 @@ public interface BoxIncomeDao {
     List<BoxIncomeR> getAll();
 
     @Query("delete FROM BoxIncomeR")
-    void deleteByTitle();
+    void deleteAll();
 
     @Query("update  BoxIncomeR set factorNumber=:factorNumber,lat=:lat,lon=:lon,number=:number,price=:price," +
             "registerDate=(:registerDate),status=:status WHERE id like (:id)")

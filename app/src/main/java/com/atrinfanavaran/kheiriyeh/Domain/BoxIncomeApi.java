@@ -3,11 +3,14 @@ package com.atrinfanavaran.kheiriyeh.Domain;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
 
 public class BoxIncomeApi extends BaseDomain {
-    private String id;
-    private String lon;
-    private String lat;
+    private String factorNumber;
+    private String number;
+    private String price;
     private String status;
-    private String boxId;
+    private String lat;
+    private String lon;
+    private String registerDate;
+    private String id;
 
     public BoxIncomeApi() {
         setApiAddress("api/BoxIncome");
@@ -21,20 +24,28 @@ public class BoxIncomeApi extends BaseDomain {
         this.id = id;
     }
 
-    public String getlon() {
-        return lon;
+    public String getfactorNumber() {
+        return factorNumber;
     }
 
-    public void setlon(String lon) {
-        this.lon = lon;
+    public void setfactorNumber(String factorNumber) {
+        this.factorNumber = factorNumber;
     }
 
-    public String getlat() {
-        return lat;
+    public String getnumber() {
+        return number;
     }
 
-    public void setlat(String lat) {
-        this.lat = lat;
+    public void setnumber(String number) {
+        this.number = number;
+    }
+
+    public String getprice() {
+        return price;
+    }
+
+    public void setprice(String price) {
+        this.price = price;
     }
 
     public String getstatus() {
@@ -45,11 +56,27 @@ public class BoxIncomeApi extends BaseDomain {
         this.status = status;
     }
 
-    public String getboxId() {
-        return boxId;
+    public String getlat() {
+        return lat;
     }
 
-    public void setboxId(String boxId) {
-        this.boxId = boxId;
+    public void setlat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getlon() {
+        return lon;
+    }
+
+    public void setlon(String lon) {
+        this.lon = lon;
+    }
+
+    public String getregisterDate() {
+        return registerDate;
+    }
+
+    public void setregisterDate(String registerDate) {
+        this.registerDate = registerDate;
     }
 }

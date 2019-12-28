@@ -35,6 +35,7 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/iransanslight"
             android:text="TextView"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="10sp" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

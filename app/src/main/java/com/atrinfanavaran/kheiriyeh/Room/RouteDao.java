@@ -15,16 +15,19 @@ public interface RouteDao {
     List<RouteR> getAll();
 
     @Query("delete FROM RouteR")
-    void deleteByTitle();
+    void deleteAll();
 
     @Query("update  RouteR set code=:code,day=:day,address=:address,code=:code" +
             " WHERE id like (:id)")
     void update(String code, String day, String address, int id);
 
+    @Query("Delete from  RouteR  " +
+            " WHERE id like (:id)")
+    void delete(int id);
 
     @Insert
     void insertBox(RouteR routeR);
 
     @Delete
-    void delete(RouteR routeR);
+    void delete2(RouteR routeR);
 }

@@ -41,6 +41,11 @@ public class LoginActivity extends BaseActivity {
         RunPermissionDownload();
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     private void setVariable() {
         loginBtn.setOnClickListener(v -> {
 
