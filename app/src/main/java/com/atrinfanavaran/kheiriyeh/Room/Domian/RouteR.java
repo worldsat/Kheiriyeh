@@ -18,5 +18,10 @@ public class RouteR {
     @ColumnInfo(name = "address")
     public String address;
 
+    @ColumnInfo(name = "lat")
+    public String lat;
+
+    @ColumnInfo(name = "lon")
+    public String lon;
 
 }

@@ -1,6 +1,9 @@
 package com.atrinfanavaran.kheiriyeh.Activity;
 
+import android.Manifest;
 import android.arch.persistence.room.Room;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -27,6 +30,7 @@ import com.atrinfanavaran.kheiriyeh.Fragment.BoxIncomeListFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.BoxListFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.FirstFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.MapFragment;
+import com.atrinfanavaran.kheiriyeh.Fragment.MapRouteFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.RouteListFragment;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBox;
@@ -38,7 +42,8 @@ import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome2;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncomeEdit;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackNewDischarge;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
-import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute1;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute2;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRouteEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.R;
@@ -46,10 +51,15 @@ import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackQuickList, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox {
+public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackQuickList, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute1, onCallBackRoute2, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox {
 
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
@@ -69,7 +79,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
                 AppDatabase.class, "RoomDb").fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
 //        getApplicationContext().deleteDatabase("RoomDb");
-
+        RunPermissionDownload();
         initView();
         BottomNavigation();
         NavigationDrawer();
@@ -266,9 +276,26 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     }
 
     @Override
-    public void SaveRoute(RouteR routeR, boolean editable) {
+    public void SaveRoute1(RouteR router, boolean editable) {
+        fragment = new MapRouteFragment();
+        Bundle bundle1 = new Bundle();
+        Route route = new Route();
+        route.setaddress(router.address);
+        route.setcode(router.code);
+        route.setday(router.day);
+        route.setid(router.id);
+
+        bundle1.putSerializable("Route", route);
+        bundle1.putBoolean("editable", editable);
+        fragment.setArguments(bundle1);
+
+        setFragment();
+    }
+
+    @Override
+    public void SaveRoute2(RouteR routeR, boolean editable) {
         if (editable) {
-            db.RouteDao().update(routeR.code, routeR.day, routeR.address, routeR.id);
+            db.RouteDao().update(routeR.code, routeR.day, routeR.address, routeR.id, routeR.lat, routeR.lon);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.RouteDao().insertBox(routeR);
@@ -335,10 +362,12 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         fragment = new AddRouteFragment();
 
         Route route = new Route();
-        route.setAddress(routerR.address);
-        route.setCode(routerR.code);
-        route.setDay(routerR.day);
-        route.setId(routerR.id);
+        route.setaddress(routerR.address);
+        route.setcode(routerR.code);
+        route.setday(routerR.day);
+        route.setid(routerR.id);
+        route.setlat(routerR.lat);
+        route.setlon(routerR.lon);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("Route", route);
@@ -370,6 +399,64 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
         }
         setFragment();
+    }
+
+
+    private void RunPermissionDownload() {
+
+        Dexter.withActivity(getActivity())
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_NETWORK_STATE
+                        , Manifest.permission.ACCESS_FINE_LOCATION
+                        , Manifest.permission.ACCESS_COARSE_LOCATION
+
+                )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+
+                        }
+
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                })
+                .onSameThread().check();
+
+    }
+
+    private void checkRunTimePermission() {
+        String[] permissionArrays = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.ACCESS_NETWORK_STATE
+                , Manifest.permission.ACCESS_FINE_LOCATION
+                , Manifest.permission.ACCESS_COARSE_LOCATION
+        };
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissionArrays, 1);
+        } else {
+
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    checkRunTimePermission();
+                }
+                return;
+            }
+        }
     }
 
 

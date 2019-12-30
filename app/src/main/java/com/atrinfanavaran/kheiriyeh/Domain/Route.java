@@ -6,37 +6,55 @@ public class Route extends BaseDomain {
  private String  code;
  private String  day;
  private String  address;
+ private String  lat;
+ private String  lon;
  private int  id;
 
-    public String getCode() {
+    public String getcode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setcode(String code) {
         this.code = code;
     }
 
-    public String getDay() {
+    public String getday() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setday(String day) {
         this.day = day;
     }
 
-    public String getAddress() {
+    public String getaddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setaddress(String address) {
         this.address = address;
     }
 
-    public int getId() {
+    public int getid() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setid(int id) {
         this.id = id;
+    }
+
+    public String getlat() {
+        return lat;
+    }
+
+    public void setlat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getlon() {
+        return lon;
+    }
+
+    public void setlon(String lon) {
+        this.lon = lon;
     }
 }

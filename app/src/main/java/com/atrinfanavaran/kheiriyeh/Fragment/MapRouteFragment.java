@@ -1,9 +1,11 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,14 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.atrinfanavaran.kheiriyeh.Domain.BoxIncomeApi;
-import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
-import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
+import com.atrinfanavaran.kheiriyeh.Domain.Route;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome2;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute2;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -31,47 +34,91 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 
-public class MapFragment extends Fragment implements LocationListener, GoogleMap.OnMapLoadedCallback {
-
+public class MapRouteFragment extends Fragment implements LocationListener, GoogleMap.OnMapLoadedCallback {
+    private Button btn2Save;
+    private onCallBackBoxIncome2 onCallBackBoxIncome2;
     private GoogleMap googlemap;
     private LatLng safecompPOS;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private ProgressBar progressBar;
     private Context context;
+    private onCallBackRoute2 onCallBack;
     private MapView mMapView;
-    private TextView titleToolbar;
+    private Route route;
+    private boolean editable = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            route = (Route) bundle.get("Route");
+            editable = (boolean) bundle.get("editable");
+
+
+        }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+
+        View rootView = inflater.inflate(R.layout.map_fragment_route, container, false);
+
         return rootView;
+
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btn2Save = view.findViewById(R.id.btn_2);
+        btn2Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (route == null) {
+                    Toast.makeText(context, "خطا در انجام عملیات", Toast.LENGTH_SHORT).show();
 
-        initView(view);
+                } else {
+                    if (route.getlat() == null) {
+                        Toast.makeText(context, "خطا در دریافت موقعیت", Toast.LENGTH_SHORT).show();
+                    } else {
+                        RouteR routeR = new RouteR();
+                        routeR.code = route.getcode();
+                        routeR.day = route.getday();
+                        routeR.address = route.getaddress();
+                        routeR.lat = route.getlat();
+                        routeR.lon = route.getlon();
+                        if (editable)
+                            routeR.id = route.getid();
+                        onCallBack.SaveRoute2(routeR, editable);
+                    }
+                }
+
+
+//                onCallBackBoxIncome2.SaveBoxIncome2();
+            }
+        });
+
+
         context = getActivity();
-
-        titleToolbar = getActivity().findViewById(R.id.titleToolbar);
-        titleToolbar.setText("آدرس ها");
 
         String languageToLoad = "fa_IR";
         Locale locale = new Locale(languageToLoad);
@@ -104,11 +151,29 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
                 });
                 googlemap.getUiSettings().setMyLocationButtonEnabled(true);
                 googlemap.getUiSettings().setZoomControlsEnabled(true);
+//                googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
+//                googlemap.setOnCameraIdleListener(() -> {
+//                    Log.i("moh3n", "onCameraIdle: ");
+
+//                });
+                GoogleMap.OnMyLocationChangeListener myLocationChangeListener = location -> {
+                    LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                    double lat = loc.latitude;
+                    double lng = loc.longitude;
+                    String latStr = String.valueOf(lat);
+                    String lngStr = String.valueOf(lng);
+                    route.setlat(latStr);
+                    route.setlon(lngStr);
+
+                    googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+
+                    Log.i("moh3n", "onMyLocationChange: " + lat + " " + lng);
+                };
                 googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
                 // For dropping a marker at a point on the Map
-//                LatLng sydney = new LatLng(32.7154899, 51.698559);
+//                LatLng sydney = new LatLng(-34, 151);
 //                googlemap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-                getBoxesOnline();
+
                 // For zooming automatically to the location of the marker
 //                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
 //                googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -123,39 +188,9 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
                 .addApi(LocationServices.API)
                 .build();
 
-
         createLocationRequest();
 
     }
-
-    private void initView(View view) {
-//        progressBar=view.findViewById(R.id.)
-    }
-
-
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//
-//        googlemap = googleMap;
-//
-//        googlemap.setOnCameraIdleListener(() -> {
-//
-////                addItemsToMap(yourMarkerList);
-//            //     final LatLng POS_center = googlemap.getCameraPosition().target;
-//
-//
-//        });
-//        googlemap.setOnCameraMoveStartedListener(i -> {
-//            googlemap.setOnMapLoadedCallback(this);
-//            progressBar.setVisibility(View.VISIBLE);
-//        });
-//
-//
-//        googlemap.getUiSettings().setMyLocationButtonEnabled(true);
-//        googlemap.getUiSettings().setZoomControlsEnabled(true);
-//        googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
-//
-//    }
 
     GoogleApiClient.ConnectionCallbacks connectionListener = new GoogleApiClient.ConnectionCallbacks() {
 
@@ -252,7 +287,7 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
         mLastLocation = location;
         Log.i("moh3n", "onLocationChanged: " + mLastLocation);
         safecompPOS = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-//        googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
+        googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
     }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
@@ -266,56 +301,14 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
         }
     };
 
-    private void getBoxesOnline() {
-//        progressBar.setVisibility(View.VISIBLE);
-        Controller controller = new Controller(getActivity());
-        controller.Get(BoxIncomeApi.class, null, 0, 0, true, new CallbackGet() {
-            @Override
-            public <T> void onSuccess(ArrayList<T> result, int count) {
-
-                ArrayList<BoxIncomeApi> response = new ArrayList<>((Collection<? extends BoxIncomeApi>) result);
-
-                for (int i = 0; i < response.size(); i++) {
-                    if (response.get(i).getlat() == null || response.get(i).getlon() == null)
-                        return;
-                    double lat = Double.valueOf(response.get(i).getlat());
-                    double lng = Double.valueOf(response.get(i).getlon());
-
-                    LatLng location = new LatLng(lat, lng);
-                    String statusStr = "";
-                    float coloredMarker = BitmapDescriptorFactory.HUE_RED;
-                    switch (response.get(i).getstatus()) {
-                        case "1": {
-                            statusStr = "عدم حضور";
-                            coloredMarker = BitmapDescriptorFactory.HUE_ORANGE;
-                            break;
-                        }
-                        case "2": {
-                            statusStr = "عدم موجودی";
-                            coloredMarker = BitmapDescriptorFactory.HUE_RED;
-                            break;
-                        }
-                        case "3": {
-                            statusStr = "تخلیه شده";
-                            coloredMarker = BitmapDescriptorFactory.HUE_GREEN;
-                            break;
-                        }
-                    }
-
-                    googlemap.addMarker(new MarkerOptions().position(location).snippet(statusStr).title("Marker Title").icon(BitmapDescriptorFactory.defaultMarker(coloredMarker)));
-                }
-
-
-//                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(context, "خطا در دریافت اطلاعات", Toast.LENGTH_SHORT).show();
-//                progressBar.setVisibility(View.GONE);
-            }
-        });
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
+        if (getActivity() instanceof onCallBackRoute2)
+            onCallBack = (onCallBackRoute2) getActivity();
     }
+
 
 
 }

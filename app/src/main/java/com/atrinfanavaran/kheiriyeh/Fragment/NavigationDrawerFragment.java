@@ -232,6 +232,8 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("code", data.get(i).code);
                 params.put("day", data.get(i).day);
                 params.put("address", data.get(i).address);
+                params.put("lat", data.get(i).lat);
+                params.put("lon", data.get(i).lon);
 
                 params2.put(params);
             } catch (JSONException e) {

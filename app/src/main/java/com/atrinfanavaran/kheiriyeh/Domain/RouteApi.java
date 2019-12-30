@@ -6,10 +6,28 @@ public class RouteApi extends BaseDomain {
     private String code;
     private String day;
     private String address;
+    private String lat;
+    private String lon;
     private String id;
 
     public RouteApi() {
         setApiAddress("api/DischargeRoute");
+    }
+
+    public String getlat() {
+        return lat;
+    }
+
+    public void setlat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getlon() {
+        return lon;
+    }
+
+    public void setlon(String lon) {
+        this.lon = lon;
     }
 
     public String getid() {

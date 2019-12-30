@@ -57,8 +57,6 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
         if (bundle != null) {
             boxIncome = (BoxIncome) bundle.get("BoxIncome");
             editable = (boolean) bundle.get("editable");
-
-
         }
 
     }
@@ -89,7 +87,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
                     if (boxIncome.getlat() == null) {
                         Toast.makeText(context, "خطا در دریافت موقعیت", Toast.LENGTH_SHORT).show();
                     } else {
-                        onCallBackBoxIncome2.SaveBoxIncome2(boxIncome,editable);
+                        onCallBackBoxIncome2.SaveBoxIncome2(boxIncome, editable);
                     }
                 }
 
@@ -148,7 +146,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
 
                     googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
 
-                    Log.i("moh3n", "onMyLocationChange: "+lat+" "+lng);
+                    Log.i("moh3n", "onMyLocationChange: " + lat + " " + lng);
                 };
                 googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
                 // For dropping a marker at a point on the Map

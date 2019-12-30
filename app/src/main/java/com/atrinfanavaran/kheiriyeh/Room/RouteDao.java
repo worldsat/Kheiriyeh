@@ -17,9 +17,9 @@ public interface RouteDao {
     @Query("delete FROM RouteR")
     void deleteAll();
 
-    @Query("update  RouteR set code=:code,day=:day,address=:address,code=:code" +
+    @Query("update  RouteR set code=:code,day=:day,address=:address,code=:code,lat=:lat,lon=:lon" +
             " WHERE id like (:id)")
-    void update(String code, String day, String address, int id);
+    void update(String code, String day, String address, int id,String lat,String lon);
 
     @Query("Delete from  RouteR  " +
             " WHERE id like (:id)")
