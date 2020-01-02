@@ -109,8 +109,11 @@ public class AddBoxFragment extends Fragment {
             box.mobile = edt1_3.getText().toString().trim();
             box.code = spinner.getSelectedItem().toString();
             box.registerDate = edt1_5.getText().toString().trim();
-            if (editable)
+            if (editable) {
                 box.id = this.box.getId();
+            } else {
+                box.isNew = "true";
+            }
             onCallBack.SaveBox(box, editable);
         });
 

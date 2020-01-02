@@ -14,6 +14,9 @@ public interface BoxDao {
     @Query("SELECT * FROM BoxR")
     List<BoxR> getAll();
 
+    @Query("SELECT * FROM BoxR where isNew like 'true'")
+    List<BoxR> getAllNew();
+
     @Query("delete FROM BoxR")
     void deleteAll();
 

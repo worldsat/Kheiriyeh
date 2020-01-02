@@ -50,18 +50,20 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
         holder.codeUser.setText("کد: " + settingsBll.getUserId());
 
         String statusStr = "";
-        switch (array_object.get(position).status) {
-            case "1": {
-                statusStr = "عدم حضور";
-                break;
-            }
-            case "2": {
-                statusStr = "عدم موجودی";
-                break;
-            }
-            case "3": {
-                statusStr = "سایر موارد";
-                break;
+        if (array_object.get(position).status != null) {
+            switch (array_object.get(position).status) {
+                case "1": {
+                    statusStr = "عدم حضور";
+                    break;
+                }
+                case "2": {
+                    statusStr = "عدم موجودی";
+                    break;
+                }
+                case "3": {
+                    statusStr = "سایر موارد";
+                    break;
+                }
             }
         }
         holder.status.setText(statusStr);

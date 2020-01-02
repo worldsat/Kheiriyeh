@@ -112,6 +112,19 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
                 // For zooming automatically to the location of the marker
 //                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
 //                googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                googlemap.setOnCameraIdleListener(() -> {
+                    Log.i("moh3n", "onCameraIdle: ");
+
+                });
+                LatLng latlng=googlemap.getProjection().getVisibleRegion().latLngBounds.getCenter();
+                Log.i("moh3n", "onMapReady: "+latlng.longitude);
+                googlemap.setOnCameraIdleListener(() -> {
+//
+////                addItemsToMap(yourMarkerList);
+                 final LatLng POS_center = googlemap.getCameraPosition().target;
+                    Log.i("moh3n", "onMapReady: "+POS_center.longitude);
+//
+        });
             }
         });
 
@@ -301,8 +314,9 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
                             break;
                         }
                     }
-
-                    googlemap.addMarker(new MarkerOptions().position(location).snippet(statusStr).title("Marker Title").icon(BitmapDescriptorFactory.defaultMarker(coloredMarker)));
+                    String number = response.get(i).getnumber();
+                    if (number == null) number = " ";
+                    googlemap.addMarker(new MarkerOptions().position(location).snippet(statusStr).title(number).icon(BitmapDescriptorFactory.defaultMarker(coloredMarker)));
                 }
 
 

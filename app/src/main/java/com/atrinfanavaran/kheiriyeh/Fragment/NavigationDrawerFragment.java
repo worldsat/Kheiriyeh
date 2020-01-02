@@ -224,11 +224,12 @@ public class NavigationDrawerFragment extends Fragment {
     private void sendDischargeRoute() {
         JSONObject params = null;
         JSONArray params2 = new JSONArray();
-        List<RouteR> data = db.RouteDao().getAll();
+        List<RouteR> data = db.RouteDao().getAllNew();
 
         for (int i = 0; i < data.size(); i++) {
             try {
                 params = new JSONObject();
+//                params.put("id", data.get(i).id);
                 params.put("code", data.get(i).code);
                 params.put("day", data.get(i).day);
                 params.put("address", data.get(i).address);
@@ -271,11 +272,12 @@ public class NavigationDrawerFragment extends Fragment {
     private void sendBox() {
         JSONObject params = null;
         JSONArray params2 = new JSONArray();
-        List<BoxR> data = db.BoxDao().getAll();
+        List<BoxR> data = db.BoxDao().getAllNew();
 
         for (int i = 0; i < data.size(); i++) {
             try {
                 params = new JSONObject();
+//                params.put("id", data.get(i).id);
                 params.put("code", data.get(i).code);
                 params.put("number", data.get(i).number);
                 params.put("fullName", data.get(i).fullName);
@@ -319,6 +321,7 @@ public class NavigationDrawerFragment extends Fragment {
         for (int i = 0; i < boxIncome.size(); i++) {
             try {
                 params = new JSONObject();
+//                params.put("id", boxIncome.get(i).id);
                 params.put("factorNumber", boxIncome.get(i).factorNumber);
                 params.put("number", boxIncome.get(i).number);
                 params.put("price", boxIncome.get(i).price);

@@ -1,11 +1,9 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,13 +33,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import java.util.List;
 import java.util.Locale;
 
 
@@ -68,10 +60,7 @@ public class MapRouteFragment extends Fragment implements LocationListener, Goog
         if (bundle != null) {
             route = (Route) bundle.get("Route");
             editable = (boolean) bundle.get("editable");
-
-
         }
-
     }
 
 
@@ -106,8 +95,12 @@ public class MapRouteFragment extends Fragment implements LocationListener, Goog
                         routeR.address = route.getaddress();
                         routeR.lat = route.getlat();
                         routeR.lon = route.getlon();
-                        if (editable)
+
+                        if (editable) {
                             routeR.id = route.getid();
+                        } else {
+                            routeR.isNew = "true";
+                        }
                         onCallBack.SaveRoute2(routeR, editable);
                     }
                 }
@@ -145,19 +138,14 @@ public class MapRouteFragment extends Fragment implements LocationListener, Goog
                 // For showing a move to my location button
                 googlemap.setMyLocationEnabled(true);
 
-                googlemap.setOnCameraMoveStartedListener(i -> {
-//                    googlemap.setOnMapLoadedCallback(this);
-//                    progressBar.setVisibility(View.VISIBLE);
-                });
                 googlemap.getUiSettings().setMyLocationButtonEnabled(true);
                 googlemap.getUiSettings().setZoomControlsEnabled(true);
-//                googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
-//                googlemap.setOnCameraIdleListener(() -> {
-//                    Log.i("moh3n", "onCameraIdle: ");
 
-//                });
-                GoogleMap.OnMyLocationChangeListener myLocationChangeListener = location -> {
-                    LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
+
+                googlemap.setOnCameraIdleListener(() -> {
+
+                    final LatLng loc = googlemap.getCameraPosition().target;
                     double lat = loc.latitude;
                     double lng = loc.longitude;
                     String latStr = String.valueOf(lat);
@@ -165,18 +153,8 @@ public class MapRouteFragment extends Fragment implements LocationListener, Goog
                     route.setlat(latStr);
                     route.setlon(lngStr);
 
-                    googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+                });
 
-                    Log.i("moh3n", "onMyLocationChange: " + lat + " " + lng);
-                };
-                googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
-                // For dropping a marker at a point on the Map
-//                LatLng sydney = new LatLng(-34, 151);
-//                googlemap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-//                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-//                googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 
@@ -308,7 +286,6 @@ public class MapRouteFragment extends Fragment implements LocationListener, Goog
         if (getActivity() instanceof onCallBackRoute2)
             onCallBack = (onCallBackRoute2) getActivity();
     }
-
 
 
 }

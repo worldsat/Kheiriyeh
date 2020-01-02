@@ -23,4 +23,7 @@ public class BoxR {
 
     @ColumnInfo(name = "registerDate")
     public String registerDate;
+
+    @ColumnInfo(name = "isNew")
+    public String isNew;
 }

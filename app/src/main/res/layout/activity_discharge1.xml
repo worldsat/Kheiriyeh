@@ -219,7 +219,7 @@
                         android:fontFamily="@font/behdad"
                         android:hint="مبلغ"
                         android:inputType="phone"
-                        android:maxLength="11"
+                        android:maxLength="20"
                         android:textAlignment="textStart"
                         android:textDirection="rtl"
                         android:textSize="12sp" />
@@ -250,7 +250,9 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
+                            android:editable="false"
                             android:ems="10"
+                            android:enabled="false"
                             android:fontFamily="@font/behdad"
                             android:hint="تاریخ واگذاری"
                             android:inputType="number"

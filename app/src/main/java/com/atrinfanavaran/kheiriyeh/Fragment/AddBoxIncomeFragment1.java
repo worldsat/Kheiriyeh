@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxIncome;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome1;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
 import com.atrinfanavaran.kheiriyeh.R;
 
 import java.util.Calendar;
@@ -30,7 +32,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
     private EditText edt1_1, edt1_2, edt1_3, edt1_4;
     private RadioGroup statusGroup;
     private RadioButton radio1, radio2, radio3;
-    private String status;
+    private String status="1";
     private BoxIncome boxIncome;
     private boolean editable = false;
     private ImageView calendarBtn;
@@ -77,6 +79,11 @@ public class AddBoxIncomeFragment1 extends Fragment {
                     break;
             }
         });
+        radio1.setChecked(true);
+
+        edt1_3.addTextChangedListener(new NumberTextWatcherForThousand(edt1_3));
+
+
         if (boxIncome != null) {
             edt1_1.setText(boxIncome.getfactorNumber());
             edt1_2.setText(boxIncome.getnumber());
@@ -105,7 +112,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
             BoxIncome boxIncome = new BoxIncome();
             boxIncome.setfactorNumber(edt1_1.getText().toString().trim());
             boxIncome.setnumber(edt1_2.getText().toString().trim());
-            boxIncome.setprice(edt1_3.getText().toString().trim());
+            boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
             boxIncome.setregisterDate(edt1_4.getText().toString().trim());
             boxIncome.setstatus(status);
             if (editable)
@@ -149,6 +156,16 @@ public class AddBoxIncomeFragment1 extends Fragment {
         radio2 = view.findViewById(R.id.radioButton2);
         radio3 = view.findViewById(R.id.radioButton3);
         calendarBtn = view.findViewById(R.id.calendar);
+    }
+
+    public void afterTextChanged(Editable view) {
+        String s = null;
+        try {
+            // The comma in the format specifier does the trick
+            s = String.format("%,d", Long.parseLong(view.toString()));
+        } catch (NumberFormatException e) {
+        }
+        // Set s back to the view after temporarily removing the text change listener
     }
 
     class Date extends DateItem {

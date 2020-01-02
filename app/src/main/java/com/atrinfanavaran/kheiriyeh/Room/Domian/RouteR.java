@@ -24,4 +24,6 @@ public class RouteR {
     @ColumnInfo(name = "lon")
     public String lon;
 
+    @ColumnInfo(name = "isNew")
+    public String isNew;
 }

@@ -135,6 +135,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:enabled="false"
                             android:fontFamily="@font/behdad"
                             android:hint="تاریخ واگذاری"
                             android:inputType="number"
