@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
+import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 
 import java.util.List;
@@ -13,6 +14,10 @@ import java.util.List;
 public interface BoxDao {
     @Query("SELECT * FROM BoxR")
     List<BoxR> getAll();
+
+    @Query("SELECT * FROM BoxR where number like (:number)")
+    BoxR getAllFilterNumber(String number);
+
 
     @Query("SELECT * FROM BoxR where isNew like 'true'")
     List<BoxR> getAllNew();

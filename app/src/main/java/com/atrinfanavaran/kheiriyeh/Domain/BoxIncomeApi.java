@@ -3,7 +3,7 @@ package com.atrinfanavaran.kheiriyeh.Domain;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
 
 public class BoxIncomeApi extends BaseDomain {
-    private String factorNumber;
+
     private String number;
     private String price;
     private String status;
@@ -22,14 +22,6 @@ public class BoxIncomeApi extends BaseDomain {
 
     public void setid(String id) {
         this.id = id;
-    }
-
-    public String getfactorNumber() {
-        return factorNumber;
-    }
-
-    public void setfactorNumber(String factorNumber) {
-        this.factorNumber = factorNumber;
     }
 
     public String getnumber() {

@@ -50,6 +50,7 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
         holder.mobile.setText(array_object.get(position).mobile);
         holder.code.setText(array_object.get(position).code);
         holder.registerDate.setText(array_object.get(position).registerDate);
+        holder.address.setText(array_object.get(position).address);
 
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
@@ -104,7 +105,7 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView fullName, number, mobile, code, registerDate;
+        TextView fullName, number, mobile, code, registerDate,address;
         ImageView moreOption;
 
         private ViewHolder(View itemView) {
@@ -115,6 +116,7 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
             mobile = itemView.findViewById(R.id.mobile);
             code = itemView.findViewById(R.id.code);
             registerDate = itemView.findViewById(R.id.registerDate);
+            address = itemView.findViewById(R.id.address);
 
         }
     }

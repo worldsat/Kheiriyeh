@@ -325,7 +325,7 @@ public class NavigationDrawerFragment extends Fragment {
             try {
                 params = new JSONObject();
 //                params.put("id", boxIncome.get(i).id);
-                params.put("factorNumber", boxIncome.get(i).factorNumber);
+
                 params.put("number", boxIncome.get(i).number);
                 params.put("price", boxIncome.get(i).price);
                 params.put("status", boxIncome.get(i).status);
@@ -382,7 +382,7 @@ public class NavigationDrawerFragment extends Fragment {
                     boxIncomeR.lon = response.get(i).getlon();
                     boxIncomeR.lat = response.get(i).getlat();
                     boxIncomeR.number = response.get(i).getnumber();
-                    boxIncomeR.factorNumber = response.get(i).getfactorNumber();
+
                     db.BoxIncomeDao().insertBoxIncome(boxIncomeR);
 
                 }

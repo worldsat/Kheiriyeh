@@ -30,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
     public static final String TAG = "moh3n";
 
     {
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+//        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
     }
 
     @SuppressLint("SimpleDateFormat")

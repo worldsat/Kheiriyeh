@@ -1,5 +1,6 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,8 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,9 +22,15 @@ import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxIncome;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome1;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -29,13 +38,14 @@ public class AddBoxIncomeFragment1 extends Fragment {
 
     private Button btn1Save;
     private onCallBackBoxIncome1 onCallBackBoxIncome1;
-    private EditText edt1_1, edt1_2, edt1_3, edt1_4;
+    private EditText edt1_1, edt1_3, edt1_4, edt1_8, edt1_6, edt1_7;
     private RadioGroup statusGroup;
     private RadioButton radio1, radio2, radio3;
-    private String status="1";
+    private String status = "1";
     private BoxIncome boxIncome;
     private boolean editable = false;
     private ImageView calendarBtn;
+    private SearchableSpinner spinner;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,14 +89,56 @@ public class AddBoxIncomeFragment1 extends Fragment {
                     break;
             }
         });
-        radio1.setChecked(true);
+
+
+
+        AppDatabase db = Room.databaseBuilder(getActivity(),
+                AppDatabase.class, "RoomDb")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+        List<BoxR> boxRS = db.BoxDao().getAll();
+        List<String> boxR = new ArrayList<>();
+        boxR.add("انتخاب کنید");
+        for (int i = 0; i < boxRS.size(); i++) {
+            boxR.add(boxRS.get(i).number);
+        }
+
+        ArrayAdapter<String> adapter0 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_blue, boxR);
+        SearchableField.setSpinner(spinner, boxR);
+        spinner.setAdapter(adapter0);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                BoxR boxR1 = db.BoxDao().getAllFilterNumber(spinner.getSelectedItem().toString());
+                if (boxR1 != null) {
+                    edt1_6.setText(boxR1.fullName);
+                    edt1_7.setText(boxR1.mobile);
+                    edt1_8.setText(boxR1.address);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         edt1_3.addTextChangedListener(new NumberTextWatcherForThousand(edt1_3));
 
 
         if (boxIncome != null) {
-            edt1_1.setText(boxIncome.getfactorNumber());
-            edt1_2.setText(boxIncome.getnumber());
+
+
+            List<BoxR> boxRS2 = db.BoxDao().getAll();
+            for (int i = 0; i < boxRS2.size(); i++) {
+                if (boxRS2.get(i).number.equals(boxIncome.getnumber())) {
+                spinner.setSelection(i);
+                }
+            }
+
             edt1_3.setText(boxIncome.getprice());
             edt1_4.setText(boxIncome.getregisterDate());
 
@@ -110,8 +162,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
         btn1Save = view.findViewById(R.id.btn_1);
         btn1Save.setOnClickListener(v -> {
             BoxIncome boxIncome = new BoxIncome();
-            boxIncome.setfactorNumber(edt1_1.getText().toString().trim());
-            boxIncome.setnumber(edt1_2.getText().toString().trim());
+            boxIncome.setnumber(spinner.getSelectedItem().toString());
             boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
             boxIncome.setregisterDate(edt1_4.getText().toString().trim());
             boxIncome.setstatus(status);
@@ -136,6 +187,9 @@ public class AddBoxIncomeFragment1 extends Fragment {
             }).show(getActivity().getSupportFragmentManager(), "");
 
         });
+
+
+
     }
 
     @Override
@@ -148,14 +202,18 @@ public class AddBoxIncomeFragment1 extends Fragment {
 
     private void initView(View view) {
         edt1_1 = view.findViewById(R.id.edt1_1);
-        edt1_2 = view.findViewById(R.id.edt1_2);
+
         edt1_3 = view.findViewById(R.id.edt1_3);
         edt1_4 = view.findViewById(R.id.edt1_4);
+        edt1_6 = view.findViewById(R.id.edt1_6);
+        edt1_7 = view.findViewById(R.id.edt1_7);
+        edt1_8 = view.findViewById(R.id.edt1_8);
         statusGroup = view.findViewById(R.id.radioButtonGroup);
         radio1 = view.findViewById(R.id.radioButton1);
         radio2 = view.findViewById(R.id.radioButton2);
         radio3 = view.findViewById(R.id.radioButton3);
         calendarBtn = view.findViewById(R.id.calendar);
+        spinner = view.findViewById(R.id.spinner2);
     }
 
     public void afterTextChanged(Editable view) {

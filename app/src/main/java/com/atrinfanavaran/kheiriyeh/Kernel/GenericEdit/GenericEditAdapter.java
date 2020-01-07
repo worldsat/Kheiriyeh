@@ -170,7 +170,7 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ArrayAdapter adapter = new ArrayAdapter<>(holder.itemView.getContext(), R.layout.spinner_item_blue, result);
 
                 holder.spinner.setAdapter(adapter);
-                SearchableField.setSpinner(holder.spinner, result);
+//                SearchableField.setSpinner(holder.spinner, result);
 
                 // select selected item on load completion
                 // if data Map is not empty

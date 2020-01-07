@@ -214,7 +214,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     public void SaveBoxIncome2(BoxIncome boxIncome, boolean editable) {
 //        Toast.makeText(this, boxIncome.getlat(), Toast.LENGTH_SHORT).show();
         BoxIncomeR boxIncomeR = new BoxIncomeR();
-        boxIncomeR.factorNumber = boxIncome.getfactorNumber();
+
         boxIncomeR.lat = boxIncome.getlat();
         boxIncomeR.lon = boxIncome.getlon();
         boxIncomeR.number = boxIncome.getnumber();
@@ -223,7 +223,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         boxIncomeR.status = boxIncome.getstatus();
 
         if (editable) {
-            db.BoxIncomeDao().update(boxIncome.getfactorNumber(), boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
+            db.BoxIncomeDao().update( boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
                     , boxIncome.getprice(), boxIncome.getregisterDate(), boxIncome.getstatus(), boxIncome.getid()
             );
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
@@ -326,7 +326,6 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
         BoxIncome boxIncome1 = new BoxIncome();
         boxIncome1.setid(boxIncome.id);
-        boxIncome1.setfactorNumber(boxIncome.factorNumber);
         boxIncome1.setlat(boxIncome.lat);
         boxIncome1.setlon(boxIncome.lon);
         boxIncome1.setnumber(boxIncome.number);

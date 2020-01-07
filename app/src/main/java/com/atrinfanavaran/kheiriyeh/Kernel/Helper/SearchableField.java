@@ -10,12 +10,11 @@ import java.util.Collection;
 import java.util.List;
 
 public class SearchableField {
-    public static <T> void setSpinner(SearchableSpinner spinner, Collection<T> data) {
+    public static <T> void setSpinner(SearchableSpinner spinner,  List<String> data) {
         spinner.setTitle("لطفا آیتم مورد نظر را انتخاب کنید");
         spinner.setPositiveButton("لغو");
-        ArrayAdapter<T> adapter = new ArrayAdapter<>(spinner.getContext(),
-                R.layout.spinner_item_blue,
-                (List<T>) data);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(spinner.getContext(), R.layout.spinner_item_blue, data);
         spinner.setAdapter(adapter);
     }
     public static <T> void setSpinnerRed(SearchableSpinner spinner, Collection<T> data) {

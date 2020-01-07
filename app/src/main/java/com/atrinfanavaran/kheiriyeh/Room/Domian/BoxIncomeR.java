@@ -9,9 +9,6 @@ public class BoxIncomeR {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @ColumnInfo(name = "factorNumber")
-    public String factorNumber;
-
     @ColumnInfo(name = "number")
     public String number;
 

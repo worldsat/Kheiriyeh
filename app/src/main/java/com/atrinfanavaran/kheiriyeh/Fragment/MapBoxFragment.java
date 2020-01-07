@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.atrinfanavaran.kheiriyeh.Domain.Box;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBox2;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome2;
-import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute2;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.google.android.gms.common.ConnectionResult;
@@ -95,6 +94,8 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
                         boxR.code = box.getCode();
                         boxR.registerDate = box.getRegisterDate();
                         boxR.mobile = box.getMobile();
+                        boxR.address = box.getAddress();
+                        boxR.fullName = box.getFullName();
                         boxR.lat = box.getLat();
                         boxR.lon = box.getLng();
                         boxR.number = box.getNumber();
@@ -285,7 +286,7 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
-        if (getActivity() instanceof onCallBackRoute2)
+        if (getActivity() instanceof onCallBackAddBox2)
             onCallBack = (onCallBackAddBox2) getActivity();
     }
 

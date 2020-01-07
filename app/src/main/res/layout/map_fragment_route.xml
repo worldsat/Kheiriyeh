@@ -29,6 +29,123 @@
 
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginEnd="26dp">
+
+
+            <ImageView
+                android:id="@+id/circle1"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@mipmap/circlegray1" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/circle2"
+                app:layout_constraintEnd_toStartOf="@+id/circle2"
+                app:layout_constraintHorizontal_bias="0.209"
+                app:layout_constraintStart_toEndOf="@+id/circle1"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:layout_constraintVertical_bias="0.52"
+                app:srcCompat="@color/black" />
+
+            <ImageView
+                android:id="@+id/circle2"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="64dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.18"
+                app:srcCompat="@mipmap/circlered2" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/circle2"
+                app:layout_constraintEnd_toStartOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="@+id/circle2"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:srcCompat="@android:color/darker_gray" />
+
+            <ImageView
+                android:id="@+id/circle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/circle2"
+                app:layout_constraintEnd_toStartOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="@+id/circle2"
+                app:layout_constraintTop_toTopOf="@+id/circle2"
+                app:srcCompat="@mipmap/circlegray3" />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/behdad"
+                android:text="مشخصات صندوق"
+                android:textColor="@color/grey_600"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/circle1"
+                app:layout_constraintStart_toStartOf="@+id/circle1"
+                app:layout_constraintTop_toBottomOf="@+id/circle1"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/behdad"
+                android:gravity="end"
+                android:text="انتخاب آدرس از روی نقشه"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/circle2"
+                app:layout_constraintStart_toStartOf="@+id/circle2"
+                app:layout_constraintTop_toBottomOf="@+id/circle2" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:text="انتخاب آدرس از روی نقشه"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintEnd_toStartOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

@@ -40,7 +40,7 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         settingsBll.getUrlAddress();
 
-        holder.factorNumber.setText(array_object.get(position).factorNumber);
+
         holder.number.setText(array_object.get(position).number);
         if (array_object.get(position).price != null) {
             holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
@@ -89,13 +89,13 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView factorNumber, number, price, status, registerDate, name, codeUser;
+        TextView  number, price, status, registerDate, name, codeUser;
         ImageView moreOption;
 
         private ViewHolder(View itemView) {
             super(itemView);
 
-            factorNumber = itemView.findViewById(R.id.factorNumber);
+
             number = itemView.findViewById(R.id.code);
             price = itemView.findViewById(R.id.price);
             status = itemView.findViewById(R.id.status);
