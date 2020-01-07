@@ -46,7 +46,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
     private boolean editable = false;
     private ImageView calendarBtn;
     private SearchableSpinner spinner;
-
+private String numberSelected;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +91,6 @@ public class AddBoxIncomeFragment1 extends Fragment {
         });
 
 
-
         AppDatabase db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
                 .fallbackToDestructiveMigration()
@@ -101,7 +100,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
         List<String> boxR = new ArrayList<>();
         boxR.add("انتخاب کنید");
         for (int i = 0; i < boxRS.size(); i++) {
-            boxR.add(boxRS.get(i).number);
+            boxR.add(boxRS.get(i).number + ":" + boxRS.get(i).address);
         }
 
         ArrayAdapter<String> adapter0 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_blue, boxR);
@@ -111,11 +110,14 @@ public class AddBoxIncomeFragment1 extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                BoxR boxR1 = db.BoxDao().getAllFilterNumber(spinner.getSelectedItem().toString());
-                if (boxR1 != null) {
-                    edt1_6.setText(boxR1.fullName);
-                    edt1_7.setText(boxR1.mobile);
-                    edt1_8.setText(boxR1.address);
+                if (position != 0) {
+                    numberSelected=getPosition(position);
+                    BoxR boxR1 = db.BoxDao().getAllFilterNumber(getPosition(position));
+                    if (boxR1 != null) {
+                        edt1_6.setText(boxR1.fullName);
+                        edt1_7.setText(boxR1.mobile);
+                        edt1_8.setText(boxR1.address);
+                    }
                 }
             }
 
@@ -135,7 +137,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
             List<BoxR> boxRS2 = db.BoxDao().getAll();
             for (int i = 0; i < boxRS2.size(); i++) {
                 if (boxRS2.get(i).number.equals(boxIncome.getnumber())) {
-                spinner.setSelection(i);
+                    spinner.setSelection(i+1);
                 }
             }
 
@@ -162,7 +164,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
         btn1Save = view.findViewById(R.id.btn_1);
         btn1Save.setOnClickListener(v -> {
             BoxIncome boxIncome = new BoxIncome();
-            boxIncome.setnumber(spinner.getSelectedItem().toString());
+            boxIncome.setnumber(numberSelected);
             boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
             boxIncome.setregisterDate(edt1_4.getText().toString().trim());
             boxIncome.setstatus(status);
@@ -189,7 +191,17 @@ public class AddBoxIncomeFragment1 extends Fragment {
         });
 
 
+    }
 
+    private String getPosition(int position) {
+        AppDatabase db = Room.databaseBuilder(getActivity(),
+                AppDatabase.class, "RoomDb")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+        List<BoxR> boxRS = db.BoxDao().getAll();
+        int n = position - 1;
+        return boxRS.get(n).number;
     }
 
     @Override
