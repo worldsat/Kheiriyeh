@@ -103,7 +103,7 @@
                         android:fontFamily="@font/behdad"
                         android:hint="آدرس مسیر"
                         android:inputType="text"
-                        android:maxLength="11"
+                        android:maxLength="400"
                         android:textAlignment="textStart"
                         android:textDirection="rtl"
                         android:textSize="12sp" />
@@ -117,7 +117,7 @@
                     android:layout_margin="16dp"
                     android:background="@drawable/background_circle_red2"
                     android:fontFamily="@font/behdad"
-                    android:text="مرحله بعدی"
+                    android:text="ذخیره"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
@@ -34,7 +35,8 @@ public class LoginActivity extends BaseActivity {
     private Button loginBtn;
     private TextView rulesBtn, rememberPassBtn;
     private SettingsBll settingsBll;
-
+    private static final int Time_Between_Two_Back = 2000;
+    private long TimeBackPressed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,13 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
+        if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
+            finishAffinity();
+            return;
+        } else {
+            Toast.makeText(this, "به منظور خروج دوباره کلیک کنید", Toast.LENGTH_SHORT).show();
+        }
+        TimeBackPressed = System.currentTimeMillis();
     }
 
     private void setVariable() {

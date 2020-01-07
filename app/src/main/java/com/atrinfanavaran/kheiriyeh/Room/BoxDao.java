@@ -20,9 +20,9 @@ public interface BoxDao {
     @Query("delete FROM BoxR")
     void deleteAll();
 
-    @Query("update  BoxR set fullName=:fullName,number=:number,mobile=:mobile,code=:code,registerDate=:registerDate" +
+    @Query("update  BoxR set fullName=:fullName,number=:number,mobile=:mobile,code=:code,registerDate=:registerDate,address=:address,lon=:lng,lat=:lat" +
             " WHERE id like (:id)")
-    void update(String fullName, String number, String mobile, String code, String registerDate, int id);
+    void update(String fullName, String number, String mobile, String code, String registerDate, int id,String address, String lat, String lng);
 
     @Query("Delete from  BoxR  " +
             " WHERE id like (:id)")

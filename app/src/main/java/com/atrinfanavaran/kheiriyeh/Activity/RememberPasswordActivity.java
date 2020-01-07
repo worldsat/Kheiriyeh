@@ -37,10 +37,6 @@ public class RememberPasswordActivity extends BaseActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-
-    }
 
     private void setVariable() {
         settingsBll = new SettingsBll(this);

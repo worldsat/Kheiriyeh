@@ -34,7 +34,7 @@ public class AddBoxFragment extends Fragment {
 
     private Button btn1Save;
     private onCallBackAddBox onCallBack;
-    private EditText edt1_1, edt1_2, edt1_3, edt1_5;
+    private EditText edt1_1, edt1_2, edt1_3, edt1_5, edt1_6;
     private Box box;
     private boolean editable = false;
     private Spinner spinner;
@@ -89,7 +89,7 @@ public class AddBoxFragment extends Fragment {
             edt1_1.setText(box.getFullName());
             edt1_2.setText(box.getNumber());
             edt1_3.setText(box.getMobile());
-
+            edt1_6.setText(box.getAddress());
             edt1_5.setText(box.getRegisterDate());
 
         }
@@ -109,6 +109,7 @@ public class AddBoxFragment extends Fragment {
             box.mobile = edt1_3.getText().toString().trim();
             box.code = spinner.getSelectedItem().toString();
             box.registerDate = edt1_5.getText().toString().trim();
+            box.address = edt1_6.getText().toString().trim();
             if (editable) {
                 box.id = this.box.getId();
             } else {
@@ -151,6 +152,7 @@ public class AddBoxFragment extends Fragment {
         edt1_2 = view.findViewById(R.id.edt1_2);
         edt1_3 = view.findViewById(R.id.edt1_3);
         edt1_5 = view.findViewById(R.id.edt1_5);
+        edt1_6 = view.findViewById(R.id.edt1_6);
         spinner = view.findViewById(R.id.spinner);
         calendarBtn = view.findViewById(R.id.calendar);
     }

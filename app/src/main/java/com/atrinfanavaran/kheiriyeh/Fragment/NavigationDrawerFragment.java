@@ -283,6 +283,9 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("fullName", data.get(i).fullName);
                 params.put("mobile", data.get(i).mobile);
                 params.put("assignmentDate", data.get(i).registerDate);
+                params.put("address", data.get(i).address);
+                params.put("lat", data.get(i).lat);
+                params.put("lon", data.get(i).lon);
                 params2.put(params);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -414,6 +417,9 @@ public class NavigationDrawerFragment extends Fragment {
                     data.registerDate = response.get(i).getregisterDate();
                     data.code = response.get(i).getcode();
                     data.number = response.get(i).getnumber();
+                    data.address = response.get(i).getaddress();
+                    data.lat = response.get(i).getlat();
+                    data.lon = response.get(i).getlon();
 
                     try {
                         db.BoxDao().insertBox(data);

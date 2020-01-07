@@ -29,11 +29,12 @@ import com.atrinfanavaran.kheiriyeh.Fragment.AddRouteFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.BoxIncomeListFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.BoxListFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.FirstFragment;
+import com.atrinfanavaran.kheiriyeh.Fragment.MapBoxFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.MapFragment;
-import com.atrinfanavaran.kheiriyeh.Fragment.MapRouteFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.RouteListFragment;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBox;
+import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBox2;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBoxNew;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddRouteNew;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxEdit;
@@ -43,7 +44,6 @@ import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncomeEdit;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackNewDischarge;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute1;
-import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute2;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRouteEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.R;
@@ -59,7 +59,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackQuickList, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute1, onCallBackRoute2, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox {
+public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackQuickList, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute1, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox, onCallBackAddBox2 {
 
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
@@ -189,6 +189,14 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
                 if (fm.getBackStackEntryCount() > 1) {
                     fm.popBackStack();
                 }
+            } else {
+                if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
+                    finishAffinity();
+                    return;
+                } else {
+                    Toast.makeText(MainActivity.this, "به منظور خروج دوباره کلیک کنید", Toast.LENGTH_SHORT).show();
+                }
+                TimeBackPressed = System.currentTimeMillis();
             }
         } else {
             if (TimeBackPressed + Time_Between_Two_Back > System.currentTimeMillis()) {
@@ -258,8 +266,30 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
     @Override
     public void SaveBox(BoxR boxR, boolean editable) {
+
+
+        fragment = new MapBoxFragment();
+        Bundle bundle1 = new Bundle();
+        Box box = new Box();
+        box.setId(boxR.id);
+        box.setNumber(boxR.number);
+        box.setMobile(boxR.mobile);
+        box.setFullName(boxR.fullName);
+        box.setRegisterDate(boxR.registerDate);
+        box.setCode(boxR.code);
+        box.setAddress(boxR.address);
+
+        bundle1.putSerializable("Box", box);
+        bundle1.putBoolean("editable", editable);
+        fragment.setArguments(bundle1);
+
+        setFragment();
+    }
+
+    @Override
+    public void SaveBox2(BoxR boxR, boolean editable) {
         if (editable) {
-            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.registerDate, boxR.id);
+            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.registerDate, boxR.id,boxR.address, boxR.lat, boxR.lon);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.BoxDao().insertBox(boxR);
@@ -277,34 +307,18 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
     @Override
     public void SaveRoute1(RouteR router, boolean editable) {
-        fragment = new MapRouteFragment();
-        Bundle bundle1 = new Bundle();
-        Route route = new Route();
-        route.setaddress(router.address);
-        route.setcode(router.code);
-        route.setday(router.day);
-        route.setid(router.id);
-
-        bundle1.putSerializable("Route", route);
-        bundle1.putBoolean("editable", editable);
-        fragment.setArguments(bundle1);
-
-        setFragment();
-    }
-
-    @Override
-    public void SaveRoute2(RouteR routeR, boolean editable) {
         if (editable) {
-            db.RouteDao().update(routeR.code, routeR.day, routeR.address, routeR.id, routeR.lat, routeR.lon);
+            db.RouteDao().update(router.code, router.day, router.address, router.id);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
-            db.RouteDao().insertBox(routeR);
+            db.RouteDao().insertBox(router);
             Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         }
 
         fragment = new RouteListFragment();
         setFragment();
     }
+
 
     @Override
     public void EditBoxIncome(BoxIncomeR boxIncome) {

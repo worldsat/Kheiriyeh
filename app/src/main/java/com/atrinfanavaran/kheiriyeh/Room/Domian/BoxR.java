@@ -24,6 +24,15 @@ public class BoxR {
     @ColumnInfo(name = "registerDate")
     public String registerDate;
 
+    @ColumnInfo(name = "address")
+    public String address;
+
     @ColumnInfo(name = "isNew")
     public String isNew;
+
+    @ColumnInfo(name = "lat")
+    public String lat;
+
+    @ColumnInfo(name = "lon")
+    public String lon;
 }

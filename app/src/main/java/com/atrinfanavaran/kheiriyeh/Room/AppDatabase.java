@@ -10,7 +10,7 @@ import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 
-@Database(entities = {BoxIncomeR.class, BoxR.class, RouteR.class, User.class, User2.class}, version = 3)
+@Database(entities = {BoxIncomeR.class, BoxR.class, RouteR.class, User.class, User2.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 

@@ -9,10 +9,37 @@ public class BoxApi extends BaseDomain {
     private String code;
     private String registerDate;
     private String id;
+    private String address;
+    private String lat;
+    private String lon;
 
 
     public BoxApi() {
         setApiAddress("api/Box");
+    }
+
+    public String getlat() {
+        return lat;
+    }
+
+    public void setlat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getlon() {
+        return lon;
+    }
+
+    public void setlon(String lon) {
+        this.lon = lon;
+    }
+
+    public String getaddress() {
+        return address;
+    }
+
+    public void setaddress(String address) {
+        this.address = address;
     }
 
     public String getid() {

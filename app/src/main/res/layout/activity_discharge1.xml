@@ -254,7 +254,7 @@
                             android:ems="10"
                             android:enabled="false"
                             android:fontFamily="@font/behdad"
-                            android:hint="تاریخ واگذاری"
+                            android:hint="تاریخ ثبت"
                             android:inputType="number"
                             android:maxLength="11"
                             android:textAlignment="textStart"
@@ -298,11 +298,21 @@
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/radioButton3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/behdad"
+                            android:text="تخلیه صندوق"
+                            android:textColor="@color/grey_700"
+                            android:textSize="12sp" />
+
+                        <RadioButton
                             android:id="@+id/radioButton1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:checked="true"
+                            android:checked="false"
                             android:fontFamily="@font/behdad"
                             android:text="عدم حضور"
                             android:textColor="@color/grey_700"
@@ -318,15 +328,6 @@
                             android:textColor="@color/grey_700"
                             android:textSize="12sp" />
 
-                        <RadioButton
-                            android:id="@+id/radioButton3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/behdad"
-                            android:text="سایر موارد"
-                            android:textColor="@color/grey_700"
-                            android:textSize="12sp" />
                     </RadioGroup>
 
                 </LinearLayout>
