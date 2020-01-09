@@ -42,6 +42,7 @@ import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +65,7 @@ public class NavigationDrawerFragment extends Fragment {
     private AppDatabase db;
     private Controller controller;
     private BaseActivity baseActivity;
+    private ImageView imageView;
 
     public NavigationDrawerFragment() {
         // Required empty public constructor
@@ -134,6 +136,7 @@ public class NavigationDrawerFragment extends Fragment {
         btn4 = view.findViewById(R.id.btn4);
         btn5 = view.findViewById(R.id.btn5);
         btn6 = view.findViewById(R.id.btn6);
+        imageView = view.findViewById(R.id.logo);
 
         btn1.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), StirActivity.class);
@@ -170,6 +173,8 @@ public class NavigationDrawerFragment extends Fragment {
         String versionName = BuildConfig.VERSION_NAME;
         version.setText("اپلیکیشن قاصدک نسخه " + versionName);
 
+
+        setLogo();
     }
 
 
@@ -476,6 +481,16 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
+    }
+
+    private void setLogo() {
+
+        SettingsBll settingsBll = new SettingsBll(getActivity());
+
+        Glide.with(getActivity())
+                .load(settingsBll.getUrlAddress() + "/" + settingsBll.getLogoAddress())
+                .into(imageView);
+
     }
 }
 

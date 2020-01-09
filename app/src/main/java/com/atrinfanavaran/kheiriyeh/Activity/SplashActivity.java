@@ -6,17 +6,20 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.bumptech.glide.Glide;
 
 public class SplashActivity extends BaseActivity {
     private Handler mHandler = new Handler();
     ProgressBar mProgressBar;
     CountDownTimer mCountDownTimer;
     int i = 0;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,18 @@ public class SplashActivity extends BaseActivity {
 
         initView();
         setVariable();
+        setLogo();
 //        timer();
+    }
+
+    private void setLogo() {
+
+        SettingsBll settingsBll = new SettingsBll(getActivity());
+        imageView = findViewById(R.id.logo3);
+        Glide.with(getActivity())
+                .load(settingsBll.getUrlAddress() + "/" + settingsBll.getLogoAddress())
+                .into(imageView);
+
     }
 
     private void timer() {

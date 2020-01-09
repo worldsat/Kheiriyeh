@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/iransans"
-                        android:text="شماره فاکتور"
+                        android:text="شماره صندوق"
                         android:textSize="12sp" />
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner

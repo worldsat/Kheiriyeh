@@ -2,45 +2,43 @@ package com.atrinfanavaran.kheiriyeh.Domain;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
 
-public class Setting extends BaseDomain {
+public class Setting  {
     private String id;
     private String logoName;
     private String logo;
     private String sherkatName;
 
-    public Setting() {
-        setApiAddress("api/Setting");
-    }
 
-    public String getId() {
+
+    public String getid() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setid(String id) {
         this.id = id;
     }
 
-    public String getLogoName() {
+    public String getlogoName() {
         return logoName;
     }
 
-    public void setLogoName(String logoName) {
+    public void setlogoName(String logoName) {
         this.logoName = logoName;
     }
 
-    public String getLogo() {
+    public String getlogo() {
         return logo;
     }
 
-    public void setLogo(String logo) {
+    public void setlogo(String logo) {
         this.logo = logo;
     }
 
-    public String getSherkatName() {
+    public String getsherkatName() {
         return sherkatName;
     }
 
-    public void setSherkatName(String sherkatName) {
+    public void setsherkatName(String sherkatName) {
         this.sherkatName = sherkatName;
     }
 }

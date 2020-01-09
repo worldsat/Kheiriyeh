@@ -46,7 +46,8 @@ public class AddBoxIncomeFragment1 extends Fragment {
     private boolean editable = false;
     private ImageView calendarBtn;
     private SearchableSpinner spinner;
-private String numberSelected;
+    private String numberSelected;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +101,7 @@ private String numberSelected;
         List<String> boxR = new ArrayList<>();
         boxR.add("انتخاب کنید");
         for (int i = 0; i < boxRS.size(); i++) {
-            boxR.add(boxRS.get(i).number + ":" + boxRS.get(i).address);
+            boxR.add(boxRS.get(i).number + ":" + boxRS.get(i).fullName);
         }
 
         ArrayAdapter<String> adapter0 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_blue, boxR);
@@ -111,7 +112,7 @@ private String numberSelected;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    numberSelected=getPosition(position);
+                    numberSelected = getPosition(position);
                     BoxR boxR1 = db.BoxDao().getAllFilterNumber(getPosition(position));
                     if (boxR1 != null) {
                         edt1_6.setText(boxR1.fullName);
@@ -130,14 +131,12 @@ private String numberSelected;
 
         edt1_3.addTextChangedListener(new NumberTextWatcherForThousand(edt1_3));
 
-
         if (boxIncome != null) {
-
 
             List<BoxR> boxRS2 = db.BoxDao().getAll();
             for (int i = 0; i < boxRS2.size(); i++) {
                 if (boxRS2.get(i).number.equals(boxIncome.getnumber())) {
-                    spinner.setSelection(i+1);
+                    spinner.setSelection(i + 1);
                 }
             }
 

@@ -17,11 +17,13 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.atrinfanavaran.kheiriyeh.Domain.Box;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxIncome;
 import com.atrinfanavaran.kheiriyeh.Domain.Route;
+import com.atrinfanavaran.kheiriyeh.Domain.Setting;
 import com.atrinfanavaran.kheiriyeh.Fragment.AddBoxFragment;
 import com.atrinfanavaran.kheiriyeh.Fragment.AddBoxIncomeFragment1;
 import com.atrinfanavaran.kheiriyeh.Fragment.AddBoxIncomeFragment2;
@@ -46,16 +48,23 @@ import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute1;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRouteEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -68,6 +77,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     private Fragment fragment;
     private Toolbar my_toolbar;
     private AppDatabase db;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +93,11 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         initView();
         BottomNavigation();
         NavigationDrawer();
+        getSetting();
+
     }
+
+
 
 
     private void BottomNavigation() {
@@ -223,7 +237,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         boxIncomeR.status = boxIncome.getstatus();
 
         if (editable) {
-            db.BoxIncomeDao().update( boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
+            db.BoxIncomeDao().update(boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
                     , boxIncome.getprice(), boxIncome.getregisterDate(), boxIncome.getstatus(), boxIncome.getid()
             );
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
@@ -289,7 +303,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveBox2(BoxR boxR, boolean editable) {
         if (editable) {
-            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.registerDate, boxR.id,boxR.address, boxR.lat, boxR.lon);
+            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.registerDate, boxR.id, boxR.address, boxR.lat, boxR.lon);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.BoxDao().insertBox(boxR);
@@ -472,5 +486,32 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         }
     }
 
+    private void getSetting() {
+
+        controller().GetFromApi2("api/Setting", new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Gson gson = new Gson();
+
+                try {
+                    String str = new JSONObject(resultStr).getString("data");
+                    Setting response = gson.fromJson(str, Setting.class);
+                    if (response.getid() == null) return;
+
+                    SettingsBll settingsBll = new SettingsBll(getActivity());
+                    settingsBll.setLogoAddress(response.getlogoName());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+
+    }
 
 }

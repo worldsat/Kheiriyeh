@@ -317,7 +317,7 @@
                         android:text="کد مسیر"
                         android:textSize="12sp" />
 
-                    <Spinner
+                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"

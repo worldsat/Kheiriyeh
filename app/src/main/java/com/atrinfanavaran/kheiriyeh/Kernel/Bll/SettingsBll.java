@@ -10,11 +10,19 @@ public class SettingsBll {
     private final String DEFAULT_URL = "http://www.ghasedakcharity.ir";
     private final String DEFAULT_PORT = "0";
     private final String DEFAULT_PORT2 = "0";
-
+    private String logoAddress;
 
     public SettingsBll(Context context) {
         this.context = context;
         preferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+    }
+
+    public String getLogoAddress() {
+        return preferences.getString("LogoAddress", null);
+    }
+
+    public void setLogoAddress(String logoAddress) {
+        preferences.edit().putString("LogoAddress", logoAddress).apply();
     }
 
     public String getUrlAddress() {
@@ -100,6 +108,7 @@ public class SettingsBll {
         }
         return UserPost;
     }
+
     public boolean getUserId(String userPostId) {
 
         boolean UserId = false;
@@ -112,6 +121,7 @@ public class SettingsBll {
         }
         return UserId;
     }
+
     public Boolean getLoging() {
         return preferences.getBoolean("login", false);
     }

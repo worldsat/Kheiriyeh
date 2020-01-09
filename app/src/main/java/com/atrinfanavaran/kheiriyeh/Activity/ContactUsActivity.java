@@ -2,14 +2,17 @@ package com.atrinfanavaran.kheiriyeh.Activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.atrinfanavaran.kheiriyeh.Domain.ContactUs;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -20,7 +23,7 @@ public class ContactUsActivity extends BaseActivity {
     ProgressBar progressBar;
     private TextView phone, pageTelegramUrl, pageInstagramUrl, pageTwitterUrl, email, androidVersion;
     private LinearLayout informationLayout;
-
+private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,7 @@ public class ContactUsActivity extends BaseActivity {
         initView();
         toolbar();
         getData();
+        setLogo();
     }
 
     private void toolbar() {
@@ -49,8 +53,17 @@ public class ContactUsActivity extends BaseActivity {
         email = findViewById(R.id.email);
         androidVersion = findViewById(R.id.androidVersion);
         informationLayout = findViewById(R.id.information);
+        imageView = findViewById(R.id.logo2);
     }
+    private void setLogo() {
 
+        SettingsBll settingsBll = new SettingsBll(getActivity());
+
+        Glide.with(getActivity())
+                .load(settingsBll.getUrlAddress() + "/" + settingsBll.getLogoAddress())
+                .into(imageView);
+
+    }
     private void getData() {
         progressBar.setVisibility(View.VISIBLE);
 

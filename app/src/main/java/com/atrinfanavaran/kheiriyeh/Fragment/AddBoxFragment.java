@@ -19,10 +19,12 @@ import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.atrinfanavaran.kheiriyeh.Domain.Box;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBox;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,7 +39,7 @@ public class AddBoxFragment extends Fragment {
     private EditText edt1_1, edt1_2, edt1_3, edt1_5, edt1_6;
     private Box box;
     private boolean editable = false;
-    private Spinner spinner;
+    private SearchableSpinner spinner;
     private ImageView calendarBtn;
 
     @Override
@@ -78,12 +80,11 @@ public class AddBoxFragment extends Fragment {
         List<String> Routes2 = new ArrayList<>();
         Routes2.add("انتخاب کنید");
         for (int i = 0; i < Routes.size(); i++) {
-            Routes2.add(Routes.get(i).code);
+            Routes2.add(Routes.get(i).code+ ":" + Routes.get(i).address);
         }
 
-        ArrayAdapter<String> adapter0 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_blue, Routes2);
-        spinner.setAdapter(adapter0);
 
+        SearchableField.setSpinner(spinner, Routes2);
 
         if (box != null) {
             edt1_1.setText(box.getFullName());
