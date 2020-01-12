@@ -49,7 +49,7 @@ public class BoxIncomeListAdapter extends RecyclerView.Adapter<BoxIncomeListAdap
 
 
         holder.number.setText(array_object.get(position).number);
-        if (array_object.get(position).price != null) {
+        if (array_object.get(position).price != null && !array_object.get(position).price.equals("")) {
             holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
         }
         holder.registerDate.setText(array_object.get(position).registerDate);
