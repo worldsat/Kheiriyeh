@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atrinfanavaran.kheiriyeh.Domain.BoxIncomeApi;
+import com.atrinfanavaran.kheiriyeh.Domain.BoxNotEmptyApi;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.kheiriyeh.R;
@@ -116,15 +117,15 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
                     Log.i("moh3n", "onCameraIdle: ");
 
                 });
-                LatLng latlng=googlemap.getProjection().getVisibleRegion().latLngBounds.getCenter();
-                Log.i("moh3n", "onMapReady: "+latlng.longitude);
+                LatLng latlng = googlemap.getProjection().getVisibleRegion().latLngBounds.getCenter();
+                Log.i("moh3n", "onMapReady: " + latlng.longitude);
                 googlemap.setOnCameraIdleListener(() -> {
 //
 ////                addItemsToMap(yourMarkerList);
-                 final LatLng POS_center = googlemap.getCameraPosition().target;
-                    Log.i("moh3n", "onMapReady: "+POS_center.longitude);
+                    final LatLng POS_center = googlemap.getCameraPosition().target;
+                    Log.i("moh3n", "onMapReady: " + POS_center.longitude);
 //
-        });
+                });
             }
         });
 
@@ -314,6 +315,40 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
                             break;
                         }
                     }
+                    String number = response.get(i).getnumber();
+                    if (number == null) number = " ";
+                    googlemap.addMarker(new MarkerOptions().position(location).snippet(statusStr).title(number).icon(BitmapDescriptorFactory.defaultMarker(coloredMarker)));
+                }
+
+
+//                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(context, "خطا در دریافت اطلاعات", Toast.LENGTH_SHORT).show();
+//                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+
+        controller.Get(BoxNotEmptyApi.class, null, 0, 0, true, new CallbackGet() {
+            @Override
+            public <T> void onSuccess(ArrayList<T> result, int count) {
+
+                ArrayList<BoxNotEmptyApi> response = new ArrayList<>((Collection<? extends BoxNotEmptyApi>) result);
+
+                for (int i = 0; i < response.size(); i++) {
+                    if (response.get(i).getlat() == null || response.get(i).getlon() == null)
+                        return;
+                    double lat = Double.valueOf(response.get(i).getlat());
+                    double lng = Double.valueOf(response.get(i).getlon());
+
+                    LatLng location = new LatLng(lat, lng);
+
+                    String statusStr = "تخلیه نشده";
+                    float coloredMarker = BitmapDescriptorFactory.HUE_AZURE;
+
                     String number = response.get(i).getnumber();
                     if (number == null) number = " ";
                     googlemap.addMarker(new MarkerOptions().position(location).snippet(statusStr).title(number).icon(BitmapDescriptorFactory.defaultMarker(coloredMarker)));

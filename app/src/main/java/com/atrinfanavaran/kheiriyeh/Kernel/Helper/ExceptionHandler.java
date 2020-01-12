@@ -33,7 +33,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 //            saveTodatebase(Log.getStackTraceString(throwable));
 
-            File root = new File(Environment.getExternalStorageDirectory() + "/Makan", "log");
+            File root = new File(Environment.getExternalStorageDirectory() + "/Ghasedak", "log");
             if (!root.exists()) {
                 root.setReadable(true);
                 root.setWritable(true);
@@ -41,7 +41,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
             }
 
-            File f = new File(Environment.getExternalStoragePublicDirectory("Makan")
+            File f = new File(Environment.getExternalStoragePublicDirectory("Ghasedak")
                     , "log/" + dateFormat.format(today) + "_" + UUID.randomUUID().toString()
                     + ".log");
 
