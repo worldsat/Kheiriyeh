@@ -282,7 +282,6 @@ public class NavigationDrawerFragment extends Fragment {
         for (int i = 0; i < data.size(); i++) {
             try {
                 params = new JSONObject();
-//                params.put("id", data.get(i).id);
                 params.put("code", data.get(i).code);
                 params.put("number", data.get(i).number);
                 params.put("fullName", data.get(i).fullName);

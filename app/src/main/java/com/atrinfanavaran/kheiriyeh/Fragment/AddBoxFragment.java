@@ -108,7 +108,8 @@ public class AddBoxFragment extends Fragment {
             box.fullName = edt1_1.getText().toString().trim();
             box.number = edt1_2.getText().toString().trim();
             box.mobile = edt1_3.getText().toString().trim();
-            box.code = spinner.getSelectedItem().toString();
+            String[] code= spinner.getSelectedItem().toString().split(":");
+            box.code =code[0];
             box.registerDate = edt1_5.getText().toString().trim();
             box.address = edt1_6.getText().toString().trim();
             if (editable) {
