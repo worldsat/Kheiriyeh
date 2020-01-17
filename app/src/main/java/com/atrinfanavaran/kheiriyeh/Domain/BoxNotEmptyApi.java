@@ -9,7 +9,7 @@ public class BoxNotEmptyApi extends BaseDomain {
     private String status;
     private String lat;
     private String lon;
-    private String registerDate;
+    private String assignmentDate;
     private String id;
 
     public BoxNotEmptyApi() {
@@ -64,11 +64,11 @@ public class BoxNotEmptyApi extends BaseDomain {
         this.lon = lon;
     }
 
-    public String getregisterDate() {
-        return registerDate;
+    public String getassignmentDate() {
+        return assignmentDate;
     }
 
-    public void setregisterDate(String registerDate) {
-        this.registerDate = registerDate;
+    public void setassignmentDate(String assignmentDate) {
+        this.assignmentDate = assignmentDate;
     }
 }

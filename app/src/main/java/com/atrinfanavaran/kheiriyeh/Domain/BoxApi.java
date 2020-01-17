@@ -7,15 +7,25 @@ public class BoxApi extends BaseDomain {
     private String number;
     private String mobile;
     private String code;
-    private String registerDate;
+    private String assignmentDate;
     private String id;
     private String address;
     private String lat;
     private String lon;
+    private String dischargeRouteId;
+
 
 
     public BoxApi() {
         setApiAddress("api/Box");
+    }
+
+    public String getdischargeRouteId() {
+        return dischargeRouteId;
+    }
+
+    public void setdischargeRouteId(String dischargeRouteId) {
+        this.dischargeRouteId = dischargeRouteId;
     }
 
     public String getlat() {
@@ -82,11 +92,11 @@ public class BoxApi extends BaseDomain {
         this.code = code;
     }
 
-    public String getregisterDate() {
-        return registerDate;
+    public String getassignmentDate() {
+        return assignmentDate;
     }
 
-    public void setregisterDate(String registerDate) {
-        this.registerDate = registerDate;
+    public void setassignmentDate(String assignmentDate) {
+        this.assignmentDate = assignmentDate;
     }
 }

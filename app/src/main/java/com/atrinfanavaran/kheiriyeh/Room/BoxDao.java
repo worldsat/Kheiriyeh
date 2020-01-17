@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface BoxDao {
-    @Query("SELECT * FROM BoxR")
+    @Query("SELECT *,r.code code2,r.id id3 FROM BoxR b Inner Join RouteR r on b.dischargeRouteId=r.id ")
     List<BoxR> getAll();
 
     @Query("SELECT * FROM BoxR where number like (:number)")
@@ -25,9 +25,9 @@ public interface BoxDao {
     @Query("delete FROM BoxR")
     void deleteAll();
 
-    @Query("update  BoxR set fullName=:fullName,number=:number,mobile=:mobile,code=:code,registerDate=:registerDate,address=:address,lon=:lng,lat=:lat" +
+    @Query("update  BoxR set fullName=:fullName,number=:number,mobile=:mobile,code=:code,assignmentDate=:assignmentDate,dischargeRouteId=:dischargeRouteId,address=:address,lon=:lng,lat=:lat" +
             " WHERE id like (:id)")
-    void update(String fullName, String number, String mobile, String code, String registerDate, int id,String address, String lat, String lng);
+    void update(String fullName, String number, String mobile, String code, String assignmentDate, int id,String address, String lat, String lng,String dischargeRouteId);
 
     @Query("Delete from  BoxR  " +
             " WHERE id like (:id)")

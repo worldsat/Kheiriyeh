@@ -141,7 +141,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
             }
 
             edt1_3.setText(boxIncome.getprice());
-            edt1_4.setText(boxIncome.getregisterDate());
+            edt1_4.setText(boxIncome.getassignmentDate());
 
             switch (boxIncome.getstatus()) {
                 case "1": {
@@ -165,7 +165,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
             BoxIncome boxIncome = new BoxIncome();
             boxIncome.setnumber(numberSelected);
             boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
-            boxIncome.setregisterDate(edt1_4.getText().toString().trim());
+            boxIncome.setassignmentDate(edt1_4.getText().toString().trim());
             boxIncome.setstatus(status);
             if (editable)
                 boxIncome.setid(this.boxIncome.getid());

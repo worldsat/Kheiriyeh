@@ -45,7 +45,7 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
         if (array_object.get(position).price != null) {
             holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
         }
-        holder.registerDate.setText(array_object.get(position).registerDate);
+        holder.assignmentDate.setText(array_object.get(position).assignmentDate);
         holder.name.setText(settingsBll.getName());
         holder.codeUser.setText("کد: " + settingsBll.getUserId());
 
@@ -89,7 +89,7 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView  number, price, status, registerDate, name, codeUser;
+        TextView  number, price, status, assignmentDate, name, codeUser;
         ImageView moreOption;
 
         private ViewHolder(View itemView) {
@@ -99,7 +99,7 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
             number = itemView.findViewById(R.id.code);
             price = itemView.findViewById(R.id.price);
             status = itemView.findViewById(R.id.status);
-            registerDate = itemView.findViewById(R.id.registerDate);
+            assignmentDate = itemView.findViewById(R.id.assignmentDate);
             moreOption = itemView.findViewById(R.id.more_options);
             name = itemView.findViewById(R.id.name);
             codeUser = itemView.findViewById(R.id.codeUser);

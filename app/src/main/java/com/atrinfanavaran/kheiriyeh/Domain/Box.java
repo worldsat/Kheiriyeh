@@ -7,11 +7,28 @@ public class Box extends BaseDomain {
     private String number;
     private String mobile;
     private String code;
-    private String registerDate;
+    private String assignmentDate;
     private String lat;
     private String lng;
     private String address;
     private int id;
+    private String dischargeRouteId;
+
+    public String getAssignmentDate() {
+        return assignmentDate;
+    }
+
+    public void setAssignmentDate(String assignmentDate) {
+        this.assignmentDate = assignmentDate;
+    }
+
+    public String getDischargeRouteId() {
+        return dischargeRouteId;
+    }
+
+    public void setDischargeRouteId(String dischargeRouteId) {
+        this.dischargeRouteId = dischargeRouteId;
+    }
 
     public String getAddress() {
         return address;
@@ -81,11 +98,19 @@ public class Box extends BaseDomain {
         this.code = code;
     }
 
-    public String getRegisterDate() {
-        return registerDate;
+    public String getassignmentDate() {
+        return assignmentDate;
     }
 
-    public void setRegisterDate(String registerDate) {
-        this.registerDate = registerDate;
+    public void setassignmentDate(String assignmentDate) {
+        this.assignmentDate = assignmentDate;
     }
+
+
+    @Override
+    public String toString() {
+        return dischargeRouteId;
+    }
+
+  
 }

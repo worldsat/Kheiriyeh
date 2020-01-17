@@ -9,11 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
@@ -78,9 +77,11 @@ public class AddBoxFragment extends Fragment {
                 .build();
         List<RouteR> Routes = db.RouteDao().getAll();
         List<String> Routes2 = new ArrayList<>();
+        List<Integer> RoutesId = new ArrayList<>();
         Routes2.add("انتخاب کنید");
         for (int i = 0; i < Routes.size(); i++) {
-            Routes2.add(Routes.get(i).code+ ":" + Routes.get(i).address);
+            Routes2.add(Routes.get(i).code + ":" + Routes.get(i).address);
+            RoutesId.add(Routes.get(i).id);
         }
 
 
@@ -91,15 +92,19 @@ public class AddBoxFragment extends Fragment {
             edt1_2.setText(box.getNumber());
             edt1_3.setText(box.getMobile());
             edt1_6.setText(box.getAddress());
-            edt1_5.setText(box.getRegisterDate());
+            edt1_5.setText(box.getassignmentDate());
 
         }
-        if (box != null && box.getCode() != null) {
-            for (int i = 0; i < Routes2.size(); i++) {
-                if (Routes2.get(i).equals(box.getCode())) {
-                    spinner.setSelection(i);
-                    break;
+        if (box != null && box.getDischargeRouteId() != null) {
+            try {
+                for (int i = 0; i < RoutesId.size(); i++) {
+                    if (RoutesId.get(i).equals(Integer.valueOf(box.getDischargeRouteId()))) {
+                        spinner.setSelection(i + 1);
+                        break;
+                    }
                 }
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "خطا در بازخانی کد مسیر", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -108,9 +113,18 @@ public class AddBoxFragment extends Fragment {
             box.fullName = edt1_1.getText().toString().trim();
             box.number = edt1_2.getText().toString().trim();
             box.mobile = edt1_3.getText().toString().trim();
-            String[] code= spinner.getSelectedItem().toString().split(":");
-            box.code =code[0];
-            box.registerDate = edt1_5.getText().toString().trim();
+            String[] code = spinner.getSelectedItem().toString().split(":");
+            box.code = code[0];
+            String str = "";
+            for (int i = 0; i < Routes.size(); i++) {
+                if (Routes.get(i).code.equals(code[0])) {
+                    str = String.valueOf(RoutesId.get(i ));
+                }
+            }
+
+            box.dischargeRouteId = str;
+
+            box.assignmentDate = edt1_5.getText().toString().trim();
             box.address = edt1_6.getText().toString().trim();
             if (editable) {
                 box.id = this.box.getId();

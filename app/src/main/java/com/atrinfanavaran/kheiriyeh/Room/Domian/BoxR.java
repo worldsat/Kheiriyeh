@@ -21,8 +21,8 @@ public class BoxR {
     @ColumnInfo(name = "code")
     public String code;
 
-    @ColumnInfo(name = "registerDate")
-    public String registerDate;
+    @ColumnInfo(name = "assignmentDate")
+    public String assignmentDate;
 
     @ColumnInfo(name = "address")
     public String address;
@@ -35,4 +35,10 @@ public class BoxR {
 
     @ColumnInfo(name = "lon")
     public String lon;
+
+    @ColumnInfo(name = "dischargeRouteId")
+    public String dischargeRouteId;
+
+    @ColumnInfo(name = "code2")
+    public String code2;
 }

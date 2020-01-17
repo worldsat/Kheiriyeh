@@ -55,7 +55,6 @@ import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -233,12 +232,12 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         boxIncomeR.lon = boxIncome.getlon();
         boxIncomeR.number = boxIncome.getnumber();
         boxIncomeR.price = boxIncome.getprice();
-        boxIncomeR.registerDate = boxIncome.getregisterDate();
+        boxIncomeR.assignmentDate = boxIncome.getassignmentDate();
         boxIncomeR.status = boxIncome.getstatus();
 
         if (editable) {
             db.BoxIncomeDao().update(boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
-                    , boxIncome.getprice(), boxIncome.getregisterDate(), boxIncome.getstatus(), boxIncome.getid()
+                    , boxIncome.getprice(), boxIncome.getassignmentDate(), boxIncome.getstatus(), boxIncome.getid()
             );
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
@@ -289,9 +288,10 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         box.setNumber(boxR.number);
         box.setMobile(boxR.mobile);
         box.setFullName(boxR.fullName);
-        box.setRegisterDate(boxR.registerDate);
+        box.setassignmentDate(boxR.assignmentDate);
         box.setCode(boxR.code);
         box.setAddress(boxR.address);
+        box.setDischargeRouteId(boxR.dischargeRouteId);
 
         bundle1.putSerializable("Box", box);
         bundle1.putBoolean("editable", editable);
@@ -303,7 +303,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveBox2(BoxR boxR, boolean editable) {
         if (editable) {
-            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.registerDate, boxR.id, boxR.address, boxR.lat, boxR.lon);
+            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon,boxR.dischargeRouteId);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.BoxDao().insertBox(boxR);
@@ -344,7 +344,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         boxIncome1.setlon(boxIncome.lon);
         boxIncome1.setnumber(boxIncome.number);
         boxIncome1.setprice(boxIncome.price);
-        boxIncome1.setregisterDate(boxIncome.registerDate);
+        boxIncome1.setassignmentDate(boxIncome.assignmentDate);
         boxIncome1.setstatus(boxIncome.status);
 
         Bundle bundle = new Bundle();
@@ -369,12 +369,13 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         fragment = new AddBoxFragment();
 
         Box box = new Box();
-        box.setRegisterDate(boxR.registerDate);
+        box.setassignmentDate(boxR.assignmentDate);
         box.setCode(boxR.code);
         box.setFullName(boxR.fullName);
         box.setMobile(boxR.mobile);
         box.setNumber(boxR.number);
         box.setId(boxR.id);
+        box.setDischargeRouteId(boxR.dischargeRouteId);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("Box", box);

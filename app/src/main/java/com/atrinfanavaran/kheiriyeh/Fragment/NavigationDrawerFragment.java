@@ -282,14 +282,15 @@ public class NavigationDrawerFragment extends Fragment {
         for (int i = 0; i < data.size(); i++) {
             try {
                 params = new JSONObject();
-                params.put("code", data.get(i).code);
+//                params.put("code", data.get(i).code);
                 params.put("number", data.get(i).number);
                 params.put("fullName", data.get(i).fullName);
                 params.put("mobile", data.get(i).mobile);
-                params.put("assignmentDate", data.get(i).registerDate);
+                params.put("assignmentDate", data.get(i).assignmentDate);
                 params.put("address", data.get(i).address);
                 params.put("lat", data.get(i).lat);
                 params.put("lon", data.get(i).lon);
+                params.put("dischargeRouteId", data.get(i).dischargeRouteId);
                 params2.put(params);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -335,7 +336,7 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("status", boxIncome.get(i).status);
                 params.put("lon", boxIncome.get(i).lon);
                 params.put("lat", boxIncome.get(i).lat);
-                params.put("registerDate", boxIncome.get(i).registerDate);
+                params.put("assignmentDate", boxIncome.get(i).assignmentDate);
                 params2.put(params);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -382,7 +383,7 @@ public class NavigationDrawerFragment extends Fragment {
 //                    boxIncomeR.id = Integer.valueOf(response.get(i).getid());
                     boxIncomeR.price = response.get(i).getprice();
                     boxIncomeR.status = response.get(i).getstatus();
-                    boxIncomeR.registerDate = response.get(i).getregisterDate();
+                    boxIncomeR.assignmentDate = response.get(i).getassignmentDate();
                     boxIncomeR.lon = response.get(i).getlon();
                     boxIncomeR.lat = response.get(i).getlat();
                     boxIncomeR.number = response.get(i).getnumber();
@@ -418,12 +419,13 @@ public class NavigationDrawerFragment extends Fragment {
                     data.id = Integer.valueOf(response.get(i).getid());
                     data.fullName = response.get(i).getfullName();
                     data.mobile = response.get(i).getmobile();
-                    data.registerDate = response.get(i).getregisterDate();
+                    data.assignmentDate = response.get(i).getassignmentDate();
                     data.code = response.get(i).getcode();
                     data.number = response.get(i).getnumber();
                     data.address = response.get(i).getaddress();
                     data.lat = response.get(i).getlat();
                     data.lon = response.get(i).getlon();
+                    data.dischargeRouteId = response.get(i).getdischargeRouteId();
 
                     try {
                         db.BoxDao().insertBox(data);

@@ -24,6 +24,6 @@ public class BoxIncomeR {
     @ColumnInfo(name = "lon")
     public String lon;
 
-    @ColumnInfo(name = "registerDate")
-    public String registerDate;
+    @ColumnInfo(name = "assignmentDate")
+    public String assignmentDate;
 }
