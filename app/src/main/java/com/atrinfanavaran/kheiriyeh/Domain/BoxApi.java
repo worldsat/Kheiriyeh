@@ -13,11 +13,20 @@ public class BoxApi extends BaseDomain {
     private String lat;
     private String lon;
     private String dischargeRouteId;
+    private String boxId;
 
 
 
     public BoxApi() {
         setApiAddress("api/Box");
+    }
+
+    public String getboxId() {
+        return boxId;
+    }
+
+    public void setboxId(String boxId) {
+        this.boxId = boxId;
     }
 
     public String getdischargeRouteId() {

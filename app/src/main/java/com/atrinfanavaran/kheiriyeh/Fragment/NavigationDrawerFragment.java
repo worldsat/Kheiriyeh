@@ -417,6 +417,7 @@ public class NavigationDrawerFragment extends Fragment {
                 for (int i = 0; i < response.size(); i++) {
                     BoxR data = new BoxR();
                     data.id = Integer.valueOf(response.get(i).getid());
+                    data.boxId = Integer.valueOf(response.get(i).getid());
                     data.fullName = response.get(i).getfullName();
                     data.mobile = response.get(i).getmobile();
                     data.assignmentDate = response.get(i).getassignmentDate();

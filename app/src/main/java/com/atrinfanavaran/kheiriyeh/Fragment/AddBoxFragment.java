@@ -127,7 +127,8 @@ public class AddBoxFragment extends Fragment {
             box.assignmentDate = edt1_5.getText().toString().trim();
             box.address = edt1_6.getText().toString().trim();
             if (editable) {
-                box.id = this.box.getId();
+                box.id = this.box.getBoxId();
+                box.boxId = this.box.getBoxId();
             } else {
                 box.isNew = "true";
             }

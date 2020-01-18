@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface BoxDao {
-    @Query("SELECT *,r.code code2,r.id id3 FROM BoxR b Inner Join RouteR r on b.dischargeRouteId=r.id ")
+    @Query("SELECT b.id,b.fullName,b.number,b.mobile,b.code,b.assignmentDate,b.dischargeRouteId,b.address,b.lon,b.lat,r.code code2,r.id id3 ,b.id boxId FROM BoxR b Inner Join RouteR r on b.dischargeRouteId=r.id ")
     List<BoxR> getAll();
 
     @Query("SELECT * FROM BoxR where number like (:number)")

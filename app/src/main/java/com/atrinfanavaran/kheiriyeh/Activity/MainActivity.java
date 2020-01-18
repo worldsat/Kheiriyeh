@@ -292,6 +292,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         box.setCode(boxR.code);
         box.setAddress(boxR.address);
         box.setDischargeRouteId(boxR.dischargeRouteId);
+        box.setBoxId(boxR.boxId);
 
         bundle1.putSerializable("Box", box);
         bundle1.putBoolean("editable", editable);
@@ -375,7 +376,9 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         box.setMobile(boxR.mobile);
         box.setNumber(boxR.number);
         box.setId(boxR.id);
+        box.setAddress(boxR.address);
         box.setDischargeRouteId(boxR.dischargeRouteId);
+        box.setBoxId(boxR.boxId);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("Box", box);

@@ -13,6 +13,15 @@ public class Box extends BaseDomain {
     private String address;
     private int id;
     private String dischargeRouteId;
+    private int boxId;
+
+    public int getBoxId() {
+        return boxId;
+    }
+
+    public void setBoxId(int boxId) {
+        this.boxId = boxId;
+    }
 
     public String getAssignmentDate() {
         return assignmentDate;

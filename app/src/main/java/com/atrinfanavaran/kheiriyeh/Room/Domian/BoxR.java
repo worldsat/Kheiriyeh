@@ -41,4 +41,7 @@ public class BoxR {
 
     @ColumnInfo(name = "code2")
     public String code2;
+
+    @ColumnInfo(name = "boxId")
+    public int boxId;
 }
