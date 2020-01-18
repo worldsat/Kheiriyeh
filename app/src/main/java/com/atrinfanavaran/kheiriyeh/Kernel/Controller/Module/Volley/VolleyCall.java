@@ -50,7 +50,7 @@ public class VolleyCall {
                 String token = settingsBll.getTicket();
 
                 if (token != null) {
-                    params.put("authority", token);
+                    params.put("token", token);
                 }
                 return params;
             }
@@ -86,7 +86,7 @@ public class VolleyCall {
                     String token = settingsBll.getTicket();
 
                     if (token != null) {
-                        params.put("authority", token);
+                        params.put("token", token);
                     }
 
                     return params;
@@ -157,7 +157,7 @@ public class VolleyCall {
                     String token = settingsBll.getTicket();
 
                     if (token != null) {
-                        params.put("authority", token);
+                        params.put("token", token);
                     }
 
                     return params;
@@ -225,7 +225,7 @@ public class VolleyCall {
                     String token = settingsBll.getTicket();
 
                     if (token != null) {
-                        params.put("authority", token);
+                        params.put("token", token);
                     }
                     return params;
                 }
@@ -302,7 +302,7 @@ public class VolleyCall {
                     String token = settingsBll.getTicket();
 
                     if (token != null) {
-                        params.put("authority", token);
+                        params.put("token", token);
                     }
 
                     return params;

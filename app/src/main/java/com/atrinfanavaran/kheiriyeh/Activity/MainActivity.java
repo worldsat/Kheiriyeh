@@ -94,9 +94,8 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         NavigationDrawer();
         getSetting();
 
+
     }
-
-
 
 
     private void BottomNavigation() {
@@ -304,7 +303,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveBox2(BoxR boxR, boolean editable) {
         if (editable) {
-            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon,boxR.dischargeRouteId);
+            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon, boxR.dischargeRouteId);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.BoxDao().insertBox(boxR);

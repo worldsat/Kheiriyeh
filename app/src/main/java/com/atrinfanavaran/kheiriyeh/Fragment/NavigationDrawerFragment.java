@@ -257,7 +257,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.i("moh3n", "onSuccess: " + result);
-//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.RouteDao().deleteAll();
                 wait.dismiss();
                 sendBox();
@@ -304,7 +304,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.i("moh3n", "onSuccess: " + result);
-//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.BoxDao().deleteAll();
                 wait.dismiss();
                 sendBoxIncome();
@@ -329,8 +329,6 @@ public class NavigationDrawerFragment extends Fragment {
         for (int i = 0; i < boxIncome.size(); i++) {
             try {
                 params = new JSONObject();
-//                params.put("id", boxIncome.get(i).id);
-
                 params.put("number", boxIncome.get(i).number);
                 params.put("price", boxIncome.get(i).price);
                 params.put("status", boxIncome.get(i).status);
@@ -352,8 +350,8 @@ public class NavigationDrawerFragment extends Fragment {
         controller.Operation("", BoxIncomeApi.class, getActivity(), params2.toString(), new CallbackOperation() {
             @Override
             public void onSuccess(String result) {
-                Log.i("moh3n", "onSuccess: " + result);
-//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                Log.i("moh3n", "onSuccessSendBoxIncome: " + result);
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.BoxIncomeDao().deleteAll();
                 wait.dismiss();
             }
