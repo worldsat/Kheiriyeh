@@ -322,7 +322,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveRoute1(RouteR router, boolean editable) {
         if (editable) {
-            db.RouteDao().update(router.code, router.day, router.address, router.id);
+            db.RouteDao().update(router.code, router.day, router.address, router.id,router.isNew);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.RouteDao().insertBox(router);

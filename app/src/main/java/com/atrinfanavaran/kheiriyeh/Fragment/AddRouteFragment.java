@@ -12,7 +12,6 @@ import android.widget.EditText;
 
 import com.atrinfanavaran.kheiriyeh.Domain.Route;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute1;
-import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute2;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 
@@ -62,9 +61,12 @@ public class AddRouteFragment extends Fragment {
             routeR.code = edt1_1.getText().toString().trim();
             routeR.day = edt1_2.getText().toString().trim();
             routeR.address = edt1_3.getText().toString().trim();
-            if (editable)
+            if (editable) {
                 routeR.id = this.route.getid();
-            onCallBack.SaveRoute1(routeR,editable);
+            } else {
+                routeR.isNew="true";
+            }
+            onCallBack.SaveRoute1(routeR, editable);
         });
 
     }
