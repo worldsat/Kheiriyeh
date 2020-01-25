@@ -134,7 +134,7 @@ public class JDF {
      * @return String
      */
     public String getIranianDate() {
-        return (irYear + "/" + irMonth + "/" + irDay);
+        return (irYear + "-" + irMonth + "-" + irDay);
     }
 
     /**
@@ -152,7 +152,7 @@ public class JDF {
      * @return String
      */
     public String getJulianDate() {
-        return (juYear + "/" + juMonth + "/" + juDay);
+        return (juYear + "-" + juMonth + "-" + juDay);
     }
 
     /**

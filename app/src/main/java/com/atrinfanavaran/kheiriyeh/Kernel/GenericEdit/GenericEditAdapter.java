@@ -593,7 +593,7 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             mDate.setDate(day, month, year);
 
-            String str2 = year + "/" + month + "/" + day;
+            String str2 = year + "-" + month + "-" + day;
             dateListener.DateSelected(str2);
         }).show(context.getSupportFragmentManager(), "");
 

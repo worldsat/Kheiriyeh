@@ -2,6 +2,7 @@ package com.atrinfanavaran.kheiriyeh.Adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,12 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
 
 
         holder.number.setText(array_object.get(position).number);
-        if (array_object.get(position).price != null) {
-            holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
+        if (array_object.get(position).price != null && !array_object.get(position).price.equals("")) {
+            try {
+                holder.price.setText(formatter.format(Long.valueOf(array_object.get(position).price)));
+            } catch (Exception e) {
+                Log.i("moh3n", "onBindViewHolder: ");
+            }
         }
         holder.assignmentDate.setText(array_object.get(position).assignmentDate);
         holder.name.setText(settingsBll.getName());
@@ -89,7 +94,7 @@ public class BoxIncomeListHorizontalAdapter extends RecyclerView.Adapter<BoxInco
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView  number, price, status, assignmentDate, name, codeUser;
+        TextView number, price, status, assignmentDate, name, codeUser;
         ImageView moreOption;
 
         private ViewHolder(View itemView) {

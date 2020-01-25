@@ -321,9 +321,9 @@
                             android:fontFamily="@font/behdad"
                             android:hint="تاریخ ثبت"
                             android:inputType="number"
-                            android:maxLength="11"
+                            android:maxLength="30"
                             android:textAlignment="textStart"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="12sp" />
                     </android.support.design.widget.TextInputLayout>
 

@@ -590,7 +590,7 @@ public class GenericNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             mDate.setDate(day, month, year);
 
-            String str2 = year + "/" + month + "/" + day;
+            String str2 = year + "-" + month + "-" + day;
             dateListener.DateSelected(str2);
         }).show(context.getSupportFragmentManager(), "");
 

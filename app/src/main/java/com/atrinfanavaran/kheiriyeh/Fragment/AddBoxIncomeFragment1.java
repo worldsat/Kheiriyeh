@@ -28,8 +28,11 @@ import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -181,9 +184,11 @@ public class AddBoxIncomeFragment1 extends Fragment {
             Date mDate = new Date();
             builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
             builder.build((id, calendar, day, month, year) -> {
-
+                DateFormat df = new SimpleDateFormat("hh:mm:ss a", Locale.US);
+                java.util.Date d = new java.util.Date();
+                String dt = df.format(d);
                 mDate.setDate(day, month, year);
-                edt1_4.setText(year + "/" + month + "/" + day);
+                edt1_4.setText(year + "-" + month + "-" + day+" "+dt);
 
             }).show(getActivity().getSupportFragmentManager(), "");
 

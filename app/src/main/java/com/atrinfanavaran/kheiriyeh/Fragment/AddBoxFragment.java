@@ -25,6 +25,8 @@ import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -144,9 +146,12 @@ public class AddBoxFragment extends Fragment {
             Date mDate = new Date();
             builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
             builder.build((id, calendar, day, month, year) -> {
+                DateFormat df = new SimpleDateFormat("hh:mm:ss a", Locale.US);
+                java.util.Date d = new java.util.Date();
+                String dt = df.format(d);
 
                 mDate.setDate(day, month, year);
-                edt1_5.setText(year + "/" + month + "/" + day);
+                edt1_5.setText(year + "-" + month + "-" + day+" "+dt);
 
             }).show(getActivity().getSupportFragmentManager(), "");
 

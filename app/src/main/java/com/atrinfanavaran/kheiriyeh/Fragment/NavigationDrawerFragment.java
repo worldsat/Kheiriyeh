@@ -283,17 +283,18 @@ public class NavigationDrawerFragment extends Fragment {
             try {
                 params = new JSONObject();
 //                params.put("code", data.get(i).code);
-                params.put("number", data.get(i).number);
+                params.put("number", Integer.valueOf(data.get(i).number));
                 params.put("fullName", data.get(i).fullName);
-                params.put("mobile", data.get(i).mobile);
+                params.put("mobile", Integer.valueOf(data.get(i).mobile));
                 params.put("assignmentDate", data.get(i).assignmentDate);
                 params.put("address", data.get(i).address);
-                params.put("lat", data.get(i).lat);
-                params.put("lon", data.get(i).lon);
-                params.put("dischargeRouteId", data.get(i).dischargeRouteId);
+                params.put("lat", Double.valueOf(data.get(i).lat));
+                params.put("lon", Double.valueOf(data.get(i).lon));
+                params.put("dischargeRouteId", Integer.valueOf(data.get(i).dischargeRouteId));
+
                 params2.put(params);
             } catch (JSONException e) {
-                e.printStackTrace();
+                Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی اطلاعات صندوق ها", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -329,12 +330,22 @@ public class NavigationDrawerFragment extends Fragment {
         for (int i = 0; i < boxIncome.size(); i++) {
             try {
                 params = new JSONObject();
-                params.put("number", boxIncome.get(i).number);
-                params.put("price", boxIncome.get(i).price);
-                params.put("status", boxIncome.get(i).status);
-                params.put("lon", boxIncome.get(i).lon);
-                params.put("lat", boxIncome.get(i).lat);
-                params.put("assignmentDate", boxIncome.get(i).assignmentDate);
+
+                try {
+                    Integer intt = Integer.valueOf(boxIncome.get(i).price);
+                    params.put("price", boxIncome.get(i).price);
+                } catch (Exception e) {
+                    params.put("price", 0);
+                }
+                try {
+                    params.put("number", Integer.valueOf(boxIncome.get(i).number));
+                    params.put("status", Integer.valueOf(boxIncome.get(i).status));
+                    params.put("lon", Double.valueOf(boxIncome.get(i).lon));
+                    params.put("lat", Double.valueOf(boxIncome.get(i).lat));
+                    params.put("assignmentDate", boxIncome.get(i).assignmentDate);
+                } catch (Exception e) {
+                    Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی  اطلاعات تخلیه ها", Toast.LENGTH_SHORT).show();
+                }
                 params2.put(params);
             } catch (JSONException e) {
                 e.printStackTrace();
