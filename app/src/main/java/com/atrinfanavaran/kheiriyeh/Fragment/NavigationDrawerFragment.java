@@ -48,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -285,7 +286,7 @@ public class NavigationDrawerFragment extends Fragment {
 //                params.put("code", data.get(i).code);
                 params.put("number", Integer.valueOf(data.get(i).number));
                 params.put("fullName", data.get(i).fullName);
-                params.put("mobile", Integer.valueOf(data.get(i).mobile));
+                params.put("mobile", new BigInteger(data.get(i).mobile));
                 params.put("assignmentDate", data.get(i).assignmentDate);
                 params.put("address", data.get(i).address);
                 params.put("lat", Double.valueOf(data.get(i).lat));
@@ -293,7 +294,8 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("dischargeRouteId", Integer.valueOf(data.get(i).dischargeRouteId));
 
                 params2.put(params);
-            } catch (JSONException e) {
+            } catch (Exception e) {
+                Log.i("moh3n", "sendBox: "+e);
                 Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی اطلاعات صندوق ها", Toast.LENGTH_SHORT).show();
             }
         }
