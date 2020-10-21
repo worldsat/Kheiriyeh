@@ -3,10 +3,10 @@ package com.atrinfanavaran.kheiriyeh.Kernel.GenericEdit;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,14 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 
@@ -32,7 +29,6 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.GenericListBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallBackSpinner;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericEdit.Interface.OnDateListener;
-import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 

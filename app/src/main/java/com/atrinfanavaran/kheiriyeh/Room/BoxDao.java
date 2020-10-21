@@ -1,12 +1,14 @@
 package com.atrinfanavaran.kheiriyeh.Room;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.RawQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
-import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 
 import java.util.List;
 
@@ -14,6 +16,9 @@ import java.util.List;
 public interface BoxDao {
     @Query("SELECT b.id,b.fullName,b.number,b.mobile,b.code,b.assignmentDate,b.dischargeRouteId,b.address,b.lon,b.lat,r.code code2,r.id id3 ,b.id boxId FROM BoxR b Inner Join RouteR r on b.dischargeRouteId=r.id ")
     List<BoxR> getAll();
+
+    @RawQuery(observedEntities = BoxR.class)
+    List<BoxR> getfilter(SupportSQLiteQuery filter);
 
     @Query("SELECT * FROM BoxR where number like (:number)")
     BoxR getAllFilterNumber(String number);

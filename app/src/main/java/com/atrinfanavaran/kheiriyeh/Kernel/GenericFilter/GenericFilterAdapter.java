@@ -1,7 +1,5 @@
 package com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +13,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;

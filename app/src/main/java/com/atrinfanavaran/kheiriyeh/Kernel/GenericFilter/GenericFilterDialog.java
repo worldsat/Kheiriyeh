@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -18,6 +18,7 @@ import com.atrinfanavaran.kheiriyeh.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GenericFilterDialog extends Dialog {
     private final Class domain;

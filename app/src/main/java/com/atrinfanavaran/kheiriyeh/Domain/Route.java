@@ -1,6 +1,11 @@
 package com.atrinfanavaran.kheiriyeh.Domain;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewMode;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
+
+import java.util.ArrayList;
 
 public class Route extends BaseDomain {
  private String  code;
@@ -9,6 +14,33 @@ public class Route extends BaseDomain {
  private String  lat;
  private String  lon;
  private int  id;
+
+    public Route() {
+        ArrayList<DomainInfo> domainInfoList = new ArrayList<>();
+
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "address",
+                "آدرس مسیر",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "code",
+                "کد مسیر",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "day",
+                "تاریخ در ماه",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        setDomainInfo(domainInfoList);
+    }
 
     public String getcode() {
         return code;

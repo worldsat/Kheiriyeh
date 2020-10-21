@@ -1,23 +1,26 @@
 package com.atrinfanavaran.kheiriyeh.Activity;
 
 import android.Manifest;
-import android.arch.persistence.room.Room;
+
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.room.Room;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.atrinfanavaran.kheiriyeh.Domain.Box;
@@ -77,7 +80,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     private Toolbar my_toolbar;
     private AppDatabase db;
     private ImageView imageView;
-
+    private LinearLayout  filterIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,8 +96,18 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         BottomNavigation();
         NavigationDrawer();
         getSetting();
+//        setFilter();
 
 
+    }
+
+    private void setFilter() {
+        filterIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 
@@ -163,7 +176,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         //set Icon size
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
-            final View iconView = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
+            final View iconView = menuView.getChildAt(i).findViewById(R.id.icon);
             final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
             final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
             // set your height here
@@ -179,6 +192,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     private void initView() {
         bottomNavigation = findViewById(R.id.bottomnav);
         my_toolbar = findViewById(R.id.toolbar);
+        filterIcon = findViewById(R.id.filterButton);
     }
 
     private void NavigationDrawer() {

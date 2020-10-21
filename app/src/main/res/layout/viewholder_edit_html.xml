@@ -16,7 +16,7 @@
         android:gravity="start|center_vertical"
         android:text="TextView" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editorLayout"
         android:layout_width="0dp"
         android:layout_height="400dp"
@@ -67,5 +67,5 @@
 
 
         </ScrollView>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -7,13 +7,13 @@
 
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
       >
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout12"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -73,7 +73,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <fragment
             android:id="@+id/fragment_navigation_drawer"
@@ -83,5 +83,5 @@
             android:layout_gravity="start"
             app:layout="@layout/fragment_navigation_drawer"
             tools:layout="@layout/fragment_navigation_drawer" />
-    </android.support.v4.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </RelativeLayout>

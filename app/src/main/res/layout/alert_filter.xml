@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -107,7 +107,7 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -180,7 +180,7 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -250,7 +250,7 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -320,7 +320,7 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -388,7 +388,7 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -456,7 +456,7 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -524,7 +524,7 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch7"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -592,7 +592,7 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -660,7 +660,7 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch9"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

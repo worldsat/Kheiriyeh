@@ -1,7 +1,7 @@
 package com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain;
 
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class SpinnerDomain extends BaseDomain {
     private String parentId;

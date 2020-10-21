@@ -1,10 +1,10 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +32,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.design.widget.Snackbar;
+
+import com.atrinfanavaran.kheiriyeh.R;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,7 +26,7 @@ public class SnakBar {
 
         // Changing action button text color
         View sbView = snackbar.getView();
-        TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
 //        textView.setTextSize(11);
 //        textView.setMinimumHeight(370);

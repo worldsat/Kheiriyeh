@@ -1,6 +1,11 @@
 package com.atrinfanavaran.kheiriyeh.Domain;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewMode;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
+
+import java.util.ArrayList;
 
 public class Box extends BaseDomain {
     private String fullName;
@@ -73,6 +78,52 @@ public class Box extends BaseDomain {
 
     public Box() {
         setApiAddress("api/Box");
+
+        ArrayList<DomainInfo> domainInfoList = new ArrayList<>();
+
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "fullName",
+                "نام",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "number",
+                "شماره",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "mobile",
+                "همراه",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "code2",
+                "کد",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "assignmentDate",
+                "تاریخ واگذاری",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "address",
+                "آدرس",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        setDomainInfo(domainInfoList);
     }
 
     public String getFullName() {

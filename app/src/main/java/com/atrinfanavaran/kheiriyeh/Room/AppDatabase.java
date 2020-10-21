@@ -1,7 +1,7 @@
 package com.atrinfanavaran.kheiriyeh.Room;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Room.User;
 import com.atrinfanavaran.kheiriyeh.Kernel.Room.User2;

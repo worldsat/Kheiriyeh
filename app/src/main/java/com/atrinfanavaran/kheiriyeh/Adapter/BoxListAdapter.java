@@ -1,9 +1,9 @@
 package com.atrinfanavaran.kheiriyeh.Adapter;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

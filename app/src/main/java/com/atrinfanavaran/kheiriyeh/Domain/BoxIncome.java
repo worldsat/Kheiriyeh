@@ -1,6 +1,11 @@
 package com.atrinfanavaran.kheiriyeh.Domain;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewMode;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
+
+import java.util.ArrayList;
 
 public class BoxIncome extends BaseDomain {
 
@@ -12,6 +17,41 @@ public class BoxIncome extends BaseDomain {
     private String assignmentDate;
     private int id;
 
+    public BoxIncome() {
+        ArrayList<DomainInfo> domainInfoList = new ArrayList<>();
+
+//        domainInfoList.add(new DomainInfo(
+//                ViewMode.FILTER.name(),
+//                "fullName",
+//                "نام",
+//                "",
+//                ViewType.EDIT_TEXT.name())
+//        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "number",
+                "شماره",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "price",
+                "مبلغ",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "assignmentDate",
+                "تاریخ واگذاری",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+
+        setDomainInfo(domainInfoList);
+    }
 
     public int getid() {
         return id;
