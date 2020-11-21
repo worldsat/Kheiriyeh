@@ -26,4 +26,7 @@ public class BoxIncomeR {
 
     @ColumnInfo(name = "assignmentDate")
     public String assignmentDate;
+
+    @ColumnInfo(name = "assignmentDateEn")
+    public String assignmentDateEn;
 }

@@ -1,11 +1,15 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
 import android.annotation.SuppressLint;
+
 import androidx.room.Room;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,7 @@ import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.atrinfanavaran.kheiriyeh.Domain.Box;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBox;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
@@ -120,13 +125,34 @@ public class AddBoxFragment extends Fragment {
             String str = "";
             for (int i = 0; i < Routes.size(); i++) {
                 if (Routes.get(i).code.equals(code[0])) {
-                    str = String.valueOf(RoutesId.get(i ));
+                    str = String.valueOf(RoutesId.get(i));
                 }
             }
 
             box.dischargeRouteId = str;
 
             box.assignmentDate = edt1_5.getText().toString().trim();
+
+            String[] date = edt1_5.getText().toString().trim().split("/");
+            roozh roozh = new roozh();
+            roozh.PersianToGregorian(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+
+            String month = "";
+            if (roozh.getMonth() < 10) {
+                month = "0" + roozh.getMonth();
+            } else {
+                month = String.valueOf(roozh.getMonth());
+            }
+
+            String day = "";
+            if (roozh.getDay() < 10) {
+                day = "0" + roozh.getDay();
+            } else {
+                day = String.valueOf(roozh.getDay());
+            }
+
+            box.assignmentDateEn = roozh.getYear() + "/" + month + "/" + day;
+
             box.address = edt1_6.getText().toString().trim();
             if (editable) {
                 box.id = this.box.getBoxId();
@@ -151,7 +177,7 @@ public class AddBoxFragment extends Fragment {
                 String dt = df.format(d);
 
                 mDate.setDate(day, month, year);
-                edt1_5.setText(year + "-" + month + "-" + day+" "+dt);
+                edt1_5.setText(year + "-" + month + "-" + day);
 
             }).show(getActivity().getSupportFragmentManager(), "");
 

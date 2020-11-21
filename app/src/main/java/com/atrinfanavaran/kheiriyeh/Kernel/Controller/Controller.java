@@ -33,6 +33,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SHA2;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.UploadFile;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
@@ -83,7 +84,7 @@ public class Controller {
             Class superClass = domain.getSuperclass();
 
             Method getTableName = superClass.getDeclaredMethod("getTableName");
-            Method getApiAddress = superClass.getDeclaredMethod("getApiAddress");
+            Method getApiAddress = superClass.getDeclaredMethod("getApiAddresss");
 
             String tableName = (String) getTableName.invoke(instance);
             String apiName = (String) getApiAddress.invoke(instance);
@@ -237,7 +238,6 @@ public class Controller {
                                 int take, int skip, boolean allData, CallbackGet callbackGet) throws JSONException {
 
 
-
         Gson gson = new Gson();
         String filterStr = "[]";
 
@@ -276,7 +276,7 @@ public class Controller {
                     JSONArray array = jsonRootObject.optJSONArray("data");
                     Method[] declaredMethods = domain.getDeclaredMethods();
 
-                    if (array!=null && array.length() > 0) {
+                    if (array != null && array.length() > 0) {
 
                         for (int i = 0; i < array.length(); i++) {
 
@@ -522,6 +522,14 @@ public class Controller {
 
         if (filter != null)
             Address = Address + "?filter=" + filter;
+        if (apiAddress.equals("status")) {
+            ArrayList<SpinnerDomain> result = new ArrayList<>();
+            result.add(new SpinnerDomain("status", "عدم حضور", "1"));
+            result.add(new SpinnerDomain("status", "عدم موجودی", "2"));
+            result.add(new SpinnerDomain("status", "سایر موارد", "3"));
+            callback.onSuccess(result);
+            return;
+        }
 
         volleyCall.Get(Address, new VolleyCall.VolleyCallback() {
             @Override
@@ -624,10 +632,14 @@ public class Controller {
                         String token = new JSONObject(response).getString("token");
                         String fullName = new JSONObject(response).getString("fullName");
                         String UserId = new JSONObject(response).getString("code");
+                        int CharityId = new JSONObject(response).getInt("charityId");
+                        String Charity = new JSONObject(response).getString("charity");
 //                        Log.i("moh3n", "onSuccessResponse: " + token);
                         settingsBll.setTicket(token);
                         settingsBll.setName(fullName);
                         settingsBll.setUserId(UserId);
+                        settingsBll.setCharityId(CharityId);
+                        settingsBll.setCharity(Charity);
 
                         callbackOperation.onSuccess(response);
 //                        context.startActivity(new Intent(context, IntentClass));

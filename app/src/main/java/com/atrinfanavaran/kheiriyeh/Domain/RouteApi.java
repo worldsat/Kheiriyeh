@@ -11,7 +11,7 @@ public class RouteApi extends BaseDomain {
     private String id;
 
     public RouteApi() {
-        setApiAddress("api/DischargeRoute");
+        setApiAddresss("api/DischargeRoute");
     }
 
     public String getlat() {

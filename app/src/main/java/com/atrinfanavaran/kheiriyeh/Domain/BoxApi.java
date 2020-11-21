@@ -8,6 +8,7 @@ public class BoxApi extends BaseDomain {
     private String mobile;
     private String code;
     private String assignmentDate;
+    private String assignmentDateEn;
     private String id;
     private String address;
     private String lat;
@@ -18,7 +19,15 @@ public class BoxApi extends BaseDomain {
 
 
     public BoxApi() {
-        setApiAddress("api/Box");
+        setApiAddresss("api/Box");
+    }
+
+    public String getassignmentDateEn() {
+        return assignmentDateEn;
+    }
+
+    public void setassignmentDateEn(String assignmentDateEn) {
+        this.assignmentDateEn = assignmentDateEn;
     }
 
     public String getboxId() {

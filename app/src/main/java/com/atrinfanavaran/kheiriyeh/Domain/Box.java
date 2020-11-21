@@ -13,12 +13,21 @@ public class Box extends BaseDomain {
     private String mobile;
     private String code;
     private String assignmentDate;
+    private String assignmentDateEn;
     private String lat;
     private String lng;
     private String address;
     private int id;
     private String dischargeRouteId;
     private int boxId;
+
+    public String getassignmentDateEn() {
+        return assignmentDateEn;
+    }
+
+    public void setassignmentDateEn(String assignmentDateEn) {
+        this.assignmentDateEn = assignmentDateEn;
+    }
 
     public int getBoxId() {
         return boxId;
@@ -77,7 +86,7 @@ public class Box extends BaseDomain {
     }
 
     public Box() {
-        setApiAddress("api/Box");
+        setApiAddresss("api/Box");
 
         ArrayList<DomainInfo> domainInfoList = new ArrayList<>();
 
@@ -111,9 +120,9 @@ public class Box extends BaseDomain {
         );
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
-                "assignmentDate",
+                "assignmentDateEn",
                 "تاریخ واگذاری",
-                "",
+                "BetweenCalendar",
                 ViewType.EDIT_TEXT.name())
         );
         domainInfoList.add(new DomainInfo(
@@ -172,5 +181,5 @@ public class Box extends BaseDomain {
         return dischargeRouteId;
     }
 
-  
+
 }

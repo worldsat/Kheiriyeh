@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                controller().LoginApi(this, MainActivity.class, new Login().getApiAddress(), loginObject.toString(), new CallbackOperation() {
+                controller().LoginApi(this, MainActivity.class, new Login().getApiAddresss(), loginObject.toString(), new CallbackOperation() {
                     @Override
                     public void onSuccess(String result) {
                         settingsBll.setLoging(true);

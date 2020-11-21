@@ -9,7 +9,7 @@ public class DischargeRoute extends BaseDomain {
     private String address;
 
     public DischargeRoute() {
-        setApiAddress("api/DischargeRoute");
+        setApiAddresss("api/DischargeRoute");
     }
 
     public String getId() {

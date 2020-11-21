@@ -91,12 +91,12 @@ public class DomainInfo extends BaseDomain {
         this.title = title;
     }
 
-    public String getApiAddress() {
+    public String getApiAddresss() {
         return apiAddress;
     }
 
-    public void setApiAddress(String apiAddress) {
-        this.apiAddress = apiAddress;
+    public void setApiAddresss(String apiAddresss) {
+        this.apiAddress = apiAddresss;
     }
 
     public String getViewType() {

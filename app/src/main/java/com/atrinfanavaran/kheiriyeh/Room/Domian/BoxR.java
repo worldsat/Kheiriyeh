@@ -24,6 +24,9 @@ public class BoxR {
     @ColumnInfo(name = "assignmentDate")
     public String assignmentDate;
 
+    @ColumnInfo(name = "assignmentDateEn")
+    public String assignmentDateEn;
+
     @ColumnInfo(name = "address")
     public String address;
 

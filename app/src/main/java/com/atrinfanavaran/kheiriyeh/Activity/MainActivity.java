@@ -4,16 +4,23 @@ import android.Manifest;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.room.Room;
+
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.atrinfanavaran.kheiriyeh.Activity.Flower.FlowerCrownListActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Sponser.SponsorListActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -80,7 +87,8 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     private Toolbar my_toolbar;
     private AppDatabase db;
     private ImageView imageView;
-    private LinearLayout  filterIcon;
+    private LinearLayout filterIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -246,11 +254,12 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         boxIncomeR.number = boxIncome.getnumber();
         boxIncomeR.price = boxIncome.getprice();
         boxIncomeR.assignmentDate = boxIncome.getassignmentDate();
+        boxIncomeR.assignmentDateEn = boxIncome.getassignmentDateEn();
         boxIncomeR.status = boxIncome.getstatus();
 
         if (editable) {
             db.BoxIncomeDao().update(boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
-                    , boxIncome.getprice(), boxIncome.getassignmentDate(), boxIncome.getstatus(), boxIncome.getid()
+                    , boxIncome.getprice(), boxIncome.getassignmentDate(), boxIncome.getassignmentDateEn(), boxIncome.getstatus(), boxIncome.getid()
             );
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
@@ -336,7 +345,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveRoute1(RouteR router, boolean editable) {
         if (editable) {
-            db.RouteDao().update(router.code, router.day, router.address, router.id,router.isNew);
+            db.RouteDao().update(router.code, router.day, router.address, router.id, router.isNew);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.RouteDao().insertBox(router);
@@ -371,10 +380,15 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
 
     private void setFragment() {
-        bottomNavigation.getMenu().getItem(0).setCheckable(true);
-        bottomNavigation.getMenu().getItem(1).setCheckable(true);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_container, fragment, "subPage").addToBackStack(null).commit();
+        try {
+            bottomNavigation.getMenu().getItem(0).setCheckable(true);
+            bottomNavigation.getMenu().getItem(1).setCheckable(true);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container, fragment, "subPage").addToBackStack(null).commit();
+
+        }catch (Exception e ){
+
+        }
 
     }
 
@@ -426,23 +440,42 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         switch (page) {
             case "0": {
                 fragment = new BoxIncomeListFragment();
+                setFragment();
                 break;
             }
             case "1": {
                 fragment = new BoxListFragment();
+                setFragment();
                 break;
             }
             case "2": {
                 fragment = new MapFragment();
+                setFragment();
                 break;
             }
             case "3": {
                 fragment = new RouteListFragment();
+                setFragment();
+                break;
+            }
+            case "4": {
+                Intent intent = new Intent(MainActivity.this, FlowerCrownListActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case "5": {
+                Intent intent = new Intent(MainActivity.this, SponsorListActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case "6": {
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                startActivity(intent);
                 break;
             }
 
         }
-        setFragment();
+
     }
 
 

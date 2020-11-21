@@ -6,13 +6,20 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.atrinfanavaran.kheiriyeh.Domain.Charity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class SplashActivity extends BaseActivity {
     private Handler mHandler = new Handler();
@@ -40,6 +47,53 @@ public class SplashActivity extends BaseActivity {
         Glide.with(getActivity())
                 .load(settingsBll.getUrlAddress() + "/" + settingsBll.getLogoAddress())
                 .into(imageView);
+
+    }
+
+    private void getPermissionServer() {
+
+
+        SettingsBll settingsBll = new SettingsBll(this);
+        controller().GetFromApi2("api/Charity", new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Log.i(TAG, "onSuccess1: " + resultStr);
+                try {
+                    Gson gson = new Gson();
+
+                    Charity charity = gson.fromJson(resultStr, Charity.class);
+                    Log.i(TAG, "onSuccess2: " + charity);
+                    settingsBll.setAccessBox(charity.isIsAccessBox());
+                    settingsBll.setActive(charity.isIsActive());
+                    settingsBll.setAccessFinancialAid(charity.isIsAccessFinancialAid());
+                    settingsBll.setAccessFlowerCrown(charity.isIsAccessFlowerCrown());
+                    settingsBll.setAccessSponsor(charity.isIsAccessSponsor());
+//                    if (settingsBll.isAccessBox()) {
+
+                        SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
+                        if (sp != null) {
+                            if (settingsBll.getLoging()) {
+                                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            } else {
+                                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+//                    } else {
+//                        SnakBar("حساب کاربری شما مسدود می باشد");
+//                    }
+
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccess4: " + e);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+
 
     }
 
@@ -101,16 +155,16 @@ public class SplashActivity extends BaseActivity {
                 mProgressBar.setProgress(100);
 
                 SettingsBll settingsBll = new SettingsBll(SplashActivity.this);
-                SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
-                if (sp != null) {
-                    if (settingsBll.getLoging()) {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    } else {
-                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
-                }
-
+//                SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
+//                if (sp != null) {
+//                    if (settingsBll.getLoging()) {
+//                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+//                    } else {
+//                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+//                        startActivity(intent);
+//                    }
+//                }
+                getPermissionServer();
             }
         };
         mCountDownTimer.start();

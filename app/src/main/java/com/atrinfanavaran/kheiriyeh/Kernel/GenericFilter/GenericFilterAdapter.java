@@ -1,5 +1,7 @@
 package com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -15,18 +18,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alirezaafkar.sundatepicker.DatePicker;
+import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.SpinnerDomain;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.GenericListBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallBackSpinner;
+import com.atrinfanavaran.kheiriyeh.Kernel.GenericEdit.Interface.OnDateListener;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 
@@ -38,13 +48,15 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
     private HashMap<Integer, FilteredDomain> filterResult;
     private HashMap<Integer, ArrayList<SpinnerDomain>> spinnerData = new HashMap<>(); //loaded spinner spinnerData
     private RecyclerView recyclerView;
+    private Activity activity;
 
     public GenericFilterAdapter(ArrayList<DomainInfo> filters,
-                                HashMap<Integer, FilteredDomain> filteredList,
+                                HashMap<Integer, FilteredDomain> filteredList, Activity activity,
                                 OnFinishedCallback filterListener) {
         this.filters = filters;
         filterResult = filteredList;
         this.callbackFinish = filterListener;
+        this.activity = activity;
     }
 
     @Override
@@ -67,8 +79,50 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
         holder.columnName.setText(filters.get(position).getTitle());
 
         //check if the row is using either a spinner or an editText
-        if (!TextUtils.isEmpty(filters.get(position).getApiAddress())) {
+        if (filters.get(position).getApiAddresss().equals("BetweenCalendar")) {
+
+
+            holder.valueEditTex.setVisibility(View.VISIBLE);
+            holder.valueEditTex.setHint("تاریخ شروع");
+            holder.valueEditTex2.setVisibility(View.VISIBLE);
+            holder.calendarEnd.setVisibility(View.VISIBLE);
+            holder.calendarStart.setVisibility(View.VISIBLE);
+            holder.spinnerWrapper.setVisibility(View.GONE);
+            holder.switchKey.setChecked(false);
+
+            holder.calendarStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatePicker((activity), new OnDateListener() {
+                        @Override
+                        public void DateSelected(String result) {
+                            Log.i("moh3n", "DateSelectedStart: " + result);
+//                            dateFinal = result;
+//                            data.put(domainInfos.get(holder.getAdapterPosition()).getId(), dateFinal + " " + hourFinal);
+                            holder.valueEditTex.setText(result);
+                        }
+                    });
+                }
+            });
+            holder.calendarEnd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatePicker((activity), new OnDateListener() {
+                        @Override
+                        public void DateSelected(String result) {
+                            Log.i("moh3n", "DateSelectedEnd: " + result);
+//                            dateFinal = result;
+//                            data.put(domainInfos.get(holder.getAdapterPosition()).getId(), dateFinal + " " + hourFinal);
+                            holder.valueEditTex2.setText(result);
+                        }
+                    });
+                }
+            });
+        } else if (!TextUtils.isEmpty(filters.get(position).getApiAddresss())) {
             holder.valueEditTex.setVisibility(View.GONE);
+            holder.valueEditTex2.setVisibility(View.GONE);
+            holder.calendarEnd.setVisibility(View.GONE);
+            holder.calendarStart.setVisibility(View.GONE);
             holder.spinnerWrapper.setVisibility(View.VISIBLE);
 
             //get the spinnerData to fill the spinner
@@ -78,7 +132,7 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
             bll.populateSpinner(
                     domain.getId(),
                     domain.getViewType(),
-                    domain.getApiAddress(),
+                    domain.getApiAddresss(),
                     new CallBackSpinner() {
                         @Override
                         public void onSuccess(ArrayList<SpinnerDomain> result) {
@@ -128,6 +182,9 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
 
         } else {
             holder.valueEditTex.setVisibility(View.VISIBLE);
+            holder.valueEditTex2.setVisibility(View.GONE);
+            holder.calendarEnd.setVisibility(View.GONE);
+            holder.calendarStart.setVisibility(View.GONE);
             holder.spinnerWrapper.setVisibility(View.GONE);
             holder.switchKey.setChecked(false);
         }
@@ -144,11 +201,21 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
                     filteredDomain = filterResult.get(adapterPosition);
                     DomainInfo domain = filters.get(adapterPosition);
 
-                    //editText
-                    if (domain.getViewType().equals(ViewType.EDIT_TEXT.name()) || domain.getViewType().equals(ViewType.TEXT_VIEW.name())) {
+                    if (domain.getApiAddresss().equals("BetweenCalendar")) {
+
+                        holder.switchKey.setChecked(true);
+
+                        if (filteredDomain != null) {
+                            String[] date = (filteredDomain).getValue().split("__");
+                            holder.valueEditTex.setText(date[0]);
+                            holder.valueEditTex2.setText(date[1]);
+                        }
+                    } else if (domain.getViewType().equals(ViewType.EDIT_TEXT.name()) || domain.getViewType().equals(ViewType.TEXT_VIEW.name())) {
+                        //editText
                         holder.valueEditTex.setText(Objects.requireNonNull(filteredDomain).getValue());
                         holder.switchKey.setChecked(true);
                     }
+
                 }
             }
         }
@@ -189,7 +256,50 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
             ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
             if (holder != null) {
                 if (holder.switchKey.isChecked()) {
-                    if (!TextUtils.isEmpty(filters.get(position).getApiAddress())) { // check if spinner or editText
+                    if (filters.get(position).getApiAddresss().equals("BetweenCalendar")) {
+                        DomainInfo domainInfo = filters.get(position);
+                        roozh roozh = new roozh();
+
+
+                        String[] date = holder.valueEditTex.getText().toString().split("/");
+                        roozh.PersianToGregorian(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+                        String month = "";
+                        if (roozh.getMonth() < 10) {
+                            month = "0" + roozh.getMonth();
+                        } else {
+                            month = String.valueOf(roozh.getMonth());
+                        }
+
+                        String day = "";
+                        if (roozh.getDay() < 10) {
+                            day = "0" + roozh.getDay();
+                        } else {
+                            day = String.valueOf(roozh.getDay());
+                        }
+                        String dateStart = roozh.getYear() + "/" + month + "/" + day;
+
+
+                        String[] date2 = holder.valueEditTex2.getText().toString().split("/");
+                        roozh.PersianToGregorian(Integer.valueOf(date2[0]), Integer.valueOf(date2[1]), Integer.valueOf(date2[2]));
+                        if (roozh.getMonth() < 10) {
+                            month = "0" + roozh.getMonth();
+                        } else {
+                            month = String.valueOf(roozh.getMonth());
+                        }
+
+
+                        if (roozh.getDay() < 10) {
+                            day = "0" + roozh.getDay();
+                        } else {
+                            day = String.valueOf(roozh.getDay());
+                        }
+                        String dateEnd = roozh.getYear() + "/" + month + "/" + day;
+
+                        filterResult.put(position, new FilteredDomain(
+                                domainInfo.getId(),
+                                dateStart + "__" + dateEnd)
+                        );
+                    } else if (!TextUtils.isEmpty(filters.get(position).getApiAddresss())) { // check if spinner or editText
                         SpinnerDomain spinnerDomain = (SpinnerDomain) holder.spinner.getSelectedItem();
 
                         filterResult.put(
@@ -216,10 +326,11 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        EditText valueEditTex;
+        EditText valueEditTex, valueEditTex2;
         Switch switchKey;
         Spinner spinner;
         ProgressBar progress;
+        ImageView calendarStart, calendarEnd;
         RelativeLayout spinnerWrapper;
         private TextView columnName;
 
@@ -228,9 +339,44 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
             columnName = itemView.findViewById(R.id.columnName);
             switchKey = itemView.findViewById(R.id.switchKey);
             valueEditTex = itemView.findViewById(R.id.value);
+            valueEditTex2 = itemView.findViewById(R.id.value2);
+            calendarEnd = itemView.findViewById(R.id.calendar3);
+            calendarStart = itemView.findViewById(R.id.calendar2);
             spinner = itemView.findViewById(R.id.spinner);
             spinnerWrapper = itemView.findViewById(R.id.spinner_wrapper);
             progress = itemView.findViewById(R.id.progress);
+        }
+    }
+
+    public void DatePicker(Context context2, OnDateListener dateListener) {
+        String str;
+        FragmentActivity context;
+        context = (FragmentActivity) context2;
+        DatePicker.Builder builder = new DatePicker
+                .Builder()
+                .theme(R.style.DialogTheme)
+                .future(true);
+        Date mDate = new Date();
+        builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
+        builder.build((id, calendar, day, month, year) -> {
+
+            mDate.setDate(day, month, year);
+
+            String str2 = year + "/" + month + "/" + day;
+            dateListener.DateSelected(str2);
+        }).show(context.getSupportFragmentManager(), "");
+
+    }
+
+    class Date extends DateItem {
+        String getDate() {
+            Calendar calendar = getCalendar();
+            return String.format(Locale.US,
+                    "%d/%d/%d",
+                    getYear(), getMonth(), getDay(),
+                    calendar.get(Calendar.YEAR),
+                    +calendar.get(Calendar.MONTH) + 1,
+                    +calendar.get(Calendar.DAY_OF_MONTH));
         }
     }
 }

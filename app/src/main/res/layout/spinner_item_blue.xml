@@ -17,4 +17,4 @@
     android:text="test"
     android:textAlignment="gravity"
     android:textColor="#2B2424"
-    android:textSize="16sp" />
+    android:textSize="14sp" />

@@ -9,7 +9,7 @@ public class Sliders extends BaseDomain {
     private String link;
 
     public Sliders() {
-        setApiAddress("api/Sliders");
+        setApiAddresss("api/Sliders");
     }
 
     public String getId() {

@@ -138,7 +138,13 @@ public class BoxListFragment extends Fragment {
                     if (filters != null && filters.size() > 0) {
                         filterStr.append(" where 1=1 ");
                         for (int i = 0; i < filters.size(); i++) {
-                            filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
+                            if (filters.get(i).getField().equals("assignmentDateEn")) {
+                                String[] dates = filters.get(i).getValue().split("__");
+                                String str = " and " + filters.get(i).getField() + " BETWEEN '" + dates[0] + "' and '" + dates[1] + "'";
+                                filterStr.append(str);
+                            } else {
+                                filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
+                            }
                         }
                     }
 

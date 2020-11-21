@@ -25,7 +25,7 @@ public class PageButton extends BaseDomain {
 
 
     public PageButton() {
-        setApiAddress("api/pgPageButton");
+        setApiAddresss("api/pgPageButton");
     }
 
     public String getRowNumber() {

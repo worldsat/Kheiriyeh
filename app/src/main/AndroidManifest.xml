@@ -20,28 +20,45 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activity.Flower.Add.AddTajGolActivity"></activity>
+        <activity android:name=".Activity.Flower.Add.AddDeceasedNameActivity"></activity>
+        <activity android:name=".Activity.Flower.List.DeceasedNameListItemActivity"></activity>
+        <activity android:name=".Activity.AddKhayerActivity"></activity>
         <activity android:name=".Activity.ActivityDesigner"></activity>
+        <activity android:name=".Activity.Sponser.List.SponsorListItemActivity"></activity>
+        <activity android:name=".Activity.Sponser.List.ContributaionListItemActivity">
+
+        </activity>
+        <activity android:name=".Activity.Flower.Add.AddDonateActivity"></activity>
+        <activity android:name=".Activity.Flower.List.DonatorListItemActivity"></activity>
+        <activity android:name=".Activity.Sponser.SponsorListActivity"></activity>
+        <activity android:name=".Activity.Sponser.Add.AddSponsorActivity">
+
+
+        </activity>
+        <activity android:name=".Activity.Sponser.Add.AddContributionActivity"></activity>
+        <activity android:name=".Activity.Flower.FlowerCrownListActivity"></activity>
+        <activity android:name=".Activity.Flower.List.TajGolListItemActivity"></activity>
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.RememberPasswordActivity" />
         <activity android:name=".Activity.StirActivity" />
         <activity android:name=".Activity.ContactUsActivity" />
         <activity android:name=".Activity.RulesActivity" />
         <activity android:name=".Kernel.Room.RoomActivity" />
+        <activity android:name=".Activity.SplashActivity">  <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAI_kveeeGMtMwh0qG1gyTJdJV65FSagv4" />
 
-        <activity android:name=".Activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Map2Activity" />
         <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.ListActivity"></activity>
     </application>
 
 </manifest>

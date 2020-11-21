@@ -8,7 +8,7 @@ public class AndroidVersion extends BaseDomain {
     private String currVersion;
 
     public AndroidVersion() {
-        setApiAddress("api/AndroidVersion");
+        setApiAddresss("api/AndroidVersion");
     }
 
     public String getid() {

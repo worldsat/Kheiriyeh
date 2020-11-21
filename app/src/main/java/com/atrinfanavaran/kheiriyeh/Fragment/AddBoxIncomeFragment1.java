@@ -1,10 +1,13 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
 import androidx.room.Room;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import com.atrinfanavaran.kheiriyeh.Domain.BoxIncome;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncome1;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
@@ -32,6 +36,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -168,6 +173,28 @@ public class AddBoxIncomeFragment1 extends Fragment {
             boxIncome.setnumber(numberSelected);
             boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
             boxIncome.setassignmentDate(edt1_4.getText().toString().trim());
+
+            String[] date = edt1_4.getText().toString().trim().split("/");
+            roozh roozh = new roozh();
+            roozh.PersianToGregorian(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+
+            String month = "";
+            if (roozh.getMonth() < 10) {
+                month = "0" + roozh.getMonth();
+            } else {
+                month = String.valueOf(roozh.getMonth());
+            }
+
+            String day = "";
+            if (roozh.getDay() < 10) {
+                day = "0" + roozh.getDay();
+            } else {
+                day = String.valueOf(roozh.getDay());
+            }
+
+            String dateEn = roozh.getYear() + "/" +month + "/" + day;
+            boxIncome.setassignmentDateEn(dateEn);
+
             boxIncome.setstatus(status);
             if (editable)
                 boxIncome.setid(this.boxIncome.getid());
@@ -187,7 +214,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
                 java.util.Date d = new java.util.Date();
                 String dt = df.format(d);
                 mDate.setDate(day, month, year);
-                edt1_4.setText(year + "-" + month + "-" + day+" "+dt);
+                edt1_4.setText(year + "/" + month + "/" + day);
 
             }).show(getActivity().getSupportFragmentManager(), "");
 

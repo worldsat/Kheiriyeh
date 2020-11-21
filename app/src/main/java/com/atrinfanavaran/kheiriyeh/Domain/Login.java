@@ -10,7 +10,7 @@ public class Login extends BaseDomain {
     private String code;
 
     public Login() {
-        setApiAddress("api/Login");
+        setApiAddresss("api/Login");
     }
 
     public String getisError() {

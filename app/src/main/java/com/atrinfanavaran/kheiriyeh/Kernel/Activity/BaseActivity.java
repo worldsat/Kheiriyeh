@@ -3,7 +3,10 @@ package com.atrinfanavaran.kheiriyeh.Kernel.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +20,9 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Module.SnakBar.SnakBar;
 import com.atrinfanavaran.kheiriyeh.Kernel.Domain.FnValidColumnList;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.ExceptionHandler;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.ListBuilder;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.bumptech.glide.Glide;
 
 import java.sql.Date;
@@ -38,6 +43,14 @@ public class BaseActivity extends AppCompatActivity {
         return new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(date);
     }
 
+    public AppDatabase db() {
+        AppDatabase db = Room.databaseBuilder(BaseActivity.this,
+                AppDatabase.class, "RoomDb")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+        return db;
+    }
 
     public static MaterialDialog alertWaiting(Context context) {
 
@@ -97,6 +110,10 @@ public class BaseActivity extends AppCompatActivity {
         return settingsBll.isOnline();
     }
 
+    public SettingsBll settingsBll() {
+        return new SettingsBll(BaseActivity.this);
+    }
+
     public void getFnValidColumnList(String SchemaName, String TableName, String UserId, CallbackGet callbackGet) {
 
         FnValidColumnListBll fnValidColumnListBll = new FnValidColumnListBll(this);
@@ -142,5 +159,26 @@ public class BaseActivity extends AppCompatActivity {
         num = num.replaceAll("۹", "9");
         num = num.replaceAll("٫", ".");
         return num;
+    }
+
+    public String shamsiToMiladi(String str) {
+        String[] date = str.trim().split("/");
+        roozh roozh = new roozh();
+        roozh.PersianToGregorian(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+
+        String month = "";
+        if (roozh.getMonth() < 10) {
+            month = "0" + roozh.getMonth();
+        } else {
+            month = String.valueOf(roozh.getMonth());
+        }
+
+        String day = "";
+        if (roozh.getDay() < 10) {
+            day = "0" + roozh.getDay();
+        } else {
+            day = String.valueOf(roozh.getDay());
+        }
+        return roozh.getYear() + "/" + month + "/" + day;
     }
 }

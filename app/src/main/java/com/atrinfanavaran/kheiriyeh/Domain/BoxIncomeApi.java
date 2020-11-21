@@ -10,10 +10,11 @@ public class BoxIncomeApi extends BaseDomain {
     private String lat;
     private String lon;
     private String assignmentDate;
+    private String assignmentDateEn;
     private String id;
 
     public BoxIncomeApi() {
-        setApiAddress("api/BoxIncome");
+        setApiAddresss("api/BoxIncome");
     }
 
     public String getid() {
@@ -70,5 +71,13 @@ public class BoxIncomeApi extends BaseDomain {
 
     public void setassignmentDate(String assignmentDate) {
         this.assignmentDate = assignmentDate;
+    }
+
+    public String getassignmentDateEn() {
+        return assignmentDateEn;
+    }
+
+    public void setassignmentDateEn(String assignmentDateEn) {
+        this.assignmentDateEn = assignmentDateEn;
     }
 }

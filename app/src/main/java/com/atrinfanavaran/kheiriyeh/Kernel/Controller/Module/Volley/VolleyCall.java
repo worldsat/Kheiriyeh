@@ -48,7 +48,7 @@ public class VolleyCall {
 
                 SettingsBll settingsBll = new SettingsBll(context);
                 String token = settingsBll.getTicket();
-
+                Log.i("moh3n", "getHeaders: " + token);
                 if (token != null) {
                     params.put("token", token);
                 }
@@ -94,7 +94,7 @@ public class VolleyCall {
 
                 @Override
                 public String getBodyContentType() {
-                    return  "application/json; charset=utf-8";
+                    return "application/json; charset=utf-8";
                 }
 
                 @Override
@@ -362,6 +362,7 @@ public class VolleyCall {
         }
 
     }
+
     public void download(final String params, String url, final VolleyCallbackByte callback) {
         try {
 
@@ -370,34 +371,34 @@ public class VolleyCall {
             Log.i("moh3n", "params: " + params);
             HttpsTrustManager.allowAllSSL();
 
-                InputStreamVolleyRequest stringRequest = new InputStreamVolleyRequest(Request.Method.POST, url,
-                        response -> callback.onSuccessResponse(response), error -> callback.onError(error.getMessage()), null) {
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/x-www-form-urlencoded; charset=UTF-8";
+            InputStreamVolleyRequest stringRequest = new InputStreamVolleyRequest(Request.Method.POST, url,
+                    response -> callback.onSuccessResponse(response), error -> callback.onError(error.getMessage()), null) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/x-www-form-urlencoded; charset=UTF-8";
+                }
+
+                @Override
+                public byte[] getBody() {
+                    try {
+                        return params == null ? null : params.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", params, "utf-8");
+                        return null;
                     }
-                    @Override
-                    public byte[] getBody() {
-                        try {
-                            return params == null ? null : params.getBytes("UTF-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", params, "utf-8");
-                            return null;
-                        }
-                    }
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> MyData = new HashMap<>();
+                }
 
-                        MyData.put("base64", "");
-                        MyData.put("contentType", "text/plain");
-                        MyData.put("fileName", "test.txt");
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> MyData = new HashMap<>();
 
-                        return MyData;
-                    }
-                };
+                    MyData.put("base64", "");
+                    MyData.put("contentType", "text/plain");
+                    MyData.put("fileName", "test.txt");
 
-
+                    return MyData;
+                }
+            };
 
 
             stringRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -412,11 +413,13 @@ public class VolleyCall {
         }
 
     }
+
     public interface VolleyCallback {
         void onSuccessResponse(String result);
 
         void onError(String error);
     }
+
     public interface VolleyCallbackByte {
         void onSuccessResponse(byte[] result);
 

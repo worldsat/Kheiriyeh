@@ -2,16 +2,19 @@ package com.atrinfanavaran.kheiriyeh.Fragment;
 
 
 import androidx.room.Room;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,18 +34,30 @@ import com.atrinfanavaran.kheiriyeh.Activity.StirActivity;
 import com.atrinfanavaran.kheiriyeh.BuildConfig;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxApi;
 import com.atrinfanavaran.kheiriyeh.Domain.BoxIncomeApi;
+import com.atrinfanavaran.kheiriyeh.Domain.DeceasedNameApi;
+import com.atrinfanavaran.kheiriyeh.Domain.DonatorApi;
+import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
+import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownTypeApi;
 import com.atrinfanavaran.kheiriyeh.Domain.RouteApi;
+import com.atrinfanavaran.kheiriyeh.Domain.SponsorApi;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxIncomeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.DeceasedNameR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.DonatorR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.FlowerCrownR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.FlowerCrownTypeR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.SponsorR;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -288,6 +303,7 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("fullName", data.get(i).fullName);
                 params.put("mobile", new BigInteger(data.get(i).mobile));
                 params.put("assignmentDate", data.get(i).assignmentDate);
+                params.put("assignmentDateEn", data.get(i).assignmentDateEn);
                 params.put("address", data.get(i).address);
                 params.put("lat", Double.valueOf(data.get(i).lat));
                 params.put("lon", Double.valueOf(data.get(i).lon));
@@ -295,7 +311,7 @@ public class NavigationDrawerFragment extends Fragment {
 
                 params2.put(params);
             } catch (Exception e) {
-                Log.i("moh3n", "sendBox: "+e);
+                Log.i("moh3n", "sendBox: " + e);
                 Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی اطلاعات صندوق ها", Toast.LENGTH_SHORT).show();
             }
         }
@@ -323,6 +339,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
     }
+
 
     private void sendBoxIncome() {
         JSONObject params = null;
@@ -367,6 +384,157 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.BoxIncomeDao().deleteAll();
                 wait.dismiss();
+                sendDeceasedName();
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.i("moh3n", "onError: " + error);
+                wait.dismiss();
+                Toast.makeText(getActivity(), "خطا در ارسال اطلاعات", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void sendDeceasedName() {
+        JSONObject params = null;
+        JSONArray params2 = new JSONArray();
+        List<DeceasedNameR> list = db.DeceasedNameDao().getAllNew();
+
+        for (int i = 0; i < list.size(); i++) {
+            params = new JSONObject();
+
+
+            try {
+                params.put("deceasedFullName", list.get(i).getDeceasedFullName());
+                params.put("deceaseAalias", list.get(i).getDeceasedFullName());
+                params.put("deceasedSex", list.get(i).isDeceasedSex());
+
+            } catch (Exception e) {
+                Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی  اطلاعات متوفی", Toast.LENGTH_SHORT).show();
+            }
+//            params2.put(params);
+
+
+            if (params2 != null) {
+                Log.i("moh3n", "sendDeceasedName: " + params2.toString());
+            }
+
+            MaterialDialog wait = baseActivity.alertWaiting2(getActivity(), "در حال ارسال  اطلاعات متوفی...");
+            wait.show();
+            controller.Operation("", DeceasedNameApi.class, getActivity(), params2.toString(), new CallbackOperation() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.i("moh3n", "sendDeceasedName: " + result);
+                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                    db.DeceasedNameDao().deleteAll();
+                    wait.dismiss();
+
+
+                }
+
+                @Override
+                public void onError(String error) {
+                    Log.i("moh3n", "onError: " + error);
+                    wait.dismiss();
+                    Toast.makeText(getActivity(), "خطا در ارسال اطلاعات", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                }
+            });
+            if (i == list.size()) {
+                sendDonator();
+            }
+        }
+
+    }
+
+    private void sendDonator() {
+        JSONObject params = null;
+        JSONArray params2 = new JSONArray();
+        List<DonatorR> list = db.DonatorDao().getAllNew();
+
+        for (int i = 0; i < list.size(); i++) {
+            params = new JSONObject();
+
+
+            try {
+                params.put("donatorFullName", list.get(i).donatorFullName);
+                params.put("donatorAlias", list.get(i).donatorAlias);
+                params.put("donatorMobile", list.get(i).donatorMobile);
+                params.put("isSendMessage", true);
+
+            } catch (Exception e) {
+                Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی اهدا کننده", Toast.LENGTH_SHORT).show();
+            }
+            params2.put(params);
+        }
+
+        if (params2 != null) {
+            Log.i("moh3n", "sendDonator: " + params2.toString());
+        }
+
+        MaterialDialog wait = baseActivity.alertWaiting2(getActivity(), "در حال ارسال  اطلاعات اهدا کننده...");
+        wait.show();
+        controller.Operation("", DonatorApi.class, getActivity(), params2.toString(), new CallbackOperation() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("moh3n", "sendDonator: " + result);
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                db.DonatorDao().deleteAll();
+                wait.dismiss();
+                sendFlowerCrown();
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.i("moh3n", "onError: " + error);
+                wait.dismiss();
+                Toast.makeText(getActivity(), "خطا در ارسال اطلاعات", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void sendFlowerCrown() {
+        JSONObject params = null;
+        JSONArray params2 = new JSONArray();
+        List<FlowerCrownR> list = db.FlowerCrownDao().getAllNew();
+
+        for (int i = 0; i < list.size(); i++) {
+            params = new JSONObject();
+
+
+            try {
+                params.put("donatorId", list.get(i).donatorId);
+                params.put("price", list.get(i).price);
+                params.put("CeremonyType", list.get(i).ceremonyType);
+                params.put("registerDate", list.get(i).registerDate);
+                params.put("flowerCrownTypeId", list.get(i).flowerCrownTypeId);
+                params.put("deceasedNameId", list.get(i).deceasedNameId);
+                params.put("IntroducedId", list.get(i).getIntroducedId());
+
+            } catch (Exception e) {
+                Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی تاج گل", Toast.LENGTH_SHORT).show();
+            }
+            params2.put(params);
+        }
+
+        if (params2 != null) {
+            Log.i("moh3n", "sendFlowerCrown: " + params2.toString());
+        }
+
+        MaterialDialog wait = baseActivity.alertWaiting2(getActivity(), "در حال ارسال  اطلاعات تاج گل...");
+        wait.show();
+        controller.Operation("", FlowerCrownApi.class, getActivity(), params2.toString(), new CallbackOperation() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("moh3n", "sendFlowerCrown: " + result);
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                db.FlowerCrownDao().deleteAll();
+                wait.dismiss();
             }
 
             @Override
@@ -395,6 +563,7 @@ public class NavigationDrawerFragment extends Fragment {
                     boxIncomeR.price = response.get(i).getprice();
                     boxIncomeR.status = response.get(i).getstatus();
                     boxIncomeR.assignmentDate = response.get(i).getassignmentDate();
+                    boxIncomeR.assignmentDateEn = response.get(i).getassignmentDateEn();
                     boxIncomeR.lon = response.get(i).getlon();
                     boxIncomeR.lat = response.get(i).getlat();
                     boxIncomeR.number = response.get(i).getnumber();
@@ -432,6 +601,7 @@ public class NavigationDrawerFragment extends Fragment {
                     data.fullName = response.get(i).getfullName();
                     data.mobile = response.get(i).getmobile();
                     data.assignmentDate = response.get(i).getassignmentDate();
+                    data.assignmentDateEn = response.get(i).getassignmentDateEn();
                     data.code = response.get(i).getcode();
                     data.number = response.get(i).getnumber();
                     data.address = response.get(i).getaddress();
@@ -449,6 +619,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
 
                 wait.dismiss();
+                getFlowerCrownType();
             }
 
             @Override
@@ -457,6 +628,132 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
+    }
+
+    private void getFlowerCrownType() {
+        MaterialDialog wait = baseActivity.alertWaiting2(getActivity(), "در حال دریافت انواع تاج گل");
+        wait.show();
+        SettingsBll settingsBll = new SettingsBll(getActivity());
+
+        controller.GetFromApi2("api/FlowerCrownType/" + settingsBll.getCharityId(), new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Gson gson = new Gson();
+                FlowerCrownTypeApi response = gson.fromJson(resultStr, FlowerCrownTypeApi.class);
+
+                for (int i = 0; i < response.getData().size(); i++) {
+                    FlowerCrownTypeR data = new FlowerCrownTypeR();
+
+                    data.id = Integer.valueOf(response.getData().get(i).getId());
+                    data.charityId = Integer.valueOf(response.getData().get(i).getCharityId());
+                    data.title = response.getData().get(i).getTitle();
+
+                    try {
+                        db.FlowerCrownTypeDao().insertBox(data);
+                    } catch (Exception e) {
+                        Log.i("moh3n", "errorInsert: " + e);
+                    }
+                }
+                String Str = "تعداد " + response.getData().size() + " رکورد از  انواع تاج گل با موفقیت ذخیره شد";
+                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+
+                wait.dismiss();
+                getDonate();
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.i("mo3h", "onError: " + error);
+                wait.dismiss();
+            }
+        });
+
+    }
+
+    private void getDonate() {
+        MaterialDialog wait = baseActivity.alertWaiting2(getActivity(), "در حال دریافت لیست اهدا");
+        wait.show();
+        SettingsBll settingsBll = new SettingsBll(getActivity());
+
+        controller.GetFromApi2("api/Donator", new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Gson gson = new Gson();
+                DonatorApi response = gson.fromJson(resultStr, DonatorApi.class);
+
+                for (int i = 0; i < response.getData().size(); i++) {
+                    DonatorR data = new DonatorR();
+
+                    data.id = Integer.valueOf(response.getData().get(i).getId());
+                    data.charityId = Integer.valueOf(response.getData().get(i).getCharityId());
+                    data.donatorAlias = response.getData().get(i).getDonatorAlias();
+                    data.donatorFullName = response.getData().get(i).getDonatorFullName();
+                    data.donatorMobile = response.getData().get(i).getDonatorMobile();
+                    data.isSendMessage = response.getData().get(i).isIsSendMessage();
+
+                    try {
+                        db.DonatorDao().insertBox(data);
+                    } catch (Exception e) {
+                        Log.i("moh3n", "errorInsert: " + e);
+                    }
+                }
+                String Str = "تعداد " + response.getData().size() + " رکورد از  لیست اهدا با موفقیت ذخیره شد";
+                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+
+                wait.dismiss();
+                getDeceasedName();
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.i("mo3h", "onError: " + error);
+                wait.dismiss();
+            }
+        });
+
+    }
+
+    private void getDeceasedName() {
+        MaterialDialog wait = baseActivity.alertWaiting2(getActivity(), "در حال دریافت لیست متوفی");
+        wait.show();
+        SettingsBll settingsBll = new SettingsBll(getActivity());
+
+        controller.GetFromApi2("api/DeceasedName", new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Gson gson = new Gson();
+                DeceasedNameApi response = gson.fromJson(resultStr, DeceasedNameApi.class);
+
+                for (int i = 0; i < response.getData().size(); i++) {
+                    DeceasedNameR data = new DeceasedNameR();
+
+                    data.id = Integer.valueOf(response.getData().get(i).getId());
+                    data.charityId = Integer.valueOf(response.getData().get(i).getCharityId());
+                    data.deceasedFullName = response.getData().get(i).getDeceasedFullName();
+                    data.deceaseAalias = response.getData().get(i).getDeceaseAalias();
+                    data.deceasedSex = response.getData().get(i).isDeceasedSex();
+
+
+                    try {
+                        db.DeceasedNameDao().insertBox(data);
+                    } catch (Exception e) {
+                        Log.i("moh3n", "errorInsert: " + e);
+                    }
+                }
+                String Str = "تعداد " + response.getData().size() + " رکورد از  لیست متوفی با موفقیت ذخیره شد";
+                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+
+                wait.dismiss();
+                getSponsor();
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.i("mo3h", "onError: " + error);
+                wait.dismiss();
+            }
+        });
+
     }
 
     private void getRoutes() {
@@ -494,6 +791,55 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
+    }
+
+    private void getSponsor() {
+        MaterialDialog wait = baseActivity.alertWaiting2(getActivity(), "در حال دریافت لیست حامی ها");
+        wait.show();
+        SettingsBll settingsBll = new SettingsBll(getActivity());
+
+        controller.GetFromApi2("api/Sponsor", new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Gson gson = new Gson();
+                SponsorApi response = gson.fromJson(resultStr, SponsorApi.class);
+                if (response.getData().size() == 0) {
+                    Toast.makeText(baseActivity, response.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    for (int i = 0; i < response.getData().size(); i++) {
+                        SponsorR data = new SponsorR();
+
+                        data.id = response.getData().get(i).getId();
+                        data.code = response.getData().get(i).getCode();
+                        data.address = response.getData().get(i).getAddress();
+                        data.fullName = response.getData().get(i).getFullName();
+                        data.mobile = response.getData().get(i).getMobile();
+                        data.nationalcode = response.getData().get(i).getNationalcode();
+                        data.phone = response.getData().get(i).getPhone();
+                        data.birthDate = response.getData().get(i).getBirthDate();
+                        data.charityId = response.getData().get(i).getCharityId();
+                        data.opratorId = response.getData().get(i).getOpratorId();
+
+                        try {
+                            db.SponsorDao().insertBox(data);
+                        } catch (Exception e) {
+                            Log.i("moh3n", "errorInsert: " + e);
+                        }
+                    }
+                    String Str = "تعداد " + response.getData().size() + " رکورد از  حامی با موفقیت ذخیره شد";
+                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                }
+                wait.dismiss();
+
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.i("mo3h", "onError: " + error);
+                wait.dismiss();
+            }
+        });
+
     }
 
     private void setLogo() {

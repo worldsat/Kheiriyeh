@@ -15,6 +15,7 @@ public class BoxIncome extends BaseDomain {
     private String lat;
     private String lon;
     private String assignmentDate;
+    private String assignmentDateEn;
     private int id;
 
     public BoxIncome() {
@@ -29,8 +30,15 @@ public class BoxIncome extends BaseDomain {
 //        );
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
+                "status",
+                "نوع",
+                "status",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
                 "number",
-                "شماره",
+                "کد",
                 "",
                 ViewType.EDIT_TEXT.name())
         );
@@ -44,11 +52,12 @@ public class BoxIncome extends BaseDomain {
 
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
-                "assignmentDate",
+                "assignmentDateEn",
                 "تاریخ واگذاری",
-                "",
+                "BetweenCalendar",
                 ViewType.EDIT_TEXT.name())
         );
+
 
         setDomainInfo(domainInfoList);
     }
@@ -108,5 +117,13 @@ public class BoxIncome extends BaseDomain {
 
     public void setassignmentDate(String assignmentDate) {
         this.assignmentDate = assignmentDate;
+    }
+
+    public String getassignmentDateEn() {
+        return assignmentDateEn;
+    }
+
+    public void setassignmentDateEn(String assignmentDateEn) {
+        this.assignmentDateEn = assignmentDateEn;
     }
 }

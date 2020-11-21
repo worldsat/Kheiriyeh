@@ -13,7 +13,7 @@ public class BoxNotEmptyApi extends BaseDomain {
     private String id;
 
     public BoxNotEmptyApi() {
-        setApiAddress("api/BoxNotEmpty");
+        setApiAddresss("api/BoxNotEmpty");
     }
 
     public String getid() {

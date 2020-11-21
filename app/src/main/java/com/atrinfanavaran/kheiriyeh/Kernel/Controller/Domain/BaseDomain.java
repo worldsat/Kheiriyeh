@@ -9,7 +9,7 @@ import io.reactivex.annotations.NonNull;
 public class BaseDomain implements Serializable {
     protected String tableName;
     protected String apiAddressGet;
-    protected String apiAddress;
+    protected String apiAddresss;
     @NonNull
     protected ArrayList<DomainInfo> domainInfo;
 
@@ -29,11 +29,11 @@ public class BaseDomain implements Serializable {
         this.tableName = tableName;
     }
 
-    public String getApiAddress() {
-        return apiAddress;
+    public String getApiAddresss() {
+        return apiAddresss;
     }
 
-    public void setApiAddress(String apiAddress) {
-        this.apiAddress = apiAddress;
+    public void setApiAddresss(String apiAddresss) {
+        this.apiAddresss = apiAddresss;
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="7dp"
@@ -16,8 +17,8 @@
             android:id="@+id/switchKey"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="2dp"
             android:gravity="center"
 
             android:theme="@style/MySwitch"
@@ -35,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.33"
+                android:layout_weight="0.24"
                 android:fontFamily="@font/behdad"
                 android:gravity="center_vertical"
                 android:inputType="textMultiLine"
@@ -48,7 +49,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:layout_weight="0.17"
+                android:layout_weight="0.15"
                 android:fontFamily="@font/behdad"
                 android:gravity="center_vertical"
                 android:text="برابر با:"
@@ -60,7 +61,58 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.5">
+                android:layout_weight="0.6">
+
+                <ImageView
+                    android:id="@+id/calendar3"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/value2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/value2"
+                    app:srcCompat="@mipmap/calender" />
+
+                <ImageView
+                    android:id="@+id/calendar2"
+                    android:layout_width="35dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/value"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@mipmap/calender" />
+
+                <EditText
+                    android:id="@+id/value2"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/background_layout_light_gray2"
+                    android:ems="10"
+                    android:fontFamily="@font/behdad"
+                    android:hint="تاریخ پایان"
+                    android:inputType="textPersonName"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue_sky2"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/calendar3"
+                    app:layout_constraintTop_toBottomOf="@+id/value"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:visibility="visible" />
 
                 <EditText
                     android:id="@+id/value"
@@ -84,8 +136,10 @@
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/calendar2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:visibility="visible" />
 
 
                 <RelativeLayout
@@ -103,7 +157,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone">
 
                     <ProgressBar
                         android:id="@+id/progress"

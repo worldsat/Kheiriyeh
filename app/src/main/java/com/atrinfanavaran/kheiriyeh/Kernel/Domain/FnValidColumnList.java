@@ -24,7 +24,7 @@ public class FnValidColumnList extends BaseDomain {
 
 
     public FnValidColumnList() {
-        setApiAddress("api/pgFnValidColumnList");
+        setApiAddresss("api/pgFnValidColumnList");
         setTableName("t_ValidColumnList");
     }
 

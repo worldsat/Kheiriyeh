@@ -11,6 +11,52 @@ public class SettingsBll {
     private final String DEFAULT_PORT = "0";
     private final String DEFAULT_PORT2 = "0";
     private String logoAddress;
+    private boolean isActive;
+    private boolean isAccessBox;
+    private boolean isAccessFinancialAid;
+    private boolean isAccessFlowerCrown;
+    private boolean isAccessSponsor;
+    private boolean id;
+
+    public boolean isActive() {
+        return preferences.getBoolean("isActive", false);
+    }
+
+    public void setActive(boolean active) {
+        preferences.edit().putBoolean("isActive", active).apply();
+    }
+
+    public boolean isAccessBox() {
+        return preferences.getBoolean("isAccessBox", false);
+    }
+
+    public void setAccessBox(boolean accessBox) {
+        preferences.edit().putBoolean("isAccessBox", accessBox).apply();
+    }
+
+    public boolean isAccessFinancialAid() {
+        return preferences.getBoolean("isAccessFinancialAid", false);
+    }
+
+    public void setAccessFinancialAid(boolean accessFinancialAid) {
+        preferences.edit().putBoolean("isAccessFinancialAid", accessFinancialAid).apply();
+    }
+
+    public boolean isAccessFlowerCrown() {
+        return preferences.getBoolean("isAccessFlowerCrown", false);
+    }
+
+    public void setAccessFlowerCrown(boolean accessFlowerCrown) {
+        preferences.edit().putBoolean("isAccessFlowerCrown", accessFlowerCrown).apply();
+    }
+
+    public boolean isAccessSponsor() {
+        return preferences.getBoolean("isAccessSponsor", false);
+    }
+
+    public void setAccessSponsor(boolean accessSponsor) {
+        preferences.edit().putBoolean("isAccessSponsor", accessSponsor).apply();
+    }
 
     public SettingsBll(Context context) {
         this.context = context;
@@ -71,6 +117,24 @@ public class SettingsBll {
         return preferences.getString("UserId", null);
     }
 
+
+    public void setCharityId(int CharityId) {
+        preferences.edit().putInt("CharityId", CharityId).apply();
+    }
+
+    public int getCharityId() {
+        return preferences.getInt("CharityId", 0);
+    }
+
+    public void setCharity(String Charity) {
+        preferences.edit().putString("CharityId", Charity).apply();
+    }
+
+    public String getCharity() {
+        return preferences.getString("Charity", "-");
+    }
+
+
     public void setUserId(String token) {
         preferences.edit().putString("UserId", token).apply();
     }
@@ -79,6 +143,7 @@ public class SettingsBll {
         preferences.edit().putString("Token", null).apply();
         setLoging(false);
     }
+
 
     public String getUserPostId() {
         return preferences.getString("UserPostId", null);

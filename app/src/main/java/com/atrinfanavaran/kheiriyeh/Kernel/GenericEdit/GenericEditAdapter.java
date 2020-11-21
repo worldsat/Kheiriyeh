@@ -147,7 +147,7 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         //populate spinner
         DomainInfo item = domainInfos.get(position);
         GenericListBll bll = new GenericListBll(holder.itemView.getContext());
-        bll.populateSpinner(item.getId(), null, item.getViewType(), item.getApiAddress(), new CallBackSpinner() {
+        bll.populateSpinner(item.getId(), null, item.getViewType(), item.getApiAddresss(), new CallBackSpinner() {
             @Override
             public void onSuccess(ArrayList<SpinnerDomain> response) {
 
@@ -391,7 +391,7 @@ public class GenericEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return DATE_CALENDAR_EDIT_TEXT;
         } else if (item.getViewType().equals(ViewType.DATE_EDIT_TEXT.name())) {
             return DATE_EDIT_TEXT;
-        } else if (!item.getApiAddress().isEmpty()) {
+        } else if (!item.getApiAddresss().isEmpty()) {
             return SPINNER;
         } else if (item.getViewType().equals(ViewType.CHECK_BOX.name())) {
             return CHECK_BOX;

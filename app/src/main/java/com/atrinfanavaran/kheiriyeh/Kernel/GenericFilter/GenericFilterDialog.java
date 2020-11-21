@@ -1,12 +1,15 @@
 package com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -68,7 +71,7 @@ public class GenericFilterDialog extends Dialog {
 
         GenericFilterAdapter genericFilterAdapter = new GenericFilterAdapter(
                 filterDomains,
-                filteredDomain,
+                filteredDomain, (Activity) context,
                 () -> {
                     dismiss();
                     onApply.onApply(filteredDomain);

@@ -56,6 +56,21 @@ public class QuickListAdapter extends RecyclerView.Adapter<QuickListAdapter.View
                 holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("3"));
                 break;
             }
+            case 4: {
+//                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addroute));
+                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("4"));
+                break;
+            }
+            case 5: {
+//                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addroute));
+                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("5"));
+                break;
+            }
+            case 6: {
+//                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.addroute));
+                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("6"));
+                break;
+            }
         }
     }
 

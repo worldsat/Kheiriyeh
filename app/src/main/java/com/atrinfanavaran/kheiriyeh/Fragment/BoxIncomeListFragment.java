@@ -1,7 +1,9 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
 import androidx.room.Room;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -14,11 +16,13 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter.GenericFilterDialog;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.BoxR;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +53,10 @@ public class BoxIncomeListFragment extends Fragment {
     private FloatingActionButton floatingActionButton1;
     private TextView titleToolbar;
     private TextView emptyText;
-    private   List<BoxIncomeR> list;
+    private List<BoxIncomeR> list;
     private HashMap<Integer, FilteredDomain> result = new HashMap<>();
     private LinearLayout filterBtn;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +91,8 @@ public class BoxIncomeListFragment extends Fragment {
         list = db.BoxIncomeDao().getAll();
         if (list.size() == 0) {
             emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.setVisibility(View.GONE);
         }
         adapter = new BoxIncomeListAdapter(list, new onCallBackBoxIncomeEdit() {
             @Override
@@ -111,6 +118,7 @@ public class BoxIncomeListFragment extends Fragment {
         });
 
     }
+
     public void showFilterDialog() {
         Class DOMAIN = BoxIncome.class;
 
@@ -140,7 +148,13 @@ public class BoxIncomeListFragment extends Fragment {
                     if (filters != null && filters.size() > 0) {
                         filterStr.append(" where 1=1 ");
                         for (int i = 0; i < filters.size(); i++) {
-                            filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
+                            if (filters.get(i).getField().equals("assignmentDateEn")) {
+                                String[] dates = filters.get(i).getValue().split("__");
+                                String str = " and " + filters.get(i).getField() + " BETWEEN '" + dates[0] + "' and '" + dates[1] + "'";
+                                filterStr.append(str);
+                            } else {
+                                filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
+                            }
                         }
                     }
 
@@ -148,6 +162,7 @@ public class BoxIncomeListFragment extends Fragment {
                         list.clear();
                     }
 
+                    Log.i("moh3n", "showFilterDialog: " + filterStr);
                     list = db.BoxIncomeDao().getfilter(new SimpleSQLiteQuery("SELECT * FROM BoxIncomeR  " + filterStr));
                     if (list.size() == 0) {
                         emptyText.setVisibility(View.VISIBLE);
@@ -165,6 +180,7 @@ public class BoxIncomeListFragment extends Fragment {
                 });
         filterDialog.show();
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

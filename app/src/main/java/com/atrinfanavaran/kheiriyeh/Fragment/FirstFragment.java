@@ -1,14 +1,18 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.room.Room;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +57,7 @@ public class FirstFragment extends Fragment {
     private AppDatabase db;
     private TextView titleToolbar;
     private LinearLayout filterBtn;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,11 +167,23 @@ public class FirstFragment extends Fragment {
     }
 
     private void quickList() {
+        SettingsBll settingsBll = new SettingsBll(getActivity());
         ArrayList<String> list = new ArrayList<>();
-        list.add("تخلیه");
-        list.add("افزودن");
-        list.add("آدرس ها");
-        list.add("افزودن آدرس");
+//        if (settingsBll.isAccessBox()) {
+            list.add("تخلیه صندوق");
+            list.add("افزودن صندوق");
+            list.add("آدرس ها");
+            list.add("افزودن آدرس");
+//        }
+//        if (settingsBll.isAccessFlowerCrown()) {
+            list.add("تاج گل");
+//        }
+//        if (settingsBll.isAccessFinancialAid()) {
+            list.add("مشارکت");
+//        }
+//        if (settingsBll.isAccessSponsor()) {
+            list.add("کمک نقدی");
+//        }
         adapter1 = new QuickListAdapter(list, new onCallBackQuickList() {
             @Override
             public void goTo(String page) {
@@ -174,7 +191,7 @@ public class FirstFragment extends Fragment {
             }
         });
         row1.setAdapter(adapter1);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 2);
         row1.setLayoutManager(linearLayoutManager);
 
     }
