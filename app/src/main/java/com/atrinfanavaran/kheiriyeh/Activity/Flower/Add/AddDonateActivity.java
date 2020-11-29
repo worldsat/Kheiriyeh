@@ -19,6 +19,8 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.DonatorR;
 
+import java.util.UUID;
+
 public class AddDonateActivity extends BaseActivity {
 
 
@@ -66,10 +68,12 @@ public class AddDonateActivity extends BaseActivity {
                 donatorR.donatorMobile = edt3.getText().toString();
                 if (editable) {
                     donatorR.id = object.getId();
+
                     db().DonatorDao().update(donatorR.donatorFullName, donatorR.donatorAlias, donatorR.donatorMobile, donatorR.id);
                     Toast.makeText(AddDonateActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
                     donatorR.isNew = "true";
+                    donatorR.guidDonator = UUID.randomUUID().toString();
                     db().DonatorDao().insertBox(donatorR);
                     Toast.makeText(AddDonateActivity.this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 }
@@ -85,6 +89,7 @@ public class AddDonateActivity extends BaseActivity {
 
         }
         filterIcon.setVisibility(View.GONE);
+        backIcon.setVisibility(View.VISIBLE);
         backIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

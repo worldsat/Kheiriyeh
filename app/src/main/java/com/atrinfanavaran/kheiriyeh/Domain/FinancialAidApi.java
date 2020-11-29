@@ -1,11 +1,42 @@
 package com.atrinfanavaran.kheiriyeh.Domain;
 
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.BaseDomain;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewMode;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FinancialAidApi extends BaseDomain {
+
+    public FinancialAidApi() {
+        setApiAddresss("api/FinancialAid");
+
+        ArrayList<DomainInfo> domainInfoList = new ArrayList<>();
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "name",
+                "نام ",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "price",
+                "مبلغ",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        domainInfoList.add(new DomainInfo(
+                ViewMode.FILTER.name(),
+                "financialServiceType",
+                "نوع",
+                "",
+                ViewType.EDIT_TEXT.name())
+        );
+        setDomainInfo(domainInfoList);
+    }
 
     /**
      * data : [{"id":1,"name":"تست","price":1000,"charityId":1,"charity":null,"opratorId":1,"financialServiceTypeId":1,"financialServiceType":null}]

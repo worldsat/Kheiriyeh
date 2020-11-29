@@ -1,9 +1,11 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import com.atrinfanavaran.kheiriyeh.Domain.Route;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackRoute1;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
+
+import java.util.UUID;
 
 
 public class AddRouteFragment extends Fragment {
@@ -64,7 +68,8 @@ public class AddRouteFragment extends Fragment {
             if (editable) {
                 routeR.id = this.route.getid();
             } else {
-                routeR.isNew="true";
+                routeR.isNew = "true";
+                routeR.guidDischargeRoute = UUID.randomUUID().toString();
             }
             onCallBack.SaveRoute1(routeR, editable);
         });

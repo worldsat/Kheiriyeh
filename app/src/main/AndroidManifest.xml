@@ -23,10 +23,12 @@
         <activity android:name=".Activity.Flower.Add.AddTajGolActivity"></activity>
         <activity android:name=".Activity.Flower.Add.AddDeceasedNameActivity"></activity>
         <activity android:name=".Activity.Flower.List.DeceasedNameListItemActivity"></activity>
+        <activity android:name=".Activity.Financial.List.FinancialAidListItemActivity"></activity>
+        <activity android:name=".Activity.Financial.Add.AddFinancialAidActivity"></activity>
         <activity android:name=".Activity.AddKhayerActivity"></activity>
         <activity android:name=".Activity.ActivityDesigner"></activity>
         <activity android:name=".Activity.Sponser.List.SponsorListItemActivity"></activity>
-        <activity android:name=".Activity.Sponser.List.ContributaionListItemActivity">
+        <activity android:name=".Activity.Sponser.List.ContributionListItemActivity">
 
         </activity>
         <activity android:name=".Activity.Flower.Add.AddDonateActivity"></activity>
@@ -58,7 +60,16 @@
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Map2Activity" />
         <activity android:name=".Activity.MainActivity"></activity>
-        <activity android:name=".Activity.ListActivity"></activity>
+        <activity android:name=".Activity.FinancialListActivity"></activity>
+        <provider
+            android:name=".Kernel.Helper.GenericFileProvider"
+            android:authorities="${applicationId}.my.package.name.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

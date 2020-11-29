@@ -204,11 +204,46 @@ public class GenericFilterAdapter extends RecyclerView.Adapter<GenericFilterAdap
                     if (domain.getApiAddresss().equals("BetweenCalendar")) {
 
                         holder.switchKey.setChecked(true);
-
+                        roozh roozh = new roozh();
                         if (filteredDomain != null) {
-                            String[] date = (filteredDomain).getValue().split("__");
-                            holder.valueEditTex.setText(date[0]);
-                            holder.valueEditTex2.setText(date[1]);
+                            String[] dateAll = (filteredDomain).getValue().split("__");
+                            String[] date = dateAll[0].split("/");
+                            roozh.GregorianToPersian(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+//                            String month = "";
+//                            if (roozh.getMonth() < 10) {
+//                                month = "0" + roozh.getMonth();
+//                            } else {
+//                                month = String.valueOf(roozh.getMonth());
+//                            }
+//
+//                            String day = "";
+//                            if (roozh.getDay() < 10) {
+//                                day = "0" + roozh.getDay();
+//                            } else {
+//                                day = String.valueOf(roozh.getDay());
+//                            }
+                            String dateStart = roozh.getYear() + "/" + roozh.getMonth() + "/" + roozh.getDay();
+
+                            holder.valueEditTex.setText(dateStart);
+
+                            //***********************************************
+                            String[] date2 = dateAll[1].split("/");
+                            roozh.GregorianToPersian(Integer.valueOf(date2[0]), Integer.valueOf(date2[1]), Integer.valueOf(date2[2]));
+//                            String month2 = "";
+//                            if (roozh.getMonth() < 10) {
+//                                month2 = "0" + roozh.getMonth();
+//                            } else {
+//                                month2 = String.valueOf(roozh.getMonth());
+//                            }
+//
+//                            String day2 = "";
+//                            if (roozh.getDay() < 10) {
+//                                day2 = "0" + roozh.getDay();
+//                            } else {
+//                                day2 = String.valueOf(roozh.getDay());
+//                            }
+                            String dateEnd = roozh.getYear() + "/" + roozh.getMonth() + "/" + roozh.getDay();
+                            holder.valueEditTex2.setText(dateEnd);
                         }
                     } else if (domain.getViewType().equals(ViewType.EDIT_TEXT.name()) || domain.getViewType().equals(ViewType.TEXT_VIEW.name())) {
                         //editText

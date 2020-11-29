@@ -84,11 +84,13 @@ public class AddBoxFragment extends Fragment {
                 .build();
         List<RouteR> Routes = db.RouteDao().getAll();
         List<String> Routes2 = new ArrayList<>();
+        List<String> RoutesGuid = new ArrayList<>();
         List<Integer> RoutesId = new ArrayList<>();
         Routes2.add("انتخاب کنید");
         for (int i = 0; i < Routes.size(); i++) {
             Routes2.add(Routes.get(i).code + ":" + Routes.get(i).address);
             RoutesId.add(Routes.get(i).id);
+            RoutesGuid.add(Routes.get(i).guidDischargeRoute);
         }
 
 
@@ -106,6 +108,7 @@ public class AddBoxFragment extends Fragment {
             try {
                 for (int i = 0; i < RoutesId.size(); i++) {
                     if (RoutesId.get(i).equals(Integer.valueOf(box.getDischargeRouteId()))) {
+
                         spinner.setSelection(i + 1);
                         break;
                     }
@@ -125,11 +128,12 @@ public class AddBoxFragment extends Fragment {
             String str = "";
             for (int i = 0; i < Routes.size(); i++) {
                 if (Routes.get(i).code.equals(code[0])) {
-                    str = String.valueOf(RoutesId.get(i));
+                    str = String.valueOf(RoutesGuid.get(i));
                 }
             }
 
-            box.dischargeRouteId = str;
+//            box.dischargeRouteId = str;
+            box.guidDischargeRoute = str;
 
             box.assignmentDate = edt1_5.getText().toString().trim();
 

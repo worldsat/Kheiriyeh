@@ -14,12 +14,21 @@ public class BoxApi extends BaseDomain {
     private String lat;
     private String lon;
     private String dischargeRouteId;
+    private String guidDischargeRoute;
     private String boxId;
 
 
 
     public BoxApi() {
         setApiAddresss("api/Box");
+    }
+
+    public String getGuidDischargeRoute() {
+        return guidDischargeRoute;
+    }
+
+    public void setGuidDischargeRoute(String guidDischargeRoute) {
+        this.guidDischargeRoute = guidDischargeRoute;
     }
 
     public String getassignmentDateEn() {

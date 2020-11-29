@@ -25,6 +25,7 @@ import com.atrinfanavaran.kheiriyeh.Room.Domian.FlowerCrownR;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AddDeceasedNameActivity extends BaseActivity {
 
@@ -81,6 +82,7 @@ public class AddDeceasedNameActivity extends BaseActivity {
                     Toast.makeText(AddDeceasedNameActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
                     deceasedNameR.isNew = "true";
+                    deceasedNameR.guidDeceasedName = UUID.randomUUID().toString();
                     db().DeceasedNameDao().insertBox(deceasedNameR);
                     Toast.makeText(AddDeceasedNameActivity.this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 }
@@ -95,6 +97,7 @@ public class AddDeceasedNameActivity extends BaseActivity {
         }
 
         filterIcon.setVisibility(View.GONE);
+        backIcon.setVisibility(View.VISIBLE);
         backIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

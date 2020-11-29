@@ -87,8 +87,17 @@ public class DeceasedNameApi extends BaseDomain {
         private int id;
         private String deceasedFullName;
         private String deceaseAalias;
+        private String guidDeceasedName;
         private boolean deceasedSex;
         private int charityId;
+
+        public String getGuidDeceasedName() {
+            return guidDeceasedName;
+        }
+
+        public void setGuidDeceasedName(String guidDeceasedName) {
+            this.guidDeceasedName = guidDeceasedName;
+        }
 
         public int getId() {
             return id;

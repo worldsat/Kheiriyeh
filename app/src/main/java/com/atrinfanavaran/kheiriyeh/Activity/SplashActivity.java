@@ -1,7 +1,11 @@
 package com.atrinfanavaran.kheiriyeh.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -9,10 +13,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
 import com.atrinfanavaran.kheiriyeh.Domain.Charity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.bumptech.glide.Glide;
@@ -68,7 +77,7 @@ public class SplashActivity extends BaseActivity {
                     settingsBll.setAccessFinancialAid(charity.isIsAccessFinancialAid());
                     settingsBll.setAccessFlowerCrown(charity.isIsAccessFlowerCrown());
                     settingsBll.setAccessSponsor(charity.isIsAccessSponsor());
-//                    if (settingsBll.isAccessBox()) {
+                    if (settingsBll.isAccessBox()) {
 
                         SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
                         if (sp != null) {
@@ -79,9 +88,9 @@ public class SplashActivity extends BaseActivity {
                                 startActivity(intent);
                             }
                         }
-//                    } else {
-//                        SnakBar("حساب کاربری شما مسدود می باشد");
-//                    }
+                    } else {
+                        SnakBar("حساب کاربری شما مسدود می باشد");
+                    }
 
                 } catch (Exception e) {
                     Log.i(TAG, "onSuccess4: " + e);

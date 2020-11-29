@@ -181,4 +181,22 @@ public class BaseActivity extends AppCompatActivity {
         }
         return roozh.getYear() + "/" + month + "/" + day;
     }
+
+    public StringBuilder filteringDate(ArrayList<Filter> filters) {
+        StringBuilder filterStr = new StringBuilder();
+
+        if (filters != null && filters.size() > 0) {
+            filterStr.append(" where 1=1 ");
+            for (int i = 0; i < filters.size(); i++) {
+                if (filters.get(i).getField().equals("assignmentDateEn")||filters.get(i).getField().equals("registerDateEn")) {
+                    String[] dates = filters.get(i).getValue().split("__");
+                    String str = " and " + filters.get(i).getField() + " BETWEEN '" + dates[0] + "' and '" + dates[1] + "'";
+                    filterStr.append(str);
+                } else {
+                    filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
+                }
+            }
+        }
+        return filterStr;
+    }
 }

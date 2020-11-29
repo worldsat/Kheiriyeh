@@ -41,6 +41,8 @@ public class BoxR {
 
     @ColumnInfo(name = "dischargeRouteId")
     public String dischargeRouteId;
+  @ColumnInfo(name = "guidDischargeRoute")
+    public String guidDischargeRoute;
 
     @ColumnInfo(name = "code2")
     public String code2;

@@ -1,4 +1,4 @@
-package com.atrinfanavaran.kheiriyeh.Adapter;
+package com.atrinfanavaran.kheiriyeh.Adapter.Sponsor;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,10 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.DeceasedNameListItemActivity;
-import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.DonatorListItemActivity;
-import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.TajGolListItemActivity;
-import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.ContributaionListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.ContributionListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.SponsorListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.R;
@@ -46,7 +43,7 @@ public class SponsorListAdapter extends RecyclerView.Adapter<SponsorListAdapter.
             @Override
             public void onClick(View v) {
                 if (position == 0) {
-                    Intent intent = new Intent(holder.itemView.getContext(), ContributaionListItemActivity.class);
+                    Intent intent = new Intent(holder.itemView.getContext(), ContributionListItemActivity.class);
                     holder.itemView.getContext().startActivity(intent);
                 } else if (position == 1) {
                     Intent intent = new Intent(holder.itemView.getContext(), SponsorListItemActivity.class);

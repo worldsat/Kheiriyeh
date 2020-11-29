@@ -13,6 +13,7 @@ public class Route extends BaseDomain {
  private String  address;
  private String  lat;
  private String  lon;
+ private String  guidDischargeRoute;
  private int  id;
 
     public Route() {
@@ -40,6 +41,14 @@ public class Route extends BaseDomain {
                 ViewType.EDIT_TEXT.name())
         );
         setDomainInfo(domainInfoList);
+    }
+
+    public String getguidDischargeRoute() {
+        return guidDischargeRoute;
+    }
+
+    public void setguidDischargeRoute(String guidDischargeRoute) {
+        this.guidDischargeRoute = guidDischargeRoute;
     }
 
     public String getcode() {

@@ -25,9 +25,9 @@ public interface FinancialAidDao {
     @Query("delete FROM FinancialAidR")
     void deleteAll();
 
-    @Query("update  RouteR set code=:code,day=:day,address=:address,code=:code,isNew=:isnew" +
+    @Query("update  FinancialAidR set name=:name,price=:price,financialServiceTypeId=:financialServiceTypeId" +
             " WHERE id like (:id)")
-    void update(String code, String day, String address, int id, String isnew);
+    void update(String name, int price, int financialServiceTypeId, int id);
 
     @Query("Delete from  FinancialAidR  " +
             " WHERE id like (:id)")

@@ -1,4 +1,4 @@
-package com.atrinfanavaran.kheiriyeh.Activity.Flower.List;
+package com.atrinfanavaran.kheiriyeh.Activity.Financial.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
+import com.atrinfanavaran.kheiriyeh.Activity.Financial.Add.AddFinancialAidActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddDonateActivity;
+import com.atrinfanavaran.kheiriyeh.Adapter.FinancialAid.FinancialAidListAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.Flower.DonatorListAdapter;
 import com.atrinfanavaran.kheiriyeh.Domain.DonatorApi;
-import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
+import com.atrinfanavaran.kheiriyeh.Domain.FinancialAidApi;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.Filter;
@@ -23,7 +25,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter.GenericFilterDialog;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.DonatorR;
-import com.google.android.gms.common.api.Api;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.FinancialAidR;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class DonatorListItemActivity extends BaseActivity {
+public class FinancialAidListItemActivity extends BaseActivity {
 
 
     private Toolbar my_toolbar;
@@ -44,7 +46,7 @@ public class DonatorListItemActivity extends BaseActivity {
 
     private HashMap<Integer, FilteredDomain> result = new HashMap<>();
     private LinearLayout filterBtn, backButton;
-    private List<DonatorR> list = new ArrayList<>();
+    private List<FinancialAidR> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,24 +60,24 @@ public class DonatorListItemActivity extends BaseActivity {
     }
 
     private void setvariable() {
-        title.setText("لیست اهدا کننده");
+        title.setText("لیست کمک های نقدی");
         addBtn.setOnClickListener(v -> {
             finish();
-            startActivity(new Intent(DonatorListItemActivity.this, AddDonateActivity.class));
+            startActivity(new Intent(FinancialAidListItemActivity.this, AddFinancialAidActivity.class));
 
         });
 
 
-        list.addAll(db().DonatorDao().getAll());
+        list.addAll(db().FinancialAidDao().getAll());
         if (list.size() > 0) {
             emptyText.setVisibility(View.GONE);
-            adapter1 = new DonatorListAdapter(list);
+            adapter1 = new FinancialAidListAdapter(list);
             row1.setAdapter(adapter1);
 
         } else {
             emptyText.setVisibility(View.VISIBLE);
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DonatorListItemActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FinancialAidListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
 
         filterBtn.setVisibility(View.VISIBLE);
@@ -120,7 +122,7 @@ public class DonatorListItemActivity extends BaseActivity {
     }
 
     public void showFilterDialog() {
-        Class DOMAIN = DonatorApi.class;
+        Class DOMAIN = FinancialAidApi.class;
 
         GenericFilterDialog filterDialog = new GenericFilterDialog(
                 this,
@@ -150,14 +152,14 @@ public class DonatorListItemActivity extends BaseActivity {
                         list.clear();
                     }
 
-                    list = db().DonatorDao().getfilter(new SimpleSQLiteQuery("SELECT * from DonatorR  " + filterStr));
+                    list = db().FinancialAidDao().getfilter(new SimpleSQLiteQuery("SELECT * from FinancialAidR  " + filterStr));
                     if (list.size() == 0) {
                         emptyText.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         emptyText.setVisibility(View.GONE);
                     }
 
-                    adapter1 = new DonatorListAdapter(list);
+                    adapter1 = new FinancialAidListAdapter(list);
                     row1.setAdapter(adapter1);
 
                 });

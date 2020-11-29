@@ -363,7 +363,7 @@ public class Controller {
             Class superClass = domain.getSuperclass();
 
 //            Method getTableName = superClass.getDeclaredMethod("getTableName");
-            Method getApiAddress = superClass.getDeclaredMethod("getApiAddress");
+            Method getApiAddress = superClass.getDeclaredMethod("getApiAddresss");
 
 //            String tableName = (String) getTableName.invoke(instance);
             String apiName = (String) getApiAddress.invoke(instance);

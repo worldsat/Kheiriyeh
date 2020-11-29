@@ -17,6 +17,7 @@ import com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddSponsorActivity;
 import com.atrinfanavaran.kheiriyeh.Adapter.Flower.TajGolListAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.Sponsor.SponsorListItemAdapter;
 import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
+import com.atrinfanavaran.kheiriyeh.Domain.SponsorApi;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.Filter;
@@ -60,7 +61,11 @@ public class SponsorListItemActivity extends BaseActivity {
 
     private void setvariable() {
         title.setText("لیست حامیان");
-        addBtn.setOnClickListener(v -> startActivity(new Intent(SponsorListItemActivity.this, AddSponsorActivity.class)));
+        addBtn.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(SponsorListItemActivity.this, AddSponsorActivity.class));
+
+        });
 
 
         list.addAll(db().SponsorDao().getAll());
@@ -117,7 +122,7 @@ public class SponsorListItemActivity extends BaseActivity {
     }
 
     public void showFilterDialog() {
-        Class DOMAIN = FlowerCrownApi.class;
+        Class DOMAIN = SponsorApi.class;
 
         GenericFilterDialog filterDialog = new GenericFilterDialog(
                 this,
@@ -141,19 +146,7 @@ public class SponsorListItemActivity extends BaseActivity {
                             filters.add(new Filter(entry.getKey(), entry.getValue()));
                         }
                     }
-                    StringBuilder filterStr = new StringBuilder();
-                    if (filters != null && filters.size() > 0) {
-                        filterStr.append(" where 1=1 ");
-                        for (int i = 0; i < filters.size(); i++) {
-                            if (filters.get(i).getField().equals("assignmentDateEn")) {
-                                String[] dates = filters.get(i).getValue().split("__");
-                                String str = " and " + filters.get(i).getField() + " BETWEEN '" + dates[0] + "' and '" + dates[1] + "'";
-                                filterStr.append(str);
-                            } else {
-                                filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
-                            }
-                        }
-                    }
+                    StringBuilder filterStr = filteringDate(filters);
 
                     if (adapter1 != null) {
                         list.clear();
@@ -162,7 +155,7 @@ public class SponsorListItemActivity extends BaseActivity {
                     list = db().SponsorDao().getfilter(new SimpleSQLiteQuery("SELECT * from SponsorR  " + filterStr));
                     if (list.size() == 0) {
                         emptyText.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         emptyText.setVisibility(View.GONE);
                     }
 

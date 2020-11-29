@@ -19,7 +19,7 @@ import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.SponsorR;
 
 @Database(entities = {BoxIncomeR.class, BoxR.class, FlowerCrownTypeR.class, FinancialServiceTypeR.class, FinancialAidR.class, FlowerCrownR.class, DonatorR.class, DeceasedNameR.class, SponsorR.class, RouteR.class, ContributionR.class, User.class, User2.class}
-        , version = 19)
+        , version = 21)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 

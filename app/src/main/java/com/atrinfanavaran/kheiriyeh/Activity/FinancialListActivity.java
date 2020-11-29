@@ -1,8 +1,7 @@
-package com.atrinfanavaran.kheiriyeh.Activity.Flower;
+package com.atrinfanavaran.kheiriyeh.Activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -19,7 +18,7 @@ import com.atrinfanavaran.kheiriyeh.R;
 
 import java.util.ArrayList;
 
-public class FlowerCrownListActivity extends BaseActivity {
+public class FinancialListActivity extends BaseActivity {
 
 
     private Toolbar my_toolbar;
@@ -39,13 +38,15 @@ public class FlowerCrownListActivity extends BaseActivity {
     }
 
     private void setvariable() {
-        title.setText("تاج گل");
+        title.setText("لیست");
 
         ArrayList<String> list = new ArrayList<>();
-        list.add("لیست تاج گل");
-        list.add(" اهدا کننده");
-        list.add(" متوفی");
-
+        list.add("ثبت درآمد");
+        list.add("افزودن خیرین و حامیان");
+        list.add("گزارش خیرین");
+        list.add("گزارش درآمدها");
+        list.add("دریافت اطلاعات");
+        list.add("ارسال اطلاعات");
         adapter1 = new MenuListAdapter(list, new onCallBackQuickList() {
             @Override
             public void goTo(String page) {
@@ -53,12 +54,8 @@ public class FlowerCrownListActivity extends BaseActivity {
             }
         });
         row1.setAdapter(adapter1);
-        LinearLayoutManager linearLayoutManager = new GridLayoutManager(FlowerCrownListActivity.this, 2);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(FinancialListActivity.this, 2);
         row1.setLayoutManager(linearLayoutManager);
-
-        LinearLayout backButton = findViewById(R.id.backButton);
-        backButton.setVisibility(View.VISIBLE);
-        backButton.setOnClickListener(v -> finish());
     }
 
 

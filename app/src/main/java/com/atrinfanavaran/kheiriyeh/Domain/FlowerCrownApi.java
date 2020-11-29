@@ -131,11 +131,38 @@ public class FlowerCrownApi extends BaseDomain {
         private int price;
         private int ceremonyType;
         private int charityId;
-        private Object charity;
+        private String charity;
         private int opratorId;
         private int flowerCrownTypeId;
-        private Object flowerCrownType;
+        private String flowerCrownType;
         private String registerDate;
+        private int deceasedNameId;
+        private int donatorId;
+        private int introducedId;
+
+        public int getDeceasedNameId() {
+            return deceasedNameId;
+        }
+
+        public void setDeceasedNameId(int deceasedNameId) {
+            this.deceasedNameId = deceasedNameId;
+        }
+
+        public int getDonatorId() {
+            return donatorId;
+        }
+
+        public void setDonatorId(int donatorId) {
+            this.donatorId = donatorId;
+        }
+
+        public int getIntroducedId() {
+            return introducedId;
+        }
+
+        public void setIntroducedId(int introducedId) {
+            this.introducedId = introducedId;
+        }
 
         public int getId() {
             return id;
@@ -185,11 +212,11 @@ public class FlowerCrownApi extends BaseDomain {
             this.charityId = charityId;
         }
 
-        public Object getCharity() {
+        public String getCharity() {
             return charity;
         }
 
-        public void setCharity(Object charity) {
+        public void setCharity(String charity) {
             this.charity = charity;
         }
 
@@ -209,11 +236,11 @@ public class FlowerCrownApi extends BaseDomain {
             this.flowerCrownTypeId = flowerCrownTypeId;
         }
 
-        public Object getFlowerCrownType() {
+        public String getFlowerCrownType() {
             return flowerCrownType;
         }
 
-        public void setFlowerCrownType(Object flowerCrownType) {
+        public void setFlowerCrownType(String flowerCrownType) {
             this.flowerCrownType = flowerCrownType;
         }
 

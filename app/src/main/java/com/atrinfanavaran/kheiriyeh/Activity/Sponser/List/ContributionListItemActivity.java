@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddContributionActivity;
-import com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddSponsorActivity;
 import com.atrinfanavaran.kheiriyeh.Adapter.Sponsor.ContributionListItemAdapter;
-import com.atrinfanavaran.kheiriyeh.Adapter.Sponsor.SponsorListItemAdapter;
+import com.atrinfanavaran.kheiriyeh.Domain.ContributionApi;
 import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
@@ -24,7 +23,6 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter.GenericFilterDialog;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.ContributionR;
-import com.atrinfanavaran.kheiriyeh.Room.Domian.SponsorR;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ContributaionListItemActivity extends BaseActivity {
+public class ContributionListItemActivity extends BaseActivity {
 
 
     private Toolbar my_toolbar;
@@ -60,7 +58,11 @@ public class ContributaionListItemActivity extends BaseActivity {
 
     private void setvariable() {
         title.setText("لیست مشارکت ها");
-        addBtn.setOnClickListener(v -> startActivity(new Intent(ContributaionListItemActivity.this, AddContributionActivity.class)));
+        addBtn.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(ContributionListItemActivity.this, AddContributionActivity.class));
+
+        });
 
 
         list.addAll(db().ContributaionDao().getAll());
@@ -72,7 +74,7 @@ public class ContributaionListItemActivity extends BaseActivity {
         } else {
             emptyText.setVisibility(View.VISIBLE);
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ContributaionListItemActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ContributionListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
 
         filterBtn.setVisibility(View.VISIBLE);
@@ -117,7 +119,7 @@ public class ContributaionListItemActivity extends BaseActivity {
     }
 
     public void showFilterDialog() {
-        Class DOMAIN = FlowerCrownApi.class;
+        Class DOMAIN = ContributionApi.class;
 
         GenericFilterDialog filterDialog = new GenericFilterDialog(
                 this,
@@ -141,19 +143,7 @@ public class ContributaionListItemActivity extends BaseActivity {
                             filters.add(new Filter(entry.getKey(), entry.getValue()));
                         }
                     }
-                    StringBuilder filterStr = new StringBuilder();
-                    if (filters != null && filters.size() > 0) {
-                        filterStr.append(" where 1=1 ");
-                        for (int i = 0; i < filters.size(); i++) {
-                            if (filters.get(i).getField().equals("assignmentDateEn")) {
-                                String[] dates = filters.get(i).getValue().split("__");
-                                String str = " and " + filters.get(i).getField() + " BETWEEN '" + dates[0] + "' and '" + dates[1] + "'";
-                                filterStr.append(str);
-                            } else {
-                                filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
-                            }
-                        }
-                    }
+                    StringBuilder filterStr = filteringDate(filters);
 
                     if (adapter1 != null) {
                         list.clear();

@@ -169,21 +169,21 @@ public class FirstFragment extends Fragment {
     private void quickList() {
         SettingsBll settingsBll = new SettingsBll(getActivity());
         ArrayList<String> list = new ArrayList<>();
-//        if (settingsBll.isAccessBox()) {
+        if (settingsBll.isAccessBox()) {
             list.add("تخلیه صندوق");
             list.add("افزودن صندوق");
             list.add("آدرس ها");
             list.add("افزودن آدرس");
-//        }
-//        if (settingsBll.isAccessFlowerCrown()) {
+        }
+        if (settingsBll.isAccessFlowerCrown()) {
             list.add("تاج گل");
-//        }
-//        if (settingsBll.isAccessFinancialAid()) {
+        }
+        if (settingsBll.isAccessFinancialAid()) {
             list.add("مشارکت");
-//        }
-//        if (settingsBll.isAccessSponsor()) {
+        }
+        if (settingsBll.isAccessSponsor()) {
             list.add("کمک نقدی");
-//        }
+        }
         adapter1 = new QuickListAdapter(list, new onCallBackQuickList() {
             @Override
             public void goTo(String page) {

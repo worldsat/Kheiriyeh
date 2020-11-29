@@ -26,4 +26,7 @@ public class RouteR {
 
     @ColumnInfo(name = "isNew")
     public String isNew;
+
+    @ColumnInfo(name = "guidDischargeRoute")
+    public String guidDischargeRoute;
 }

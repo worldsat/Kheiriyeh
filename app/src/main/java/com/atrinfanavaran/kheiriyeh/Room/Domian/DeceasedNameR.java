@@ -24,6 +24,9 @@ public class DeceasedNameR implements Serializable {
     @ColumnInfo(name = "charityId")
     public int charityId;
 
+    @ColumnInfo(name = "guidDeceasedName")
+    public String  guidDeceasedName;
+
 
 
     @ColumnInfo(name = "isNew")
@@ -36,6 +39,13 @@ public class DeceasedNameR implements Serializable {
         return deceasedSexStr;
     }
 
+    public String getGuidDeceasedName() {
+        return guidDeceasedName;
+    }
+
+    public void setGuidDeceasedName(String guidDeceasedName) {
+        this.guidDeceasedName = guidDeceasedName;
+    }
 
     public void setDeceasedSexStr(String deceasedSexStr) {
         this.deceasedSexStr = deceasedSexStr;

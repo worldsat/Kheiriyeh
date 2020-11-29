@@ -9,9 +9,18 @@ public class RouteApi extends BaseDomain {
     private String lat;
     private String lon;
     private String id;
+    private String guidDischargeRoute;
 
     public RouteApi() {
         setApiAddresss("api/DischargeRoute");
+    }
+
+    public String getguidDischargeRoute() {
+        return guidDischargeRoute;
+    }
+
+    public void setguidDischargeRoute(String guidDischargeRoute) {
+        this.guidDischargeRoute = guidDischargeRoute;
     }
 
     public String getlat() {

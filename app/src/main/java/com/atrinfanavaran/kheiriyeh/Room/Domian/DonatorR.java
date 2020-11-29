@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class DonatorR  implements Serializable {
+public class DonatorR implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -29,6 +29,9 @@ public class DonatorR  implements Serializable {
     @ColumnInfo(name = "isSendMessage")
     public boolean isSendMessage;
 
+    @ColumnInfo(name = "guidDonator")
+    public String guidDonator;
+
     @Override
     public String toString() {
         return donatorFullName;
@@ -40,6 +43,14 @@ public class DonatorR  implements Serializable {
     public DonatorR(int id, String donatorFullName) {
         this.id = id;
         this.donatorFullName = donatorFullName;
+    }
+
+    public String getGuidDonator() {
+        return guidDonator;
+    }
+
+    public void setGuidDonator(String guidDonator) {
+        this.guidDonator = guidDonator;
     }
 
     public int getId() {

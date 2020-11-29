@@ -20,6 +20,7 @@ import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.TajGolListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Domain.CeremonyType;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.DeceasedNameR;
@@ -48,6 +49,7 @@ public class AddTajGolActivity extends BaseActivity {
     private SearchableSpinner CeremonySpinner, donatorSpinner, deceasedNameSpinner, FlowerCrownTypeSpinner, inturducedSpinner;
     private ImageView calendarBtn;
     private int ceremonyTypeId = 0, FlowerCrownTypeId = 0, donatorId = 0, DeceasedNameId = 0, IntroducedId = 0;
+    private String donatorGuId, DeceasedNameGuId, IntroducedGuId;
     private boolean editable = false;
     private FlowerCrownR object;
 
@@ -83,22 +85,25 @@ public class AddTajGolActivity extends BaseActivity {
                 flowerCrownR.flowerCrownType = flowerCrownType;
                 flowerCrownR.ceremonyType = ceremonyType;
                 flowerCrownR.ceremonyTypeId = ceremonyTypeId;
-                flowerCrownR.price = Integer.parseInt(edt1.getText().toString());
+                flowerCrownR.price = Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString()));
                 flowerCrownR.registerDate = edt2.getText().toString();
                 flowerCrownR.registerDateEn = shamsiToMiladi(edt2.getText().toString());
                 flowerCrownR.charityId = settingsBll().getCharityId();
                 flowerCrownR.charity = settingsBll().getCharity();
                 flowerCrownR.donator = donator;
                 flowerCrownR.donatorId = donatorId;
+                flowerCrownR.guidDonator = donatorGuId;
                 flowerCrownR.deceasedNameId = DeceasedNameId;
+                flowerCrownR.guidDeceasedName = DeceasedNameGuId;
                 flowerCrownR.deceasedName = deceasedName;
+                flowerCrownR.guidIntroduced = IntroducedGuId;
                 flowerCrownR.IntroducedId = IntroducedId;
                 flowerCrownR.Introduced = Introduced;
 
 
                 if (editable) {
                     flowerCrownR.id = object.getId();
-                    db().FlowerCrownDao().update(flowerCrownR.flowerCrownType, flowerCrownR.deceasedName, flowerCrownR.charity, flowerCrownR.donator, flowerCrownR.donatorId, flowerCrownR.ceremonyTypeId, flowerCrownR.ceremonyType,
+                    db().FlowerCrownDao().update(flowerCrownR.guidIntroduced, flowerCrownR.guidDeceasedName, flowerCrownR.guidDonator, flowerCrownR.flowerCrownType, flowerCrownR.deceasedName, flowerCrownR.charity, flowerCrownR.donator, flowerCrownR.donatorId, flowerCrownR.ceremonyTypeId, flowerCrownR.ceremonyType,
                             flowerCrownR.price, flowerCrownR.registerDate, flowerCrownR.registerDateEn, flowerCrownR.flowerCrownTypeId, flowerCrownR.deceasedNameId, flowerCrownR.id, flowerCrownR.IntroducedId, flowerCrownR.Introduced);
                     Toast.makeText(AddTajGolActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
@@ -117,7 +122,9 @@ public class AddTajGolActivity extends BaseActivity {
 
 
         }
+        edt1.addTextChangedListener(new NumberTextWatcherForThousand(edt1));
         filterIcon.setVisibility(View.GONE);
+        backIcon.setVisibility(View.VISIBLE);
         backIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,8 +228,9 @@ public class AddTajGolActivity extends BaseActivity {
         donatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                donatorId = ((DonatorR) donatorSpinner.getSelectedItem()).getId();
+                donatorGuId = ((DonatorR) donatorSpinner.getSelectedItem()).getGuidDonator();
                 donator = ((DonatorR) donatorSpinner.getSelectedItem()).getDonatorFullName();
+                donatorId = ((DonatorR) donatorSpinner.getSelectedItem()).getId();
 
             }
 
@@ -247,8 +255,9 @@ public class AddTajGolActivity extends BaseActivity {
         inturducedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                IntroducedId = ((DonatorR) inturducedSpinner.getSelectedItem()).getId();
+                IntroducedGuId = ((DonatorR) inturducedSpinner.getSelectedItem()).getGuidDonator();
                 Introduced = ((DonatorR) inturducedSpinner.getSelectedItem()).getDonatorFullName();
+                IntroducedId = ((DonatorR) inturducedSpinner.getSelectedItem()).getId();
 
             }
 
@@ -279,8 +288,9 @@ public class AddTajGolActivity extends BaseActivity {
         deceasedNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                DeceasedNameId = ((DeceasedNameR) deceasedNameSpinner.getSelectedItem()).getId();
+                DeceasedNameGuId = ((DeceasedNameR) deceasedNameSpinner.getSelectedItem()).getGuidDeceasedName();
                 deceasedName = ((DeceasedNameR) deceasedNameSpinner.getSelectedItem()).getDeceasedFullName();
+                DeceasedNameId = ((DeceasedNameR) deceasedNameSpinner.getSelectedItem()).getId();
 
             }
 

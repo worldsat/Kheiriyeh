@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity {
 
         initView();
         setVariable();
-        checkVersion();
+
     }
 
 
@@ -116,68 +116,9 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    private void checkVersion() {
 
 
-        Controller controller = new Controller(this);
-        controller.Get(AndroidVersion.class, null, 0, 0, true, new CallbackGet() {
-            @Override
-            public <T> void onSuccess(ArrayList<T> result, int count) {
-                Log.i("moh3n", "version: " + result);
-                ArrayList<AndroidVersion> response = (ArrayList<AndroidVersion>) result;
 
-                if (response.size() > 0) {
-
-                    int lastVerisionCode = Integer.valueOf(response.get(response.size() - 1).getcurrVersion());
-                    String link = response.get(response.size() - 1).getappAndroidUrl();
-
-                    try {
-                        PackageInfo phoneVersion = LoginActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
-
-                        if (phoneVersion.versionCode < lastVerisionCode) {
-                            alertQuestion(LoginActivity.this, link);
-                        }
-                        Log.i("moh3n", phoneVersion.versionCode + " " + lastVerisionCode);
-                    } catch (Exception e) {
-                        Log.i("moh3n", "error versionConde:" + e);
-                    }
-                }
-            }
-
-            @Override
-            public void onError(String error) {
-
-            }
-        });
-
-    }
-
-    private void alertQuestion(final Context context, String link) {
-        final MaterialDialog question_dialog = new MaterialDialog.Builder(context)
-                .customView(R.layout.alert_warning_update, false)
-                .autoDismiss(false)
-                .backgroundColor(Color.parseColor("#01000000"))
-                .show();
-
-        TextView ok_btn = (TextView) question_dialog.findViewById(R.id.ok);
-        TextView cancel_btn = (TextView) question_dialog.findViewById(R.id.cancel);
-        final TextView warningTxt = (TextView) question_dialog.findViewById(R.id.warning_alert);
-
-
-        warningTxt.setText("نسخه جدید از نرم افزار موجود است،آیا مایل به بروزرسانی میباشید؟");
-
-        ok_btn.setOnClickListener(v -> {
-
-            String Address = link;
-            Log.i("moh3n", "onClick: " + Address);
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(Address));
-            startActivity(i);
-
-        });
-        cancel_btn.setOnClickListener(v -> question_dialog.dismiss());
-
-    }
 
 
 }

@@ -59,7 +59,10 @@ public class DeceasedNameListItemActivity extends BaseActivity {
 
     private void setvariable() {
         title.setText("لیست متوفی");
-        addBtn.setOnClickListener(v -> startActivity(new Intent(DeceasedNameListItemActivity.this, AddDeceasedNameActivity.class)));
+        addBtn.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(DeceasedNameListItemActivity.this, AddDeceasedNameActivity.class));
+        });
 
 
         list.addAll(db().DeceasedNameDao().getAll());
@@ -140,19 +143,7 @@ public class DeceasedNameListItemActivity extends BaseActivity {
                             filters.add(new Filter(entry.getKey(), entry.getValue()));
                         }
                     }
-                    StringBuilder filterStr = new StringBuilder();
-                    if (filters != null && filters.size() > 0) {
-                        filterStr.append(" where 1=1 ");
-                        for (int i = 0; i < filters.size(); i++) {
-                            if (filters.get(i).getField().equals("assignmentDateEn")) {
-                                String[] dates = filters.get(i).getValue().split("__");
-                                String str = " and " + filters.get(i).getField() + " BETWEEN '" + dates[0] + "' and '" + dates[1] + "'";
-                                filterStr.append(str);
-                            } else {
-                                filterStr.append(String.format(" and %s like '%%%s%%'", filters.get(i).getField(), filters.get(i).getValue()));
-                            }
-                        }
-                    }
+                    StringBuilder filterStr = filteringDate(filters);
 
                     if (adapter1 != null) {
                         list.clear();
@@ -161,7 +152,7 @@ public class DeceasedNameListItemActivity extends BaseActivity {
                     list = db().DeceasedNameDao().getfilter(new SimpleSQLiteQuery("SELECT * from DeceasedNameR  " + filterStr));
                     if (list.size() == 0) {
                         emptyText.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         emptyText.setVisibility(View.GONE);
                     }
 

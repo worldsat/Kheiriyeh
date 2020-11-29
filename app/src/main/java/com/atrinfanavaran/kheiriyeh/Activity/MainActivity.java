@@ -5,13 +5,26 @@ import android.Manifest;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.room.Room;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.atrinfanavaran.kheiriyeh.Activity.Financial.List.FinancialAidListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.FlowerCrownListActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.SponsorListActivity;
+import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
+import com.atrinfanavaran.kheiriyeh.Domain.Login;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Module.SnakBar.SnakBar;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.DownloadFileUrl;
+import com.atrinfanavaran.kheiriyeh.Kernel.Interface.OnFinishedDownloadCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,6 +41,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atrinfanavaran.kheiriyeh.Domain.Box;
@@ -75,7 +89,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackQuickList, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute1, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox, onCallBackAddBox2 {
 
@@ -105,7 +121,110 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         NavigationDrawer();
         getSetting();
 //        setFilter();
+        checkVersion();
 
+    }
+
+    private void checkVersion() {
+
+        SettingsBll settingsBll = new SettingsBll(this);
+        String Url = settingsBll.getUrlAddress();
+        Controller controller = new Controller(this);
+        controller.GetFromApi2("/api/AndroidVersion", new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                try {
+                    Log.i("moh3n", "version: " + resultStr);
+                    Gson gson = new Gson();
+                    AndroidVersion androidVersion = gson.fromJson(resultStr, AndroidVersion.class);
+//                    alertQuestion(MainActivity.this, "link", false);
+
+                    int lastVerisionCode = Integer.parseInt(androidVersion.getData().getCurrVersion());
+                    String link = Url +"/"+ androidVersion.getData().getAppAndroidUrl();
+
+                    PackageInfo phoneVersion = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
+
+                    if (phoneVersion.versionCode < lastVerisionCode) {
+                        if (androidVersion.getData().isIsMandatory()) {
+                            alertQuestion(MainActivity.this, link, true);
+                        } else {
+                            alertQuestion(MainActivity.this, link, false);
+                        }
+                    }
+
+                    Log.i("moh3n", phoneVersion.versionCode + " " + lastVerisionCode);
+
+                } catch (Exception e) {
+                    Log.i("moh3n", "error versionConde:" + e);
+                }
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+        controller.Get(AndroidVersion.class, null, 0, 0, true, new CallbackGet() {
+            @Override
+            public <T> void onSuccess(ArrayList<T> result, int count) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+
+    }
+
+    private void alertQuestion(final Context context, String link, boolean forcible) {
+        final MaterialDialog question_dialog = new MaterialDialog.Builder(context)
+                .customView(R.layout.alert_warning_update, false)
+                .autoDismiss(false)
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
+                .backgroundColor(Color.parseColor("#01000000"))
+                .show();
+
+        TextView ok_btn = (TextView) question_dialog.findViewById(R.id.ok);
+        TextView cancel_btn = (TextView) question_dialog.findViewById(R.id.cancel);
+        final TextView warningTxt = (TextView) question_dialog.findViewById(R.id.warning_alert);
+
+
+        warningTxt.setText("نسخه جدید از نرم افزار موجود است،آیا مایل به بروزرسانی میباشید؟");
+
+        ok_btn.setOnClickListener(v -> {
+            question_dialog.dismiss();
+            String Address = link;
+            Log.i("moh3n", "onClick: " + Address);
+//            Intent i = new Intent(Intent.ACTION_VIEW);
+//            i.setData(Uri.parse(Address));
+//            startActivity(i);
+            new DownloadFileUrl(context, Address, "ghasedak.apk", null, forcible, new OnFinishedDownloadCallback() {
+                @Override
+                public void onFinish() {
+
+                }
+
+                @Override
+                public void onCancel() {
+                    SnakBar snakBar = new SnakBar();
+                    snakBar.snakShow(context, "دریافت فایل لغو شد");
+
+                }
+            });
+
+        });
+        cancel_btn.setOnClickListener(v -> {
+            if (forcible) {
+                finishAffinity();
+
+            } else {
+                question_dialog.dismiss();
+            }
+        });
 
     }
 
@@ -263,6 +382,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
             );
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
+
             db.BoxIncomeDao().insertBoxIncome(boxIncomeR);
             Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         }
@@ -314,6 +434,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         box.setCode(boxR.code);
         box.setAddress(boxR.address);
         box.setDischargeRouteId(boxR.dischargeRouteId);
+        box.setguidDischargeRoute(boxR.guidDischargeRoute);
         box.setBoxId(boxR.boxId);
 
         bundle1.putSerializable("Box", box);
@@ -329,6 +450,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
             db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon, boxR.dischargeRouteId);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
+
             db.BoxDao().insertBox(boxR);
             Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         }
@@ -386,7 +508,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.main_container, fragment, "subPage").addToBackStack(null).commit();
 
-        }catch (Exception e ){
+        } catch (Exception e) {
 
         }
 
@@ -469,7 +591,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
                 break;
             }
             case "6": {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, FinancialAidListItemActivity.class);
                 startActivity(intent);
                 break;
             }

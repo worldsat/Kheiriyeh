@@ -17,4 +17,49 @@ public class FinancialServiceTypeR {
 
     @ColumnInfo(name = "isNew")
     public String isNew;
+
+    public FinancialServiceTypeR(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    public FinancialServiceTypeR() {
+    }
+
+    @Override
+    public String toString() {
+        return title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getCharityId() {
+        return charityId;
+    }
+
+    public void setCharityId(int charityId) {
+        this.charityId = charityId;
+    }
+
+    public String getIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(String isNew) {
+        this.isNew = isNew;
+    }
 }

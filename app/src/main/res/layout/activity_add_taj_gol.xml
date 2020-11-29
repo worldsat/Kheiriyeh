@@ -240,7 +240,7 @@
                             android:ems="10"
                             android:fontFamily="@font/behdad"
                             android:hint="مبلغ"
-                            android:inputType="text"
+                            android:inputType="phone"
                             android:textAlignment="textStart"
                             android:textDirection="rtl"
                             android:textSize="12sp" />

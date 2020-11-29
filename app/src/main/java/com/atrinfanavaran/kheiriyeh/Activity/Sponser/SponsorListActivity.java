@@ -2,6 +2,7 @@ package com.atrinfanavaran.kheiriyeh.Activity.Sponser;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -10,8 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.kheiriyeh.Adapter.MenuListAdapter;
-import com.atrinfanavaran.kheiriyeh.Adapter.SponsorListAdapter;
+import com.atrinfanavaran.kheiriyeh.Adapter.Sponsor.SponsorListAdapter;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
@@ -40,6 +40,9 @@ public class SponsorListActivity extends BaseActivity {
 
     private void setvariable() {
         title.setText("مشارکت");
+        LinearLayout backButton = findViewById(R.id.backButton);
+        backButton.setVisibility(View.VISIBLE);
+        backButton.setOnClickListener(v -> finish());
 
         ArrayList<String> list = new ArrayList<>();
         list.add("لیست فرم مشارکت");

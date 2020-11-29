@@ -94,6 +94,7 @@ public class DonatorApi  extends BaseDomain {
         private int id;
         private String donatorFullName;
         private String donatorAlias;
+        private String guidDonator;
         private int charityId;
         private String donatorMobile;
         private boolean isSendMessage;
@@ -120,6 +121,14 @@ public class DonatorApi  extends BaseDomain {
 
         public void setDonatorAlias(String donatorAlias) {
             this.donatorAlias = donatorAlias;
+        }
+
+        public String getGuidDonator() {
+            return guidDonator;
+        }
+
+        public void setGuidDonator(String guidDonator) {
+            this.guidDonator = guidDonator;
         }
 
         public int getCharityId() {

@@ -161,7 +161,7 @@
                     android:fontFamily="@font/behdad"
                     android:gravity="start"
                     android:text="-"
-                    android:textColor="@color/blue_grey_900"
+                    android:textColor="@color/green_700"
                     android:textSize="10sp" />
             </LinearLayout>
 

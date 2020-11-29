@@ -61,6 +61,41 @@ public class FlowerCrownR implements Serializable {
     @ColumnInfo(name = "isNew")
     public String isNew;
 
+    @ColumnInfo(name = "guidIntroduced")
+    public String guidIntroduced;
+
+    @ColumnInfo(name = "guidDeceasedName")
+    public String guidDeceasedName;
+
+    @ColumnInfo(name = "guidDonator")
+    public String guidDonator;
+
+
+
+    public String getGuidIntroduced() {
+        return guidIntroduced;
+    }
+
+    public void setGuidIntroduced(String guidIntroduced) {
+        this.guidIntroduced = guidIntroduced;
+    }
+
+    public String getGuidDeceasedName() {
+        return guidDeceasedName;
+    }
+
+    public void setGuidDeceasedName(String guidDeceasedName) {
+        this.guidDeceasedName = guidDeceasedName;
+    }
+
+    public String getGuidDonator() {
+        return guidDonator;
+    }
+
+    public void setGuidDonator(String guidDonator) {
+        this.guidDonator = guidDonator;
+    }
+
     public int getId() {
         return id;
     }

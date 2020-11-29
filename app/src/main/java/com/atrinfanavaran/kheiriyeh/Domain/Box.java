@@ -17,6 +17,7 @@ public class Box extends BaseDomain {
     private String lat;
     private String lng;
     private String address;
+    private String guidDischargeRoute;
     private int id;
     private String dischargeRouteId;
     private int boxId;
@@ -27,6 +28,14 @@ public class Box extends BaseDomain {
 
     public void setassignmentDateEn(String assignmentDateEn) {
         this.assignmentDateEn = assignmentDateEn;
+    }
+
+    public String getguidDischargeRoute() {
+        return guidDischargeRoute;
+    }
+
+    public void setguidDischargeRoute(String guidDischargeRoute) {
+        this.guidDischargeRoute = guidDischargeRoute;
     }
 
     public int getBoxId() {
