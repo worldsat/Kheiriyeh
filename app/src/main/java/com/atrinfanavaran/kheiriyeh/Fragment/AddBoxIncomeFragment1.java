@@ -56,6 +56,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
     private ImageView calendarBtn;
     private SearchableSpinner spinner;
     private String numberSelected;
+    private String guidBox;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
                         edt1_6.setText(boxR1.fullName);
                         edt1_7.setText(boxR1.mobile);
                         edt1_8.setText(boxR1.address);
+                        guidBox = boxR1.guidBox;
                     }
                 }
             }
@@ -179,16 +181,16 @@ public class AddBoxIncomeFragment1 extends Fragment {
             } else if (edt1_6.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا نام و نام خانوادگی را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
-            }else if (edt1_7.getText().toString().trim().isEmpty()) {
+            } else if (edt1_7.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا موبایل را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
-            }else if (edt1_8.getText().toString().trim().isEmpty()) {
+            } else if (edt1_8.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا آدرس را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
-            }else if (edt1_4.getText().toString().trim().isEmpty()) {
+            } else if (edt1_4.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا تاریخ ثبت را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
-            }else if (spinner.getSelectedItem().toString().equals("انتخاب کنید")) {
+            } else if (spinner.getSelectedItem().toString().equals("انتخاب کنید")) {
                 Toast.makeText(getActivity(), "لطفا شماره صندوف را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -197,6 +199,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
             boxIncome.setnumber(numberSelected);
             boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
             boxIncome.setassignmentDate(edt1_4.getText().toString().trim());
+            boxIncome.setGuidBox(guidBox);
 
             String[] date = edt1_4.getText().toString().trim().split("/");
             roozh roozh = new roozh();
@@ -216,7 +219,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
                 day = String.valueOf(roozh.getDay());
             }
 
-            String dateEn = roozh.getYear() + "/" +month + "/" + day;
+            String dateEn = roozh.getYear() + "/" + month + "/" + day;
             boxIncome.setassignmentDateEn(dateEn);
 
             boxIncome.setstatus(status);

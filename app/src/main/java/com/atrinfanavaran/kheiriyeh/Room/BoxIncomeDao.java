@@ -24,8 +24,8 @@ public interface BoxIncomeDao {
     void deleteAll();
 
     @Query("update  BoxIncomeR set lat=:lat,lon=:lon,number=:number,price=:price," +
-            "assignmentDate=(:assignmentDate),assignmentDateEn=(:assignmentDateEn),status=:status WHERE id like (:id)")
-    void update(String lat, String lon, String number, String price, String assignmentDate, String assignmentDateEn, String status, int id);
+            "assignmentDate=(:assignmentDate),assignmentDateEn=(:assignmentDateEn),status=:status,guidBox=:guidBox WHERE id like (:id)")
+    void update(String lat, String lon, String number, String price, String assignmentDate, String assignmentDateEn, String status, int id,String guidBox);
 
     @Query("Delete from  BoxIncomeR  " +
             " WHERE id like (:id)")

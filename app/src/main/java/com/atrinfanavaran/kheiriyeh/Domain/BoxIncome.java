@@ -16,6 +16,7 @@ public class BoxIncome extends BaseDomain {
     private String lon;
     private String assignmentDate;
     private String assignmentDateEn;
+    private String guidBox;
     private int id;
 
     public BoxIncome() {
@@ -60,6 +61,14 @@ public class BoxIncome extends BaseDomain {
 
 
         setDomainInfo(domainInfoList);
+    }
+
+    public String getGuidBox() {
+        return guidBox;
+    }
+
+    public void setGuidBox(String guidBox) {
+        this.guidBox = guidBox;
     }
 
     public int getid() {

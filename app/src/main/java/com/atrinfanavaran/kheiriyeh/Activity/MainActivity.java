@@ -372,10 +372,11 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         boxIncomeR.assignmentDate = boxIncome.getassignmentDate();
         boxIncomeR.assignmentDateEn = boxIncome.getassignmentDateEn();
         boxIncomeR.status = boxIncome.getstatus();
+        boxIncomeR.guidBox = boxIncome.getGuidBox();
 
         if (editable) {
             db.BoxIncomeDao().update(boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
-                    , boxIncome.getprice(), boxIncome.getassignmentDate(), boxIncome.getassignmentDateEn(), boxIncome.getstatus(), boxIncome.getid()
+                    , boxIncome.getprice(), boxIncome.getassignmentDate(), boxIncome.getassignmentDateEn(), boxIncome.getstatus(), boxIncome.getid(), boxIncome.getGuidBox()
             );
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
@@ -492,6 +493,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         boxIncome1.setprice(boxIncome.price);
         boxIncome1.setassignmentDate(boxIncome.assignmentDate);
         boxIncome1.setstatus(boxIncome.status);
+        boxIncome1.setGuidBox(boxIncome.guidBox);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("BoxIncome", boxIncome1);

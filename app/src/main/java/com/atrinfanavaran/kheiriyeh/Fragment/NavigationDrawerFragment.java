@@ -380,6 +380,7 @@ public class NavigationDrawerFragment extends Fragment {
                     params.put("lat", Double.valueOf(boxIncome.get(i).lat));
                     params.put("assignmentDate", boxIncome.get(i).assignmentDate);
                     params.put("charityId", settingsBll.getCharityId());
+                    params.put("guidBox", boxIncome.get(i).guidBox);
                 } catch (Exception e) {
                     Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی  اطلاعات تخلیه ها", Toast.LENGTH_SHORT).show();
                 }
@@ -847,7 +848,7 @@ public class NavigationDrawerFragment extends Fragment {
                         }
                     }
                     if (response.getData().size() > 0) {
-                        String Str = "تعداد " + response.getData().size() + " رکورد از  لیست اهدا با موفقیت ذخیره شد";
+                        String Str = "تعداد " + response.getData().size() + " رکورد از  لیست تاج گل با موفقیت ذخیره شد";
                         Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
                     }
                 }
