@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddTajGolActivity;
+import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
@@ -26,11 +27,11 @@ import java.util.List;
 
 public class TajGolListAdapter extends RecyclerView.Adapter<TajGolListAdapter.ViewHolder> {
 
-    private final List<FlowerCrownR> array_object;
+    private final List<FlowerCrownApi.Data> array_object;
     private onCallBackBoxEdit onCallBackBoxEdit;
     private DecimalFormat formatter = new DecimalFormat("###,###,###,###");
 
-    public TajGolListAdapter(List<FlowerCrownR> result) {
+    public TajGolListAdapter(List<FlowerCrownApi.Data> result) {
         this.array_object = result;
     }
 
@@ -48,14 +49,41 @@ public class TajGolListAdapter extends RecyclerView.Adapter<TajGolListAdapter.Vi
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
 
-        holder.title.setText(array_object.get(position).donator);
-        holder.t1.setText(array_object.get(position).deceasedName);
-        holder.t2.setText(array_object.get(position).Introduced);
-        holder.t3.setText( formatter.format(Long.valueOf(array_object.get(position).price))+" تومان ");
-        holder.t4.setText(array_object.get(position).ceremonyType);
-        holder.t5.setText(array_object.get(position).flowerCrownType);
-        holder.t6.setText(array_object.get(position).registerDate);
+        holder.title.setText(array_object.get(position).getDonatorName());
+        holder.t1.setText(array_object.get(position).getDeceasedFullName());
+        holder.t2.setText(array_object.get(position).getIntroducedName());
+        holder.t3.setText(formatter.format(Long.valueOf(array_object.get(position).getPrice())) + " تومان ");
 
+        holder.t5.setText("" + array_object.get(position).getFlowerCrownType());
+        holder.t6.setText(array_object.get(position).getRegisterDate());
+
+        String CeremonyType = "";
+        switch (array_object.get(position).getCeremonyType()) {
+            case 1: {
+                CeremonyType="ترحیم";
+                break;
+            }
+            case 2: {
+                CeremonyType="هفته";
+                break;
+            }
+            case 3: {
+                CeremonyType="چهلم";
+                break;
+            }
+            case 4: {
+                CeremonyType="سال";
+                break;
+            }
+            case 5: {
+                CeremonyType="عید";
+                break;
+            }
+        }
+        holder.t4.setText(CeremonyType);
+
+
+        holder.moreOption.setVisibility(View.GONE);
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 
@@ -75,7 +103,7 @@ public class TajGolListAdapter extends RecyclerView.Adapter<TajGolListAdapter.Vi
                                 .fallbackToDestructiveMigration()
                                 .allowMainThreadQueries()
                                 .build();
-                        db.FlowerCrownDao().delete(array_object.get(position).id);
+                        db.FlowerCrownDao().delete(array_object.get(position).getId());
 
                         array_object.remove(holder.getAdapterPosition());
 

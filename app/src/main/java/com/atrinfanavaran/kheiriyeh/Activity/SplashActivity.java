@@ -60,50 +60,54 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void getPermissionServer() {
+        SettingsBll settingsBll = new SettingsBll(SplashActivity.this);
 
+        if (settingsBll.getTicket() != null) {
 
-        SettingsBll settingsBll = new SettingsBll(this);
-        controller().GetFromApi2("api/Charity", new CallbackGetString() {
-            @Override
-            public void onSuccess(String resultStr) {
-                Log.i(TAG, "onSuccess1: " + resultStr);
-                try {
-                    Gson gson = new Gson();
+            controller().GetFromApi2("api/Charity", new CallbackGetString() {
+                @Override
+                public void onSuccess(String resultStr) {
+                    Log.i(TAG, "onSuccess1: " + resultStr);
+                    try {
+                        Gson gson = new Gson();
 
-                    Charity charity = gson.fromJson(resultStr, Charity.class);
-                    Log.i(TAG, "onSuccess2: " + charity);
-                    settingsBll.setAccessBox(charity.isIsAccessBox());
-                    settingsBll.setActive(charity.isIsActive());
-                    settingsBll.setAccessFinancialAid(charity.isIsAccessFinancialAid());
-                    settingsBll.setAccessFlowerCrown(charity.isIsAccessFlowerCrown());
-                    settingsBll.setAccessSponsor(charity.isIsAccessSponsor());
-                    if (settingsBll.isAccessBox()) {
+                        Charity charity = gson.fromJson(resultStr, Charity.class);
+                        Log.i(TAG, "onSuccess2: " + charity);
 
-                        SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
-                        if (sp != null) {
-                            if (settingsBll.getLoging()) {
-                                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                            } else {
-                                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                                startActivity(intent);
+                        settingsBll.setAccessBox(charity.isIsAccessBox());
+                        settingsBll.setActive(charity.isIsActive());
+                        settingsBll.setAccessFinancialAid(charity.isIsAccessFinancialAid());
+                        settingsBll.setAccessFlowerCrown(charity.isIsAccessFlowerCrown());
+                        settingsBll.setAccessSponsor(charity.isIsAccessSponsor());
+                        if (settingsBll.isAccessBox()) {
+
+                            SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
+                            if (sp != null) {
+                                if (settingsBll.getLoging()) {
+                                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                                } else {
+                                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
                             }
+                        } else {
+                            SnakBar("حساب کاربری شما مسدود می باشد");
                         }
-                    } else {
-                        SnakBar("حساب کاربری شما مسدود می باشد");
+
+                    } catch (Exception e) {
+                        Log.i(TAG, "onSuccess4: " + e);
                     }
-
-                } catch (Exception e) {
-                    Log.i(TAG, "onSuccess4: " + e);
                 }
-            }
 
-            @Override
-            public void onError(String error) {
+                @Override
+                public void onError(String error) {
 
-            }
-        });
+                }
+            });
 
-
+        } else {
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        }
     }
 
     private void timer() {

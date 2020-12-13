@@ -69,6 +69,17 @@ public class AddFinancialAidActivity extends BaseActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (edt1.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا نام را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (edt2.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا مبلغ را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (spin1.getSelectedItem().toString().equals("انتخاب کنید")) {
+                    Toast.makeText(getActivity(), "لطفا نوع را انتخاب نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 FinancialAidR obj = new FinancialAidR();
 
                 obj.financialServiceTypeId = FinancialServiceTypeId;
@@ -86,8 +97,9 @@ public class AddFinancialAidActivity extends BaseActivity {
                     db().FinancialAidDao().insertBox(obj);
                     Toast.makeText(AddFinancialAidActivity.this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 }
-                finish();
+
                 startActivity(new Intent(AddFinancialAidActivity.this, FinancialAidListItemActivity.class));
+                finish();
             }
         });
 

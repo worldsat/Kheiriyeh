@@ -76,7 +76,7 @@
                     android:layout_gravity="start"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/behdad"
-                    android:text="نام معرف:"
+                    android:text="نام مستعار:"
                     android:textColor="@color/blue_grey_900"
                     android:textDirection="rtl"
                     android:textSize="10sp" />

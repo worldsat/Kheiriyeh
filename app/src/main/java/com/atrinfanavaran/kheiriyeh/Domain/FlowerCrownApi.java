@@ -5,9 +5,23 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewMode;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FlowerCrownApi extends BaseDomain {
+
+    /**
+     * data : [{"id":8,"price":4444444,"ceremonyType":4,"charityId":1,"charity":null,"opratorId":1,"flowerCrownTypeId":3,"flowerCrownType":{"id":3,"title":"تاج گل سوم","charityId":1},"deceasedNameId":8,"deceasedName":null,"donatorId":1,"introducedId":6,"registerDate":"1399/9/18"},{"id":7,"price":5464564,"ceremonyType":2,"charityId":1,"charity":null,"opratorId":1,"flowerCrownTypeId":4,"flowerCrownType":{"id":4,"title":"تاج گل چهارم","charityId":1},"deceasedNameId":1,"deceasedName":null,"donatorId":1,"introducedId":3,"registerDate":"1399/9/18"},{"id":6,"price":98989,"ceremonyType":1,"charityId":1,"charity":null,"opratorId":1,"flowerCrownTypeId":1,"flowerCrownType":{"id":1,"title":"تاج گل اول","charityId":1},"deceasedNameId":6,"deceasedName":null,"donatorId":9,"introducedId":9,"registerDate":"1399/9/17"}]
+     * count : 3
+     * isError : false
+     * message :
+     */
+
+    private int count;
+    private boolean isError;
+    private String message;
+    private List<Data> data;
 
     public FlowerCrownApi() {
         setApiAddresss("api/FlowerCrown");
@@ -15,7 +29,7 @@ public class FlowerCrownApi extends BaseDomain {
 
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
-                "donator",
+                "donatorName",
                 "نام اهدا کننده",
                 "",
                 ViewType.EDIT_TEXT.name())
@@ -29,7 +43,7 @@ public class FlowerCrownApi extends BaseDomain {
         );
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
-                "Introduced",
+                "introducedName",
                 "نام معرف",
                 "",
                 ViewType.EDIT_TEXT.name())
@@ -55,28 +69,16 @@ public class FlowerCrownApi extends BaseDomain {
                 "",
                 ViewType.EDIT_TEXT.name())
         );
-        domainInfoList.add(new DomainInfo(
-                ViewMode.FILTER.name(),
-                "registerDateEn",
-                "تاریخ ثبت",
-                "BetweenCalendar",
-                ViewType.EDIT_TEXT.name())
-        );
+//        domainInfoList.add(new DomainInfo(
+//                ViewMode.FILTER.name(),
+//                "registerDateEn",
+//                "تاریخ ثبت",
+//                "BetweenCalendar",
+//                ViewType.EDIT_TEXT.name())
+//        );
 
         setDomainInfo(domainInfoList);
     }
-
-    /**
-     * data : [{"id":1,"donator":"محمد","deceasedName":"عباس","price":10000,"ceremonyType":1,"charityId":1,"charity":null,"opratorId":1,"flowerCrownTypeId":1,"flowerCrownType":null,"registerDate":"1399-09-09"}]
-     * count : 1
-     * isError : false
-     * message :
-     */
-
-    private int count;
-    private boolean isError;
-    private String message;
-    private ArrayList<Data> data;
 
     public int getCount() {
         return count;
@@ -102,32 +104,32 @@ public class FlowerCrownApi extends BaseDomain {
         this.message = message;
     }
 
-    public ArrayList<Data> getData() {
+    public List<Data> getData() {
         return data;
     }
 
-    public void setData(ArrayList<Data> data) {
+    public void setData(List<Data> data) {
         this.data = data;
     }
 
-    public static class Data {
+    public static class Data  implements Serializable {
         /**
-         * id : 1
-         * donator : محمد
-         * deceasedName : عباس
-         * price : 10000
-         * ceremonyType : 1
+         * id : 8
+         * price : 4444444
+         * ceremonyType : 4
          * charityId : 1
          * charity : null
          * opratorId : 1
-         * flowerCrownTypeId : 1
-         * flowerCrownType : null
-         * registerDate : 1399-09-09
+         * flowerCrownTypeId : 3
+         * flowerCrownType : {"id":3,"title":"تاج گل سوم","charityId":1}
+         * deceasedNameId : 8
+         * deceasedName : null
+         * donatorId : 1
+         * introducedId : 6
+         * registerDate : 1399/9/18
          */
 
         private int id;
-        private String donator;
-        private String deceasedName;
         private int price;
         private int ceremonyType;
         private int charityId;
@@ -135,33 +137,37 @@ public class FlowerCrownApi extends BaseDomain {
         private int opratorId;
         private int flowerCrownTypeId;
         private String flowerCrownType;
-        private String registerDate;
         private int deceasedNameId;
+        private String deceasedName;
         private int donatorId;
         private int introducedId;
+        private String registerDate;
+        private String donatorName;
+        private String deceasedFullName;
+        private String introducedName;
 
-        public int getDeceasedNameId() {
-            return deceasedNameId;
+        public String getDonatorName() {
+            return donatorName;
         }
 
-        public void setDeceasedNameId(int deceasedNameId) {
-            this.deceasedNameId = deceasedNameId;
+        public void setDonatorName(String donatorName) {
+            this.donatorName = donatorName;
         }
 
-        public int getDonatorId() {
-            return donatorId;
+        public String getDeceasedFullName() {
+            return deceasedFullName;
         }
 
-        public void setDonatorId(int donatorId) {
-            this.donatorId = donatorId;
+        public void setDeceasedFullName(String deceasedFullName) {
+            this.deceasedFullName = deceasedFullName;
         }
 
-        public int getIntroducedId() {
-            return introducedId;
+        public String getIntroducedName() {
+            return introducedName;
         }
 
-        public void setIntroducedId(int introducedId) {
-            this.introducedId = introducedId;
+        public void setIntroducedName(String introducedName) {
+            this.introducedName = introducedName;
         }
 
         public int getId() {
@@ -170,22 +176,6 @@ public class FlowerCrownApi extends BaseDomain {
 
         public void setId(int id) {
             this.id = id;
-        }
-
-        public String getDonator() {
-            return donator;
-        }
-
-        public void setDonator(String donator) {
-            this.donator = donator;
-        }
-
-        public String getDeceasedName() {
-            return deceasedName;
-        }
-
-        public void setDeceasedName(String deceasedName) {
-            this.deceasedName = deceasedName;
         }
 
         public int getPrice() {
@@ -244,12 +234,80 @@ public class FlowerCrownApi extends BaseDomain {
             this.flowerCrownType = flowerCrownType;
         }
 
+        public int getDeceasedNameId() {
+            return deceasedNameId;
+        }
+
+        public void setDeceasedNameId(int deceasedNameId) {
+            this.deceasedNameId = deceasedNameId;
+        }
+
+        public String getDeceasedName() {
+            return deceasedName;
+        }
+
+        public void setDeceasedName(String deceasedName) {
+            this.deceasedName = deceasedName;
+        }
+
+        public int getDonatorId() {
+            return donatorId;
+        }
+
+        public void setDonatorId(int donatorId) {
+            this.donatorId = donatorId;
+        }
+
+        public int getIntroducedId() {
+            return introducedId;
+        }
+
+        public void setIntroducedId(int introducedId) {
+            this.introducedId = introducedId;
+        }
+
         public String getRegisterDate() {
             return registerDate;
         }
 
         public void setRegisterDate(String registerDate) {
             this.registerDate = registerDate;
+        }
+
+        public static class FlowerCrownType {
+            /**
+             * id : 3
+             * title : تاج گل سوم
+             * charityId : 1
+             */
+
+            private int id;
+            private String title;
+            private int charityId;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public int getCharityId() {
+                return charityId;
+            }
+
+            public void setCharityId(int charityId) {
+                this.charityId = charityId;
+            }
         }
     }
 }

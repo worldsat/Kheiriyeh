@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -57,9 +58,20 @@ public class SponsorListItemActivity extends BaseActivity {
         initView();
         NavigationDrawer();
         setvariable();
+        getDate();
     }
 
     private void setvariable() {
+        LinearLayout refreshBtn = findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.VISIBLE);
+        refreshBtn.setOnClickListener(v -> {
+            if (list.size() > 0) {
+                list.clear();
+            }
+            getDate();
+            Toast.makeText(this, "لیست برورسانی شد", Toast.LENGTH_SHORT).show();
+        });
+
         title.setText("لیست حامیان");
         addBtn.setOnClickListener(v -> {
             finish();
@@ -68,15 +80,6 @@ public class SponsorListItemActivity extends BaseActivity {
         });
 
 
-        list.addAll(db().SponsorDao().getAll());
-        if (list.size() > 0) {
-            emptyText.setVisibility(View.GONE);
-            adapter1 = new SponsorListItemAdapter(list);
-            row1.setAdapter(adapter1);
-
-        } else {
-            emptyText.setVisibility(View.VISIBLE);
-        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SponsorListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
 
@@ -94,6 +97,19 @@ public class SponsorListItemActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    private void getDate() {
+        list.addAll(db().SponsorDao().getAll());
+        if (list.size() > 0) {
+            emptyText.setVisibility(View.GONE);
+            adapter1 = new SponsorListItemAdapter(list);
+            row1.setAdapter(adapter1);
+
+        } else {
+            emptyText.setVisibility(View.VISIBLE);
+            row1.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -149,7 +165,9 @@ public class SponsorListItemActivity extends BaseActivity {
                     StringBuilder filterStr = filteringDate(filters);
 
                     if (adapter1 != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
                     list = db().SponsorDao().getfilter(new SimpleSQLiteQuery("SELECT * from SponsorR  " + filterStr));

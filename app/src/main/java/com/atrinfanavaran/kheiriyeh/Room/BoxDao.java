@@ -14,7 +14,7 @@ import java.util.List;
 
 @Dao
 public interface BoxDao {
-    @Query("SELECT b.id,b.fullName,b.number,b.mobile,b.code,b.assignmentDate,b.dischargeRouteId,b.address,b.lon,b.lat,r.code code2,r.id id3 ,b.id boxId FROM BoxR b Inner Join RouteR r on b.dischargeRouteId=r.id ")
+    @Query("SELECT b.id,b.fullName,b.number,b.mobile,b.code,b.assignmentDate,b.dischargeRouteId,b.address,b.lon,b.lat,r.code code2,r.id id3 ,b.id boxId,b.guidBox,r.guidDischargeRoute FROM BoxR b left Join RouteR r on b.dischargeRouteId=r.id ")
     List<BoxR> getAll();
 
     @RawQuery(observedEntities = BoxR.class)
@@ -30,9 +30,12 @@ public interface BoxDao {
     @Query("delete FROM BoxR")
     void deleteAll();
 
-    @Query("update  BoxR set fullName=:fullName,number=:number,mobile=:mobile,code=:code,assignmentDate=:assignmentDate,dischargeRouteId=:dischargeRouteId,address=:address,lon=:lng,lat=:lat" +
+    @Query("delete FROM BoxR Where Isnew  not like 'true' ")
+    void deleteAllOld();
+
+    @Query("update  BoxR set fullName=:fullName,number=:number,mobile=:mobile,code=:code,assignmentDate=:assignmentDate,guidDischargeRoute=:guidDischargeRoute,address=:address,lon=:lng,lat=:lat" +
             " WHERE id like (:id)")
-    void update(String fullName, String number, String mobile, String code, String assignmentDate, int id,String address, String lat, String lng,String dischargeRouteId);
+    void update(String fullName, String number, String mobile, String code, String assignmentDate, int id,String address, String lat, String lng,String guidDischargeRoute);
 
     @Query("Delete from  BoxR  " +
             " WHERE id like (:id)")

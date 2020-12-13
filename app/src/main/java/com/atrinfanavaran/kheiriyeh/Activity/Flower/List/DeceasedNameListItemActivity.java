@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -16,15 +17,18 @@ import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddDeceasedNameActivity;
 import com.atrinfanavaran.kheiriyeh.Adapter.Flower.DeceasedNameListAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.Flower.DonatorListAdapter;
 import com.atrinfanavaran.kheiriyeh.Domain.DeceasedNameApi;
+import com.atrinfanavaran.kheiriyeh.Domain.DonatorApi;
 import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.Filter;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter.GenericFilterDialog;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.DeceasedNameR;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,10 +45,10 @@ public class DeceasedNameListItemActivity extends BaseActivity {
     private TextView title;
     private FloatingActionButton addBtn;
     private TextView emptyText;
-
+    private ProgressBar progressBar;
     private HashMap<Integer, FilteredDomain> result = new HashMap<>();
     private LinearLayout filterBtn, backButton;
-    private List<DeceasedNameR> list = new ArrayList<>();
+    private List<DeceasedNameApi.Data> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +68,8 @@ public class DeceasedNameListItemActivity extends BaseActivity {
             startActivity(new Intent(DeceasedNameListItemActivity.this, AddDeceasedNameActivity.class));
         });
 
+        getData(null);
 
-        list.addAll(db().DeceasedNameDao().getAll());
-        if (list.size() > 0) {
-            emptyText.setVisibility(View.GONE);
-            adapter1 = new DeceasedNameListAdapter(list);
-            row1.setAdapter(adapter1);
-
-        } else {
-            emptyText.setVisibility(View.VISIBLE);
-        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DeceasedNameListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
 
@@ -93,6 +89,39 @@ public class DeceasedNameListItemActivity extends BaseActivity {
         });
     }
 
+    private void getData(StringBuilder filter) {
+        String address = "api/DeceasedName/GetAll";
+        if (filter != null) {
+            address = "api/DeceasedName/" + filter;
+        }
+        progressBar.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+
+                Gson gson = new Gson();
+                DeceasedNameApi response = gson.fromJson(resultStr, DeceasedNameApi.class);
+
+                list.addAll(response.getData());
+                if (list.size() > 0) {
+                    emptyText.setVisibility(View.GONE);
+                    adapter1 = new DeceasedNameListAdapter(list);
+                    row1.setAdapter(adapter1);
+
+                } else {
+                    emptyText.setVisibility(View.VISIBLE);
+                    row1.setVisibility(View.GONE);
+                }
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         finish();
@@ -107,6 +136,7 @@ public class DeceasedNameListItemActivity extends BaseActivity {
         emptyText = findViewById(R.id.EmptyWarning);
         filterBtn = findViewById(R.id.filterButton);
         backButton = findViewById(R.id.backButton);
+        progressBar = findViewById(R.id.progressBarRow3);
     }
 
     private void NavigationDrawer() {
@@ -143,22 +173,23 @@ public class DeceasedNameListItemActivity extends BaseActivity {
                             filters.add(new Filter(entry.getKey(), entry.getValue()));
                         }
                     }
-                    StringBuilder filterStr = filteringDate(filters);
-
+                    StringBuilder filterStr = filteringDateOnline(filters);
                     if (adapter1 != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
-                    list = db().DeceasedNameDao().getfilter(new SimpleSQLiteQuery("SELECT * from DeceasedNameR  " + filterStr));
-                    if (list.size() == 0) {
-                        emptyText.setVisibility(View.VISIBLE);
-                    } else {
-                        emptyText.setVisibility(View.GONE);
-                    }
-
-                    adapter1 = new DeceasedNameListAdapter(list);
-                    row1.setAdapter(adapter1);
-
+//                    list = db().DeceasedNameDao().getfilter(new SimpleSQLiteQuery("SELECT * from DeceasedNameR  " + filterStr));
+//                    if (list.size() == 0) {
+//                        emptyText.setVisibility(View.VISIBLE);
+//                    } else {
+//                        emptyText.setVisibility(View.GONE);
+//                    }
+//
+//                    adapter1 = new DeceasedNameListAdapter(list);
+//                    row1.setAdapter(adapter1);
+                    getData(filterStr);
                 });
         filterDialog.show();
     }

@@ -28,6 +28,9 @@ public interface SponsorDao {
     @Query("delete FROM SponsorR")
     void deleteAll();
 
+    @Query("delete FROM SponsorR Where Isnew  not like 'true' ")
+    void deleteAllOld();
+    
     @Query("update  SponsorR set fullName=:fullName,code=:code,nationalcode=:nationalcode,mobile=:mobile,phone=:phone,address=:address,birthDate=:birthDate" +
             " WHERE id like (:id)")
     void update(String fullName, String code, String nationalcode, String mobile, String phone, String address, String birthDate, int id);

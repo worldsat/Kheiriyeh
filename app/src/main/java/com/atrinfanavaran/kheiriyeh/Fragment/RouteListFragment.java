@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -70,26 +71,27 @@ public class RouteListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
+
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.VISIBLE);
+        refreshBtn.setOnClickListener(v -> {
+            if (list.size() > 0) {
+                list.clear();
+            }
+            getDate();
+            Toast.makeText(getActivity(), "لیست برورسانی شد", Toast.LENGTH_SHORT).show();
+        });
+
         titleToolbar.setText("افزودن آدرس");
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
-
+        getDate();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        list = db.RouteDao().getAll();
-        if (list.size() == 0) {
-            emptyText.setVisibility(View.VISIBLE);
-        }
-        adapter = new RouteListAdapter(list, new onCallBackRouteEdit() {
-            @Override
-            public void EditRoute(RouteR routerR) {
-                onCallBackRouteEdit.EditRoute(routerR);
-            }
-        });
-        recyclerView.setAdapter(adapter);
+
 
         floatingActionButton1.setOnClickListener(v -> {
             onCallBack.btnNewRoute();
@@ -103,6 +105,22 @@ public class RouteListFragment extends Fragment {
         });
 
 
+    }
+
+    private void getDate() {
+        list = db.RouteDao().getAll();
+        if (list.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        }else{
+            emptyText.setVisibility(View.GONE);
+        }
+        adapter = new RouteListAdapter(list, new onCallBackRouteEdit() {
+            @Override
+            public void EditRoute(RouteR routerR) {
+                onCallBackRouteEdit.EditRoute(routerR);
+            }
+        });
+        recyclerView.setAdapter(adapter);
     }
 
     public void showFilterDialog() {
@@ -139,7 +157,9 @@ public class RouteListFragment extends Fragment {
                     }
 
                     if (adapter != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
                     list = db.RouteDao().getfilter(new SimpleSQLiteQuery("SELECT * FROM RouteR " + filterStr));

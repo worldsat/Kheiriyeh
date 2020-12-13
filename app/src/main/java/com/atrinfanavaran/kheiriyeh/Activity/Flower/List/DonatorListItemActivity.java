@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -20,11 +21,13 @@ import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.Filter;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter.GenericFilterDialog;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.DonatorR;
 import com.google.android.gms.common.api.Api;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +47,8 @@ public class DonatorListItemActivity extends BaseActivity {
 
     private HashMap<Integer, FilteredDomain> result = new HashMap<>();
     private LinearLayout filterBtn, backButton;
-    private List<DonatorR> list = new ArrayList<>();
+    private List<DonatorApi.Data> list = new ArrayList<>();
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +70,8 @@ public class DonatorListItemActivity extends BaseActivity {
         });
 
 
-        list.addAll(db().DonatorDao().getAll());
-        if (list.size() > 0) {
-            emptyText.setVisibility(View.GONE);
-            adapter1 = new DonatorListAdapter(list);
-            row1.setAdapter(adapter1);
+        getData(null);
 
-        } else {
-            emptyText.setVisibility(View.VISIBLE);
-        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DonatorListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
 
@@ -94,6 +91,39 @@ public class DonatorListItemActivity extends BaseActivity {
         });
     }
 
+    private void getData(StringBuilder filter) {
+        String address = "api/Donator/GetAll";
+        if (filter != null) {
+            address = "api/Donator/" + filter;
+        }
+        progressBar.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+
+                Gson gson = new Gson();
+                DonatorApi response = gson.fromJson(resultStr, DonatorApi.class);
+
+                list.addAll(response.getData());
+                if (list.size() > 0) {
+                    emptyText.setVisibility(View.GONE);
+                    adapter1 = new DonatorListAdapter(list);
+                    row1.setAdapter(adapter1);
+
+                } else {
+                    emptyText.setVisibility(View.VISIBLE);
+                    row1.setVisibility(View.GONE);
+                }
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         finish();
@@ -108,6 +138,7 @@ public class DonatorListItemActivity extends BaseActivity {
         emptyText = findViewById(R.id.EmptyWarning);
         filterBtn = findViewById(R.id.filterButton);
         backButton = findViewById(R.id.backButton);
+        progressBar = findViewById(R.id.progressBarRow3);
     }
 
     private void NavigationDrawer() {
@@ -144,22 +175,24 @@ public class DonatorListItemActivity extends BaseActivity {
                             filters.add(new Filter(entry.getKey(), entry.getValue()));
                         }
                     }
-                    StringBuilder filterStr = filteringDate(filters);
+                    StringBuilder filterStr = filteringDateOnline(filters);
 
                     if (adapter1 != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
-                    list = db().DonatorDao().getfilter(new SimpleSQLiteQuery("SELECT * from DonatorR  " + filterStr));
-                    if (list.size() == 0) {
-                        emptyText.setVisibility(View.VISIBLE);
-                    }else{
-                        emptyText.setVisibility(View.GONE);
-                    }
-
-                    adapter1 = new DonatorListAdapter(list);
-                    row1.setAdapter(adapter1);
-
+//                    list = db().DonatorDao().getfilter(new SimpleSQLiteQuery("SELECT * from DonatorR  " + filterStr));
+//                    if (list.size() == 0) {
+//                        emptyText.setVisibility(View.VISIBLE);
+//                    } else {
+//                        emptyText.setVisibility(View.GONE);
+//                    }
+//
+//                    adapter1 = new DonatorListAdapter(list);
+//                    row1.setAdapter(adapter1);
+                    getData(filterStr);
                 });
         filterDialog.show();
     }

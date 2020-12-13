@@ -45,7 +45,7 @@ public class GenericFilterDialog extends Dialog {
         getWindow().setBackgroundDrawable(
                 new ColorDrawable(android.graphics.Color.TRANSPARENT));
         initViews();
-        setCanceledOnTouchOutside(false);
+        setCanceledOnTouchOutside(true);
 
         if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

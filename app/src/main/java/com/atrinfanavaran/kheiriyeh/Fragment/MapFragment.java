@@ -79,6 +79,8 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
 
         LinearLayout filterBtn = getActivity().findViewById(R.id.filterButton);
         filterBtn.setVisibility(View.GONE);
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.GONE);
 
         titleToolbar = getActivity().findViewById(R.id.titleToolbar);
         titleToolbar.setText("آدرس ها");
@@ -174,6 +176,7 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
                     break;
             }
         });
+
     }
 
     private void initView(View view) {
@@ -230,7 +233,7 @@ public class MapFragment extends Fragment implements LocationListener, GoogleMap
 
             safecompPOS = new LatLng(32.656358, 51.669068);
             googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
-
+            getBoxesOnline("all");
         }
     };
 

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -79,6 +80,11 @@ public class MapRouteFragment extends Fragment implements LocationListener, Goog
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn2Save = view.findViewById(R.id.btn_2);
+        LinearLayout filterBtn= getActivity().findViewById(R.id.filterButton);
+        filterBtn.setVisibility(View.GONE);
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.GONE);
+
         btn2Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

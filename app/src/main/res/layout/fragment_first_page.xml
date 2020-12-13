@@ -132,7 +132,7 @@
                 android:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout4"
+                    android:id="@+id/lastRecord"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

@@ -17,8 +17,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
@@ -97,7 +99,8 @@ public class AddBoxIncomeFragment1 extends Fragment {
                     break;
             }
         });
-
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.GONE);
 
         AppDatabase db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
@@ -169,6 +172,27 @@ public class AddBoxIncomeFragment1 extends Fragment {
 
         btn1Save = view.findViewById(R.id.btn_1);
         btn1Save.setOnClickListener(v -> {
+
+            if (edt1_3.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا مبلغ را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (edt1_6.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا نام و نام خانوادگی را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            }else if (edt1_7.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا موبایل را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            }else if (edt1_8.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا آدرس را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            }else if (edt1_4.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا تاریخ ثبت را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            }else if (spinner.getSelectedItem().toString().equals("انتخاب کنید")) {
+                Toast.makeText(getActivity(), "لطفا شماره صندوف را انتخاب نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             BoxIncome boxIncome = new BoxIncome();
             boxIncome.setnumber(numberSelected);
             boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
@@ -219,7 +243,24 @@ public class AddBoxIncomeFragment1 extends Fragment {
             }).show(getActivity().getSupportFragmentManager(), "");
 
         });
+        edt1_4.setKeyListener(null);
+        edt1_4.setOnClickListener(v -> {
+            DatePicker.Builder builder = new DatePicker
+                    .Builder()
+                    .theme(R.style.DialogTheme)
+                    .future(true);
+            Date mDate = new Date();
+            builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
+            builder.build((id, calendar, day, month, year) -> {
+                DateFormat df = new SimpleDateFormat("hh:mm:ss a", Locale.US);
+                java.util.Date d = new java.util.Date();
+                String dt = df.format(d);
+                mDate.setDate(day, month, year);
+                edt1_4.setText(year + "/" + month + "/" + day);
 
+            }).show(getActivity().getSupportFragmentManager(), "");
+
+        });
 
     }
 

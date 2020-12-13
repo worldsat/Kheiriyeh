@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atrinfanavaran.kheiriyeh.Adapter.BoxIncomeListAdapter;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxIncomeEdit;
@@ -80,6 +81,17 @@ public class BoxIncomeListFragment extends Fragment {
 
         initView(view);
         titleToolbar.setText("تخلیه صندوق");
+
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.VISIBLE);
+        refreshBtn.setOnClickListener(v -> {
+            if (list.size() > 0) {
+                list.clear();
+            }
+            getDate();
+            Toast.makeText(getActivity(), "لیست برورسانی شد", Toast.LENGTH_SHORT).show();
+        });
+
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
                 .fallbackToDestructiveMigration()
@@ -88,20 +100,7 @@ public class BoxIncomeListFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        list = db.BoxIncomeDao().getAll();
-        if (list.size() == 0) {
-            emptyText.setVisibility(View.VISIBLE);
-        } else {
-            emptyText.setVisibility(View.GONE);
-        }
-        adapter = new BoxIncomeListAdapter(list, new onCallBackBoxIncomeEdit() {
-            @Override
-            public void EditBoxIncome(BoxIncomeR boxIncome) {
-                onCallBackBoxIncomeEdit.EditBoxIncome(boxIncome);
-            }
-
-        });
-        recyclerView.setAdapter(adapter);
+        getDate();
 
         floatingActionButton1.setOnClickListener(v ->
 
@@ -117,6 +116,23 @@ public class BoxIncomeListFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getDate() {
+        list = db.BoxIncomeDao().getAll();
+        if (list.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.setVisibility(View.GONE);
+        }
+        adapter = new BoxIncomeListAdapter(list, new onCallBackBoxIncomeEdit() {
+            @Override
+            public void EditBoxIncome(BoxIncomeR boxIncome) {
+                onCallBackBoxIncomeEdit.EditBoxIncome(boxIncome);
+            }
+
+        });
+        recyclerView.setAdapter(adapter);
     }
 
     public void showFilterDialog() {
@@ -159,13 +175,17 @@ public class BoxIncomeListFragment extends Fragment {
                     }
 
                     if (adapter != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
                     Log.i("moh3n", "showFilterDialog: " + filterStr);
                     list = db.BoxIncomeDao().getfilter(new SimpleSQLiteQuery("SELECT * FROM BoxIncomeR  " + filterStr));
                     if (list.size() == 0) {
                         emptyText.setVisibility(View.VISIBLE);
+                    }else{
+                        emptyText.setVisibility(View.GONE);
                     }
 
                     adapter = new BoxIncomeListAdapter(list, new onCallBackBoxIncomeEdit() {

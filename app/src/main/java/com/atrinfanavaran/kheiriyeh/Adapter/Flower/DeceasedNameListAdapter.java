@@ -16,6 +16,7 @@ import androidx.room.Room;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddDeceasedNameActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddDonateActivity;
+import com.atrinfanavaran.kheiriyeh.Domain.DeceasedNameApi;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
@@ -27,10 +28,10 @@ import java.util.List;
 
 public class DeceasedNameListAdapter extends RecyclerView.Adapter<DeceasedNameListAdapter.ViewHolder> {
 
-    private final List<DeceasedNameR> array_object;
+    private final List<DeceasedNameApi.Data> array_object;
     private onCallBackBoxEdit onCallBackBoxEdit;
 
-    public DeceasedNameListAdapter(List<DeceasedNameR> result) {
+    public DeceasedNameListAdapter(List<DeceasedNameApi.Data> result) {
 
         this.array_object = result;
 
@@ -50,16 +51,16 @@ public class DeceasedNameListAdapter extends RecyclerView.Adapter<DeceasedNameLi
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
 
-        holder.title.setText(array_object.get(position).deceasedFullName);
-        holder.t1.setText(array_object.get(position).deceaseAalias);
+        holder.title.setText(array_object.get(position).getDeceasedFullName());
+        holder.t1.setText(array_object.get(position).getDeceaseAalias());
 
-        if (array_object.get(position).deceasedSex) {
+        if (array_object.get(position).isDeceasedSex()) {
             holder.t2.setText("زن");
         } else {
             holder.t2.setText("مرد");
         }
 
-
+        holder.moreOption.setVisibility(View.GONE);
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 
@@ -79,7 +80,7 @@ public class DeceasedNameListAdapter extends RecyclerView.Adapter<DeceasedNameLi
                                 .fallbackToDestructiveMigration()
                                 .allowMainThreadQueries()
                                 .build();
-                        db.DeceasedNameDao().delete(array_object.get(position).id);
+                        db.DeceasedNameDao().delete(array_object.get(position).getId());
 
                         array_object.remove(holder.getAdapterPosition());
 

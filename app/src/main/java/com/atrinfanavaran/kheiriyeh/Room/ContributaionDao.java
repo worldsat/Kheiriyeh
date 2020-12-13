@@ -25,6 +25,9 @@ public interface ContributaionDao {
     @Query("delete FROM ContributionR")
     void deleteAll();
 
+    @Query("delete FROM ContributionR Where Isnew  not like 'true' ")
+    void deleteAllOld();
+
     @Query("update  ContributionR set price=:price,description=:description,deviceCode=:deviceCode,terminalCode=:terminalCode,recieverCode=:recieverCode,fullName=:fullName,code=:code," +
             "nationalcode=:nationalcode,mobile=:mobile,phone=:phone,address=:address,birthDate=:birthDate WHERE id like (:id)")
 

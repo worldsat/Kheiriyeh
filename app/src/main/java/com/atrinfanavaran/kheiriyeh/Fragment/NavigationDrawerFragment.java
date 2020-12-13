@@ -86,6 +86,7 @@ public class NavigationDrawerFragment extends Fragment {
     private Controller controller;
     private BaseActivity baseActivity;
     private ImageView imageView;
+    private SettingsBll settingsBll;
 
     public NavigationDrawerFragment() {
         // Required empty public constructor
@@ -116,7 +117,7 @@ public class NavigationDrawerFragment extends Fragment {
         if (savedInstanceState != null) {
             m_fromSavedInstanceState = true;
         }
-
+        settingsBll = new SettingsBll(getActivity());
 
     }
 
@@ -187,7 +188,16 @@ public class NavigationDrawerFragment extends Fragment {
 
 
         drawer1.setOnClickListener(v -> sendDischargeRoute());
-        drawer2.setOnClickListener(v -> getRoutes());
+        drawer2.setOnClickListener(v -> {
+
+            db.BoxDao().deleteAllOld();
+            db.RouteDao().deleteAllOld();
+            db.SponsorDao().deleteAllOld();
+            db.ContributaionDao().deleteAllOld();
+            db.FinancialServiceTypeDao().deleteAllOld();
+
+            getRoutes();
+        });
 
         TextView version = view.findViewById(R.id.version);
         String versionName = BuildConfig.VERSION_NAME;
@@ -256,12 +266,12 @@ public class NavigationDrawerFragment extends Fragment {
                 params = new JSONObject();
 //                params.put("id", data.get(i).id);
                 params.put("code", data.get(i).code);
-                params.put("day", data.get(i).day);
+                params.put("day", Integer.valueOf(data.get(i).day));
                 params.put("address", data.get(i).address);
                 params.put("lat", data.get(i).lat);
                 params.put("lon", data.get(i).lon);
                 params.put("guidDischargeRoute", data.get(i).guidDischargeRoute);
-
+                params.put("charityId", settingsBll.getCharityId());
                 params2.put(params);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -314,7 +324,8 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("lon", Double.valueOf(data.get(i).lon));
 //                params.put("dischargeRouteId", Integer.valueOf(data.get(i).dischargeRouteId));
                 params.put("guidDischargeRoute", data.get(i).guidDischargeRoute);
-
+                params.put("guidBox", data.get(i).guidBox);
+                params.put("charityId", settingsBll.getCharityId());
                 params2.put(params);
             } catch (Exception e) {
                 Log.i("moh3n", "sendBox: " + e);
@@ -332,7 +343,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.BoxDao().deleteAll();
                 wait.dismiss();
-                sendBoxIncome();
+
             }
 
             @Override
@@ -343,7 +354,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }
         });
-
+        sendBoxIncome();
     }
 
 
@@ -351,14 +362,14 @@ public class NavigationDrawerFragment extends Fragment {
         JSONObject params = null;
         JSONArray params2 = new JSONArray();
         List<BoxIncomeR> boxIncome = db.BoxIncomeDao().getAll();
-        SettingsBll settingsBll = new SettingsBll(getActivity());
+
         for (int i = 0; i < boxIncome.size(); i++) {
             try {
                 params = new JSONObject();
 
                 try {
                     Integer intt = Integer.valueOf(boxIncome.get(i).price);
-                    params.put("price", boxIncome.get(i).price);
+                    params.put("price", intt);
                 } catch (Exception e) {
                     params.put("price", 0);
                 }
@@ -391,7 +402,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 db.BoxIncomeDao().deleteAll();
                 wait.dismiss();
-                sendDeceasedName();
+
             }
 
             @Override
@@ -402,7 +413,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }
         });
-
+        sendSponser();
     }
 
     private void sendDeceasedName() {
@@ -559,12 +570,11 @@ public class NavigationDrawerFragment extends Fragment {
             }
         }
 
-        if (params2 != null) {
+        if (params != null) {
             Log.i("moh3n", "sendFlowerCrown: " + params.toString());
         }
 
 
-        sendSponser();
     }
 
     private void sendSponser() {
@@ -587,8 +597,11 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("deviceCode", list.get(i).deviceCode);
                 params.put("recieverCode", list.get(i).recieverCode);
                 params.put("terminalCode", list.get(i).terminalCode);
-                params.put("sponsorId", list.get(i).getSponsorId());
 
+                SponsorR sponsorR = db.SponsorDao().getSponsorById( list.get(i).getSponsorId());
+                if(sponsorR.getIsNew()==null|| !sponsorR.getIsNew().equals("true")){
+                    params.put("sponsorId", list.get(i).getSponsorId());
+                }
             } catch (Exception e) {
                 Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی مشارکت", Toast.LENGTH_SHORT).show();
             }
@@ -605,9 +618,10 @@ public class NavigationDrawerFragment extends Fragment {
             controller.Operation("", SponsorApi.class, getActivity(), params2.toString(), new CallbackOperation() {
                 @Override
                 public void onSuccess(String result) {
-                    Log.i("moh3n", "sendSponser: " + result);
+                    Log.i("moh3n", "resultSponser: " + result);
                     Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                     db.ContributaionDao().deleteAll();
+                    db.SponsorDao().deleteAll();
                     wait.dismiss();
                 }
 
@@ -730,6 +744,7 @@ public class NavigationDrawerFragment extends Fragment {
                     data.lon = response.get(i).getlon();
                     data.dischargeRouteId = response.get(i).getdischargeRouteId();
                     data.guidDischargeRoute = response.get(i).getGuidDischargeRoute();
+                    data.guidBox = response.get(i).getguidBox();
 
                     try {
                         db.BoxDao().insertBox(data);
@@ -737,11 +752,12 @@ public class NavigationDrawerFragment extends Fragment {
                         Log.i("moh3n", "errorInsert: " + e);
                     }
                 }
-                String Str = "تعداد " + response.size() + " رکورد از صندوق ها با موفقیت ذخیره شد";
-                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
-
+                if (response.size() > 0) {
+                    String Str = "تعداد " + response.size() + " رکورد از صندوق ها با موفقیت ذخیره شد";
+                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                }
                 wait.dismiss();
-                getFlowerCrownType();
+
             }
 
             @Override
@@ -750,6 +766,7 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
+        getSponsor();
     }
 
     private void getFlowerCrownType() {
@@ -776,11 +793,12 @@ public class NavigationDrawerFragment extends Fragment {
                         Log.i("moh3n", "errorInsert: " + e);
                     }
                 }
-                String Str = "تعداد " + response.getData().size() + " رکورد از  انواع تاج گل با موفقیت ذخیره شد";
-                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
-
+                if (response.getData().size() > 0) {
+                    String Str = "تعداد " + response.getData().size() + " رکورد از  انواع تاج گل با موفقیت ذخیره شد";
+                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                }
                 wait.dismiss();
-                getFlowerCrown();
+
 
             }
 
@@ -790,7 +808,7 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
-
+        getFlowerCrown();
     }
 
     private void getFlowerCrown() {
@@ -828,11 +846,13 @@ public class NavigationDrawerFragment extends Fragment {
                             Log.i("moh3n", "errorInsertFlowerCrown: " + e);
                         }
                     }
-                    String Str = "تعداد " + response.getData().size() + " رکورد از  لیست اهدا با موفقیت ذخیره شد";
-                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                    if (response.getData().size() > 0) {
+                        String Str = "تعداد " + response.getData().size() + " رکورد از  لیست اهدا با موفقیت ذخیره شد";
+                        Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                    }
                 }
                 wait.dismiss();
-                getDonate();
+
             }
 
             @Override
@@ -841,7 +861,7 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
-
+        getDonate();
     }
 
     private void getDonate() {
@@ -849,7 +869,7 @@ public class NavigationDrawerFragment extends Fragment {
         wait.show();
         SettingsBll settingsBll = new SettingsBll(getActivity());
 
-        controller.GetFromApi2("api/Donator", new CallbackGetString() {
+        controller.GetFromApi2("api/Donator/GetAll", new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
                 Gson gson = new Gson();
@@ -874,11 +894,13 @@ public class NavigationDrawerFragment extends Fragment {
                             Log.i("moh3n", "errorInsert: " + e);
                         }
                     }
-                    String Str = "تعداد " + response.getData().size() + " رکورد از  لیست اهدا با موفقیت ذخیره شد";
-                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                    if (response.getData().size() > 0) {
+                        String Str = "تعداد " + response.getData().size() + " رکورد از  لیست اهدا با موفقیت ذخیره شد";
+                        Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                    }
                 }
                 wait.dismiss();
-                getDeceasedName();
+
             }
 
             @Override
@@ -887,7 +909,7 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
-
+        getDeceasedName();
     }
 
     private void getDeceasedName() {
@@ -895,7 +917,7 @@ public class NavigationDrawerFragment extends Fragment {
         wait.show();
         SettingsBll settingsBll = new SettingsBll(getActivity());
 
-        controller.GetFromApi2("api/DeceasedName", new CallbackGetString() {
+        controller.GetFromApi2("api/DeceasedName/GetAll", new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
                 Gson gson = new Gson();
@@ -918,11 +940,12 @@ public class NavigationDrawerFragment extends Fragment {
                         Log.i("moh3n", "errorInsert: " + e);
                     }
                 }
-                String Str = "تعداد " + response.getData().size() + " رکورد از  لیست متوفی با موفقیت ذخیره شد";
-                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
-
+                if (response.getData().size() > 0) {
+                    String Str = "تعداد " + response.getData().size() + " رکورد از  لیست متوفی با موفقیت ذخیره شد";
+                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                }
                 wait.dismiss();
-                getSponsor();
+
             }
 
             @Override
@@ -956,11 +979,12 @@ public class NavigationDrawerFragment extends Fragment {
                         Log.i("moh3n", "errorInsert: " + e);
                     }
                 }
-                String Str = "تعداد " + response.size() + " رکورد از مسیر ها با موفقیت ذخیره شد";
-                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
-
+                if (response.size() > 0) {
+                    String Str = "تعداد " + response.size() + " رکورد از مسیر ها با موفقیت ذخیره شد";
+                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                }
                 wait.dismiss();
-                getBox();
+
 
             }
 
@@ -970,6 +994,7 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
+        getBox();
     }
 
     private void getSponsor() {
@@ -1005,11 +1030,13 @@ public class NavigationDrawerFragment extends Fragment {
                             Log.i("moh3n", "errorInsert: " + e);
                         }
                     }
-                    String Str = "تعداد " + response.getData().size() + " رکورد از  حامی با موفقیت ذخیره شد";
-                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                    if (response.getData().size() > 0) {
+                        String Str = "تعداد " + response.getData().size() + " رکورد از  حامی با موفقیت ذخیره شد";
+                        Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                    }
                 }
                 wait.dismiss();
-                getFinancialServiceType();
+
             }
 
             @Override
@@ -1018,7 +1045,7 @@ public class NavigationDrawerFragment extends Fragment {
                 wait.dismiss();
             }
         });
-
+        getFinancialServiceType();
     }
 
     private void getFinancialServiceType() {
@@ -1045,9 +1072,10 @@ public class NavigationDrawerFragment extends Fragment {
                         Log.i("moh3n", "errorInsert: " + e);
                     }
                 }
-                String Str = "تعداد " + response.getData().size() + " رکورد از  انواع خدمت مشارکت نقدی با موفقیت ذخیره شد";
-                Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
-
+                if (response.getData().size() > 0) {
+                    String Str = "تعداد " + response.getData().size() + " رکورد از  انواع خدمت مشارکت نقدی با موفقیت ذخیره شد";
+                    Toast.makeText(getActivity(), Str, Toast.LENGTH_SHORT).show();
+                }
                 wait.dismiss();
 
             }

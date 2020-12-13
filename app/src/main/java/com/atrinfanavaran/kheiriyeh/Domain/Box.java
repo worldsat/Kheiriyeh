@@ -18,9 +18,18 @@ public class Box extends BaseDomain {
     private String lng;
     private String address;
     private String guidDischargeRoute;
+    private String guidBox;
     private int id;
     private String dischargeRouteId;
     private int boxId;
+
+    public String getguidBox() {
+        return guidBox;
+    }
+
+    public void setguidBox(String guidBox) {
+        this.guidBox = guidBox;
+    }
 
     public String getassignmentDateEn() {
         return assignmentDateEn;
@@ -120,13 +129,13 @@ public class Box extends BaseDomain {
                 "",
                 ViewType.EDIT_TEXT.name())
         );
-        domainInfoList.add(new DomainInfo(
-                ViewMode.FILTER.name(),
-                "code2",
-                "کد",
-                "",
-                ViewType.EDIT_TEXT.name())
-        );
+//        domainInfoList.add(new DomainInfo(
+//                ViewMode.FILTER.name(),
+//                "code",
+//                "کد",
+//                "",
+//                ViewType.EDIT_TEXT.name())
+//        );
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
                 "assignmentDateEn",

@@ -94,7 +94,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:fontFamily="@font/behdad"
-                            android:hint="نام معرف"
+                            android:hint="نام مستعار"
                             android:inputType="text"
 
                             android:textAlignment="textStart"
@@ -123,6 +123,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
+                            android:digits="0123456789"
                             android:ems="10"
                             android:fontFamily="@font/behdad"
                             android:hint="موبایل"
@@ -132,6 +133,16 @@
                             android:textDirection="rtl"
                             android:textSize="12sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="26dp"
+                        android:fontFamily="@font/behdad"
+                        android:text="ارسال SMS"
+                        android:textColor="@color/grey_700"
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/btn_1"

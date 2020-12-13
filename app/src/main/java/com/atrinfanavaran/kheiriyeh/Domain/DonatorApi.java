@@ -5,13 +5,14 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewMode;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DonatorApi  extends BaseDomain {
 
     public DonatorApi() {
-        setApiAddresss("api/Donator");
+        setApiAddresss("api/Donator/");
         ArrayList<DomainInfo> domainInfoList = new ArrayList<>();
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
@@ -81,7 +82,12 @@ public class DonatorApi  extends BaseDomain {
         this.data = data;
     }
 
-    public static class Data {
+    public static class Data implements Serializable {
+        public Data(int id, String donatorFullName) {
+            this.id = id;
+            this.donatorFullName = donatorFullName;
+        }
+
         /**
          * id : 1
          * donatorFullName : علی احمدی
@@ -90,6 +96,7 @@ public class DonatorApi  extends BaseDomain {
          * donatorMobile : 09131232345
          * isSendMessage : true
          */
+
 
         private int id;
         private String donatorFullName;
@@ -153,6 +160,11 @@ public class DonatorApi  extends BaseDomain {
 
         public void setIsSendMessage(boolean isSendMessage) {
             this.isSendMessage = isSendMessage;
+        }
+
+        @Override
+        public String toString() {
+            return donatorFullName;
         }
     }
 }

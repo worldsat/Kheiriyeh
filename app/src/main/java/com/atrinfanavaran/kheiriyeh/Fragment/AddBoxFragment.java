@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alirezaafkar.sundatepicker.DatePicker;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 
 public class AddBoxFragment extends Fragment {
@@ -76,7 +78,8 @@ public class AddBoxFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
-
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.GONE);
         AppDatabase db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
                 .fallbackToDestructiveMigration()
@@ -104,10 +107,10 @@ public class AddBoxFragment extends Fragment {
             edt1_5.setText(box.getassignmentDate());
 
         }
-        if (box != null && box.getDischargeRouteId() != null) {
+        if (box != null && box.getguidDischargeRoute() != null) {
             try {
-                for (int i = 0; i < RoutesId.size(); i++) {
-                    if (RoutesId.get(i).equals(Integer.valueOf(box.getDischargeRouteId()))) {
+                for (int i = 0; i < RoutesGuid.size(); i++) {
+                    if (RoutesGuid.get(i).equals(box.getguidDischargeRoute())) {
 
                         spinner.setSelection(i + 1);
                         break;
@@ -119,6 +122,25 @@ public class AddBoxFragment extends Fragment {
         }
 
         btn1Save.setOnClickListener(v -> {
+            if (edt1_2.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا شماره صندوق را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (edt1_1.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا نام و نام خانوادگی را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (edt1_3.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا موبایل را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (edt1_6.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا آدرس را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (edt1_5.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا تاریخ واگذاری را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (spinner.getSelectedItem().toString().equals("انتخاب کنید")) {
+                Toast.makeText(getActivity(), "لطفا کد مسیر را انتخاب نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            }
             BoxR box = new BoxR();
             box.fullName = edt1_1.getText().toString().trim();
             box.number = edt1_2.getText().toString().trim();
@@ -135,9 +157,10 @@ public class AddBoxFragment extends Fragment {
 //            box.dischargeRouteId = str;
             box.guidDischargeRoute = str;
 
+
             box.assignmentDate = edt1_5.getText().toString().trim();
 
-            String[] date = edt1_5.getText().toString().trim().split("/");
+            String[] date = edt1_5.getText().toString().trim().split("-");
             roozh roozh = new roozh();
             roozh.PersianToGregorian(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
 
@@ -163,6 +186,7 @@ public class AddBoxFragment extends Fragment {
                 box.boxId = this.box.getBoxId();
             } else {
                 box.isNew = "true";
+                box.guidBox = UUID.randomUUID().toString();
             }
             onCallBack.SaveBox(box, editable);
         });
@@ -186,7 +210,25 @@ public class AddBoxFragment extends Fragment {
             }).show(getActivity().getSupportFragmentManager(), "");
 
         });
+        edt1_5.setKeyListener(null);
+        edt1_5.setOnClickListener(v -> {
+            DatePicker.Builder builder = new DatePicker
+                    .Builder()
+                    .theme(R.style.DialogTheme)
+                    .future(true);
+            Date mDate = new Date();
+            builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
+            builder.build((id, calendar, day, month, year) -> {
+                DateFormat df = new SimpleDateFormat("hh:mm:ss a", Locale.US);
+                java.util.Date d = new java.util.Date();
+                String dt = df.format(d);
 
+                mDate.setDate(day, month, year);
+                edt1_5.setText(year + "-" + month + "-" + day);
+
+            }).show(getActivity().getSupportFragmentManager(), "");
+
+        });
     }
 
     @Override

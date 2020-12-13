@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -95,7 +96,8 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
 //                onCallBackBoxIncome2.SaveBoxIncome2();
             }
         });
-
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.GONE);
 
         context = getActivity();
 
@@ -135,8 +137,9 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
 //                    Log.i("moh3n", "onCameraIdle: ");
 
 //                });
-                GoogleMap.OnMyLocationChangeListener myLocationChangeListener = location -> {
-                    LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                googlemap.setOnCameraIdleListener(() -> {
+
+                    final LatLng loc = googlemap.getCameraPosition().target;
                     double lat = loc.latitude;
                     double lng = loc.longitude;
                     String latStr = String.valueOf(lat);
@@ -144,10 +147,20 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
                     boxIncome.setlat(latStr);
                     boxIncome.setlon(lngStr);
 
-                    googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
-
-                    Log.i("moh3n", "onMyLocationChange: " + lat + " " + lng);
-                };
+                });
+//                GoogleMap.OnMyLocationChangeListener myLocationChangeListener = location -> {
+//                    LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+//                    double lat = loc.latitude;
+//                    double lng = loc.longitude;
+//                    String latStr = String.valueOf(lat);
+//                    String lngStr = String.valueOf(lng);
+//                    boxIncome.setlat(latStr);
+//                    boxIncome.setlon(lngStr);
+//
+////                    googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+//
+//                    Log.i("moh3n", "onMyLocationChange: " + lat + " " + lng);
+//                };
                 googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
                 // For dropping a marker at a point on the Map
 //                LatLng sydney = new LatLng(-34, 151);

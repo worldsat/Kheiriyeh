@@ -1,7 +1,9 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
 import androidx.room.Room;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -14,6 +16,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter.GenericFilterDialog;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.RouteR;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atrinfanavaran.kheiriyeh.Adapter.BoxListAdapter;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackAddBoxNew;
@@ -49,9 +53,10 @@ public class BoxListFragment extends Fragment {
     private FloatingActionButton floatingActionButton1;
     private TextView titleToolbar;
     private TextView emptyText;
-    private   List<BoxR> list;
+    private List<BoxR> list;
     private HashMap<Integer, FilteredDomain> result = new HashMap<>();
     private LinearLayout filterBtn;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,15 @@ public class BoxListFragment extends Fragment {
         initView(view);
         titleToolbar.setText("افزودن صندوق");
 
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.VISIBLE);
+        refreshBtn.setOnClickListener(v -> {
+            if (list.size() > 0) {
+                list.clear();
+            }
+            getDate();
+            Toast.makeText(getActivity(), "لیست برورسانی شد", Toast.LENGTH_SHORT).show();
+        });
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb")
                 .fallbackToDestructiveMigration()
@@ -84,17 +98,7 @@ public class BoxListFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        list = db.BoxDao().getAll();
-        if (list.size() == 0) {
-            emptyText.setVisibility(View.VISIBLE);
-        }
-        adapter = new BoxListAdapter(list, new onCallBackBoxEdit() {
-            @Override
-            public void EditBox(BoxR boxR) {
-                onCallBackBoxEdit.EditBox(boxR);
-            }
-        });
-        recyclerView.setAdapter(adapter);
+        getDate();
 
         floatingActionButton1.setOnClickListener(v -> {
             onCallBackAddBoxNew.btnNewBox();
@@ -109,6 +113,23 @@ public class BoxListFragment extends Fragment {
             }
         });
     }
+
+    private void getDate() {
+        list = db.BoxDao().getAll();
+        if (list.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        }else{
+            emptyText.setVisibility(View.GONE);
+        }
+        adapter = new BoxListAdapter(list, new onCallBackBoxEdit() {
+            @Override
+            public void EditBox(BoxR boxR) {
+                onCallBackBoxEdit.EditBox(boxR);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+    }
+
     public void showFilterDialog() {
         Class DOMAIN = Box.class;
 
@@ -152,9 +173,11 @@ public class BoxListFragment extends Fragment {
                         list.clear();
                     }
 
-                    list = db.BoxDao().getfilter(new SimpleSQLiteQuery("SELECT b.id,b.fullName,b.number,b.mobile,b.code,b.assignmentDate,b.dischargeRouteId,b.address,b.lon,b.lat,r.code code2,r.id id3 ,b.id boxId FROM BoxR b Inner Join RouteR r on b.dischargeRouteId=r.id  " + filterStr));
+                    list = db.BoxDao().getfilter(new SimpleSQLiteQuery("SELECT b.id,b.fullName,b.number,b.mobile,b.code,b.assignmentDate,b.dischargeRouteId,b.address,b.lon,b.lat,r.code code2,r.id id3 ,b.id boxId,b.guidBox,r.guidDischargeRoute FROM BoxR b left Join RouteR r on b.dischargeRouteId=r.id  " + filterStr));
                     if (list.size() == 0) {
                         emptyText.setVisibility(View.VISIBLE);
+                    }else{
+                        emptyText.setVisibility(View.GONE);
                     }
 
                     adapter = new BoxListAdapter(list, new onCallBackBoxEdit() {
@@ -168,6 +191,7 @@ public class BoxListFragment extends Fragment {
                 });
         filterDialog.show();
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

@@ -95,7 +95,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:fontFamily="@font/behdad"
-                            android:hint="نام معرف"
+                            android:hint="نام مستعار"
                             android:inputType="text"
 
                             android:textAlignment="textStart"

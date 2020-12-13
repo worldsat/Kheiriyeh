@@ -633,13 +633,13 @@ public class Controller {
                         String fullName = new JSONObject(response).getString("fullName");
                         String UserId = new JSONObject(response).getString("code");
                         int CharityId = new JSONObject(response).getInt("charityId");
-                        String Charity = new JSONObject(response).getString("charity");
+//                        String Charity = new JSONObject(response).getString("charity");
 //                        Log.i("moh3n", "onSuccessResponse: " + token);
                         settingsBll.setTicket(token);
                         settingsBll.setName(fullName);
                         settingsBll.setUserId(UserId);
                         settingsBll.setCharityId(CharityId);
-                        settingsBll.setCharity(Charity);
+//                        settingsBll.setCharity(Charity);
 
                         callbackOperation.onSuccess(response);
 //                        context.startActivity(new Intent(context, IntentClass));

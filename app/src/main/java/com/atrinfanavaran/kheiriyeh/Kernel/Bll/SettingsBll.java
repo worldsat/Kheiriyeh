@@ -19,7 +19,7 @@ public class SettingsBll {
     private boolean id;
 
     public boolean isActive() {
-        return preferences.getBoolean("isActive", false);
+        return preferences.getBoolean("isActive", true);
     }
 
     public void setActive(boolean active) {
@@ -27,7 +27,7 @@ public class SettingsBll {
     }
 
     public boolean isAccessBox() {
-        return preferences.getBoolean("isAccessBox", false);
+        return preferences.getBoolean("isAccessBox", true);
     }
 
     public void setAccessBox(boolean accessBox) {
@@ -35,7 +35,7 @@ public class SettingsBll {
     }
 
     public boolean isAccessFinancialAid() {
-        return preferences.getBoolean("isAccessFinancialAid", false);
+        return preferences.getBoolean("isAccessFinancialAid", true);
     }
 
     public void setAccessFinancialAid(boolean accessFinancialAid) {
@@ -43,7 +43,7 @@ public class SettingsBll {
     }
 
     public boolean isAccessFlowerCrown() {
-        return preferences.getBoolean("isAccessFlowerCrown", false);
+        return preferences.getBoolean("isAccessFlowerCrown", true);
     }
 
     public void setAccessFlowerCrown(boolean accessFlowerCrown) {
@@ -51,7 +51,7 @@ public class SettingsBll {
     }
 
     public boolean isAccessSponsor() {
-        return preferences.getBoolean("isAccessSponsor", false);
+        return preferences.getBoolean("isAccessSponsor", true);
     }
 
     public void setAccessSponsor(boolean accessSponsor) {

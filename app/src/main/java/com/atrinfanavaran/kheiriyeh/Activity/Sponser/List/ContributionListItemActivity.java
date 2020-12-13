@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -54,6 +55,7 @@ public class ContributionListItemActivity extends BaseActivity {
         initView();
         NavigationDrawer();
         setvariable();
+        getDate();
     }
 
     private void setvariable() {
@@ -64,16 +66,16 @@ public class ContributionListItemActivity extends BaseActivity {
 
         });
 
+        LinearLayout refreshBtn = findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.VISIBLE);
+        refreshBtn.setOnClickListener(v -> {
+            if (list.size() > 0) {
+                list.clear();
+            }
+            getDate();
+            Toast.makeText(this, "لیست برورسانی شد", Toast.LENGTH_SHORT).show();
+        });
 
-        list.addAll(db().ContributaionDao().getAll());
-        if (list.size() > 0) {
-            emptyText.setVisibility(View.GONE);
-            adapter1 = new ContributionListItemAdapter(list);
-            row1.setAdapter(adapter1);
-
-        } else {
-            emptyText.setVisibility(View.VISIBLE);
-        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ContributionListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
 
@@ -91,6 +93,19 @@ public class ContributionListItemActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    private void getDate() {
+        list.addAll(db().ContributaionDao().getAll());
+        if (list.size() > 0) {
+            emptyText.setVisibility(View.GONE);
+            adapter1 = new ContributionListItemAdapter(list);
+            row1.setAdapter(adapter1);
+
+        } else {
+            emptyText.setVisibility(View.VISIBLE);
+            row1.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -146,13 +161,15 @@ public class ContributionListItemActivity extends BaseActivity {
                     StringBuilder filterStr = filteringDate(filters);
 
                     if (adapter1 != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
                     list = db().ContributaionDao().getfilter(new SimpleSQLiteQuery("SELECT * from ContributionR  " + filterStr));
                     if (list.size() == 0) {
                         emptyText.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         emptyText.setVisibility(View.GONE);
                     }
 

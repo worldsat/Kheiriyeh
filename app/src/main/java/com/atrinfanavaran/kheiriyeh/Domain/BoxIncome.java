@@ -38,7 +38,7 @@ public class BoxIncome extends BaseDomain {
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
                 "number",
-                "کد",
+                "شماره",
                 "",
                 ViewType.EDIT_TEXT.name())
         );

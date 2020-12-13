@@ -1,5 +1,6 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.room.Room;
 
@@ -46,6 +47,7 @@ public class FirstFragment extends Fragment {
     private static final int TAKE = 100;
     private int SKIP = 0;
     private RecyclerView row1, row2;
+    ConstraintLayout row2Layout;
     private ProgressBar progressBar, progressBar2;
     private TextView warningTxt;
     private SliderLayout sliderShow;
@@ -88,12 +90,15 @@ public class FirstFragment extends Fragment {
         tinydb = new TinyDB(getActivity());
         controller = new Controller(getActivity());
         filterBtn = getActivity().findViewById(R.id.filterButton);
+        row2Layout = getActivity().findViewById(R.id.row2);
 
         titleToolbar.setText("قاصدک");
         db = Room.databaseBuilder(getActivity(),
                 AppDatabase.class, "RoomDb").fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
         filterBtn.setVisibility(View.GONE);
+        LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.GONE);
 
         getSlider();
         quickList();
@@ -108,6 +113,11 @@ public class FirstFragment extends Fragment {
 
 //                responseLastDischarge.addAll((Collection<? extends Sliders>) result);
         List<BoxIncomeR> routes = db.BoxIncomeDao().getAll();
+        if (routes.size() == 0) {
+            row2Layout.setVisibility(View.GONE);
+        }else{
+//            row2Layout.setVisibility(View.VISIBLE);
+        }
         adapter2 = new BoxIncomeListHorizontalAdapter(routes);
         row2.setAdapter(adapter2);
 

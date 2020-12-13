@@ -68,7 +68,28 @@ public class AddSponsorActivity extends BaseActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (edt1.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا نام و نام خانوادگی را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (edt2.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا کد را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (edt3.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا کد ملی را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (edt4.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا همراه را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (edt5.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا تلفن را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (edt6.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا آدرس را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (edt7.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "لطفا تاریخ ثبت را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 SponsorR sponsorR = new SponsorR();
                 sponsorR.fullName = edt1.getText().toString();
@@ -80,8 +101,8 @@ public class AddSponsorActivity extends BaseActivity {
                 sponsorR.birthDate = edt7.getText().toString();
                 if (editable) {
                     sponsorR.id = object.id;
-                    db().SponsorDao().update(sponsorR.fullName, sponsorR.code, sponsorR.nationalcode,sponsorR.mobile
-                            ,sponsorR.phone,sponsorR.address,sponsorR.birthDate, sponsorR.id);
+                    db().SponsorDao().update(sponsorR.fullName, sponsorR.code, sponsorR.nationalcode, sponsorR.mobile
+                            , sponsorR.phone, sponsorR.address, sponsorR.birthDate, sponsorR.id);
                     Toast.makeText(AddSponsorActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
                     sponsorR.isNew = "true";
@@ -112,6 +133,25 @@ public class AddSponsorActivity extends BaseActivity {
         });
 
         calendarBtn.setOnClickListener(v -> {
+            DatePicker.Builder builder = new DatePicker
+                    .Builder()
+                    .theme(R.style.DialogTheme)
+                    .future(true);
+            Date mDate = new Date();
+            builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
+            builder.build((id, calendar, day, month, year) -> {
+                DateFormat df = new SimpleDateFormat("hh:mm:ss a", Locale.US);
+                java.util.Date d = new java.util.Date();
+                String dt = df.format(d);
+
+                mDate.setDate(day, month, year);
+                edt7.setText(year + "-" + month + "-" + day);
+
+            }).show(getActivity().getSupportFragmentManager(), "");
+
+        });
+        edt7.setKeyListener(null);
+        edt7.setOnClickListener(v -> {
             DatePicker.Builder builder = new DatePicker
                     .Builder()
                     .theme(R.style.DialogTheme)

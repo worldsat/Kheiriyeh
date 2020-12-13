@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -66,17 +67,17 @@ public class FinancialAidListItemActivity extends BaseActivity {
             startActivity(new Intent(FinancialAidListItemActivity.this, AddFinancialAidActivity.class));
 
         });
+        LinearLayout refreshBtn = findViewById(R.id.refreshBtn);
+        refreshBtn.setVisibility(View.VISIBLE);
+        refreshBtn.setOnClickListener(v -> {
+            if (list.size() > 0) {
+                list.clear();
+            }
+            getDate();
+            Toast.makeText(this, "لیست برورسانی شد", Toast.LENGTH_SHORT).show();
+        });
 
-
-        list.addAll(db().FinancialAidDao().getAll());
-        if (list.size() > 0) {
-            emptyText.setVisibility(View.GONE);
-            adapter1 = new FinancialAidListAdapter(list);
-            row1.setAdapter(adapter1);
-
-        } else {
-            emptyText.setVisibility(View.VISIBLE);
-        }
+        getDate();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FinancialAidListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
 
@@ -94,6 +95,19 @@ public class FinancialAidListItemActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    private void getDate() {
+        list.addAll(db().FinancialAidDao().getAll());
+        if (list.size() > 0) {
+            emptyText.setVisibility(View.GONE);
+            adapter1 = new FinancialAidListAdapter(list);
+            row1.setAdapter(adapter1);
+
+        } else {
+            emptyText.setVisibility(View.VISIBLE);
+            row1.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -149,7 +163,9 @@ public class FinancialAidListItemActivity extends BaseActivity {
                     StringBuilder filterStr = filteringDate(filters);
 
                     if (adapter1 != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
                     list = db().FinancialAidDao().getfilter(new SimpleSQLiteQuery("SELECT * from FinancialAidR  " + filterStr));

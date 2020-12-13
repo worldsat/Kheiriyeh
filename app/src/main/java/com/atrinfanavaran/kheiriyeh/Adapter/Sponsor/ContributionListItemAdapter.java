@@ -21,13 +21,14 @@ import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.ContributionR;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ContributionListItemAdapter extends RecyclerView.Adapter<ContributionListItemAdapter.ViewHolder> {
 
     private final List<ContributionR> array_object;
     private onCallBackBoxEdit onCallBackBoxEdit;
-
+    private DecimalFormat formatter = new DecimalFormat("###,###,###,###");
     public ContributionListItemAdapter(List<ContributionR> result) {
 
         this.array_object = result;
@@ -48,7 +49,7 @@ public class ContributionListItemAdapter extends RecyclerView.Adapter<Contributi
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
 
-        holder.title.setText(array_object.get(position).price + " ریال ");
+        holder.title.setText(formatter.format(Long.valueOf(array_object.get(position).price)) + " ریال ");
         holder.t1.setText( array_object.get(position).fullName);
         holder.t2.setText("" + array_object.get(position).deviceCode);
         holder.t3.setText("" + array_object.get(position).terminalCode);

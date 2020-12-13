@@ -48,7 +48,12 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
         holder.fullName.setText(array_object.get(position).fullName);
         holder.number.setText(array_object.get(position).number);
         holder.mobile.setText(array_object.get(position).mobile);
-        holder.code.setText(array_object.get(position).code2);
+        if(array_object.get(position).code==null|| array_object.get(position).code.equals("null")){
+            holder.code.setText(array_object.get(position).code2);
+        }else{
+            holder.code.setText(array_object.get(position).code);
+        }
+
         holder.assignmentDate.setText(array_object.get(position).assignmentDate);
         holder.address.setText(array_object.get(position).address);
 

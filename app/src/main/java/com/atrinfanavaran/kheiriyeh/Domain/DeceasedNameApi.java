@@ -5,13 +5,14 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.DomainInfo;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewMode;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.ViewType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeceasedNameApi extends BaseDomain {
 
     public DeceasedNameApi() {
-        setApiAddresss("api/DeceasedName");
+        setApiAddresss("api/DeceasedName/");
         ArrayList<DomainInfo> domainInfoList = new ArrayList<>();
         domainInfoList.add(new DomainInfo(
                 ViewMode.FILTER.name(),
@@ -41,7 +42,7 @@ public class DeceasedNameApi extends BaseDomain {
     private int count;
     private boolean isError;
     private String message;
-    private List<Data> data;
+    private ArrayList<Data> data;
 
     public int getCount() {
         return count;
@@ -67,15 +68,15 @@ public class DeceasedNameApi extends BaseDomain {
         this.message = message;
     }
 
-    public List<Data> getData() {
+    public ArrayList<Data> getData() {
         return data;
     }
 
-    public void setData(List<Data> data) {
+    public void setData(ArrayList<Data> data) {
         this.data = data;
     }
 
-    public static class Data {
+    public static class Data implements Serializable {
         /**
          * id : 1
          * deceasedFullName : مهران محمدی
@@ -83,6 +84,17 @@ public class DeceasedNameApi extends BaseDomain {
          * deceasedSex : false
          * charityId : 1
          */
+
+        @Override
+        public String toString() {
+            return deceasedFullName;
+        }
+
+        public Data(int id, String deceasedFullName) {
+            this.id = id;
+            this.deceasedFullName = deceasedFullName;
+        }
+
 
         private int id;
         private String deceasedFullName;

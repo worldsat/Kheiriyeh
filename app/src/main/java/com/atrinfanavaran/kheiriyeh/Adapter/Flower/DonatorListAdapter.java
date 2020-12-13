@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddDonateActivity;
+import com.atrinfanavaran.kheiriyeh.Domain.DonatorApi;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
@@ -25,10 +26,10 @@ import java.util.List;
 
 public class DonatorListAdapter extends RecyclerView.Adapter<DonatorListAdapter.ViewHolder> {
 
-    private final List<DonatorR> array_object;
+    private final List<DonatorApi.Data> array_object;
     private onCallBackBoxEdit onCallBackBoxEdit;
 
-    public DonatorListAdapter(List<DonatorR> result) {
+    public DonatorListAdapter(List<DonatorApi.Data> result) {
 
         this.array_object = result;
 
@@ -48,11 +49,11 @@ public class DonatorListAdapter extends RecyclerView.Adapter<DonatorListAdapter.
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         String Url = settingsBll.getUrlAddress();
 
-        holder.title.setText(array_object.get(position).donatorFullName);
-        holder.t1.setText(array_object.get(position).donatorAlias);
-        holder.t2.setText(array_object.get(position).donatorMobile);
+        holder.title.setText(array_object.get(position).getDonatorFullName());
+        holder.t1.setText(array_object.get(position).getDonatorAlias());
+        holder.t2.setText(array_object.get(position).getDonatorMobile());
 
-
+        holder.moreOption.setVisibility(View.GONE);
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 
@@ -72,7 +73,7 @@ public class DonatorListAdapter extends RecyclerView.Adapter<DonatorListAdapter.
                                 .fallbackToDestructiveMigration()
                                 .allowMainThreadQueries()
                                 .build();
-                        db.DonatorDao().delete(array_object.get(position).id);
+                        db.DonatorDao().delete(array_object.get(position).getId());
 
                         array_object.remove(holder.getAdapterPosition());
 

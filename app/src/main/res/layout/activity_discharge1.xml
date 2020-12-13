@@ -317,7 +317,7 @@
                             android:layout_weight="1"
                             android:editable="false"
                             android:ems="10"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:fontFamily="@font/behdad"
                             android:hint="تاریخ ثبت"
                             android:inputType="number"

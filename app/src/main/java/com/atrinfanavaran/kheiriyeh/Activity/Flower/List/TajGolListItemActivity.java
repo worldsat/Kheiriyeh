@@ -2,8 +2,10 @@ package com.atrinfanavaran.kheiriyeh.Activity.Flower.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -13,16 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddTajGolActivity;
+import com.atrinfanavaran.kheiriyeh.Adapter.Flower.DonatorListAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.Flower.TajGolListAdapter;
+import com.atrinfanavaran.kheiriyeh.Domain.DonatorApi;
 import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.Filter;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Domain.FilteredDomain;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.Kernel.GenericFilter.GenericFilterDialog;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.EndlessRecyclerViewScrollListener;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.FlowerCrownR;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,10 +46,11 @@ public class TajGolListItemActivity extends BaseActivity {
     private TextView title;
     private FloatingActionButton addBtn;
     private TextView emptyText;
-
+    private EndlessRecyclerViewScrollListener scrollListener;
     private HashMap<Integer, FilteredDomain> result = new HashMap<>();
     private LinearLayout filterBtn, backButton;
-    private List<FlowerCrownR> list = new ArrayList<>();
+    private List<FlowerCrownApi.Data> list = new ArrayList<>();
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,18 +71,23 @@ public class TajGolListItemActivity extends BaseActivity {
 
         });
 
+        getData(null);
+//        list.addAll(db().FlowerCrownDao().getAll());
 
-        list.addAll(db().FlowerCrownDao().getAll());
-        if (list.size() > 0) {
-            emptyText.setVisibility(View.GONE);
-            adapter1 = new TajGolListAdapter(list);
-            row1.setAdapter(adapter1);
-
-        } else {
-            emptyText.setVisibility(View.VISIBLE);
-        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TajGolListItemActivity.this);
         row1.setLayoutManager(linearLayoutManager);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                Log.i(TAG, "onLoadMore: " + page);
+//                getData(null);
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        row1.addOnScrollListener(scrollListener);
 
         filterBtn.setVisibility(View.VISIBLE);
         filterBtn.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +105,40 @@ public class TajGolListItemActivity extends BaseActivity {
         });
     }
 
+    private void getData(StringBuilder filter) {
+        String address = "api/FlowerCrown/GetAll?page=1";
+        if (filter != null) {
+            address = "api/FlowerCrown/" + filter;
+        }
+        progressBar.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+
+                Gson gson = new Gson();
+                FlowerCrownApi response = gson.fromJson(resultStr, FlowerCrownApi.class);
+
+                list.addAll(response.getData());
+                if (list.size() > 0) {
+                    emptyText.setVisibility(View.GONE);
+                    adapter1 = new TajGolListAdapter(list);
+                    row1.setAdapter(adapter1);
+
+                } else {
+                    emptyText.setVisibility(View.VISIBLE);
+                    row1.setVisibility(View.GONE);
+                }
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+    }
+
     @Override
     public void onBackPressed() {
         finish();
@@ -106,6 +153,7 @@ public class TajGolListItemActivity extends BaseActivity {
         emptyText = findViewById(R.id.EmptyWarning);
         filterBtn = findViewById(R.id.filterButton);
         backButton = findViewById(R.id.backButton);
+        progressBar = findViewById(R.id.progressBarRow3);
     }
 
     private void NavigationDrawer() {
@@ -142,22 +190,25 @@ public class TajGolListItemActivity extends BaseActivity {
                             filters.add(new Filter(entry.getKey(), entry.getValue()));
                         }
                     }
-                    StringBuilder filterStr = filteringDate(filters);
+                    StringBuilder filterStr = filteringDateOnline(filters);
 
 
                     if (adapter1 != null) {
-                        list.clear();
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
                     }
 
-                    list = db().FlowerCrownDao().getfilter(new SimpleSQLiteQuery("SELECT * from FlowerCrownR  " + filterStr));
-                    if (list.size() == 0) {
-                        emptyText.setVisibility(View.VISIBLE);
-                    } else {
-                        emptyText.setVisibility(View.GONE);
-                    }
-
-                    adapter1 = new TajGolListAdapter(list);
-                    row1.setAdapter(adapter1);
+//                    list = db().FlowerCrownDao().getfilter(new SimpleSQLiteQuery("SELECT * from FlowerCrownR  " + filterStr));
+                    getData(filterStr);
+//                    if (list.size() == 0) {
+//                        emptyText.setVisibility(View.VISIBLE);
+//                    } else {
+//                        emptyText.setVisibility(View.GONE);
+//                    }
+//
+//                    adapter1 = new TajGolListAdapter(list);
+//                    row1.setAdapter(adapter1);
 
                 });
         filterDialog.show();
