@@ -20,6 +20,7 @@ import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.DonatorListItemActivity
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.SponsorListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.DonatorR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.SponsorR;
@@ -151,6 +152,17 @@ public class AddSponsorActivity extends BaseActivity {
 
         });
         edt7.setKeyListener(null);
+        try {
+        roozh jCal = new roozh();
+        Calendar cal = Calendar.getInstance();
+        int dayOfMonth1 = cal.get(Calendar.DAY_OF_MONTH);
+        int month1 = cal.get(Calendar.MONTH);
+        int year1 = cal.get(Calendar.YEAR);
+        jCal.GregorianToPersian(year1, month1, dayOfMonth1);
+        edt7.setText(jCal.getYear() + "-" + jCal.getMonth() + "-" + jCal.getDay());
+        }catch (Exception e){
+
+        }
         edt7.setOnClickListener(v -> {
             DatePicker.Builder builder = new DatePicker
                     .Builder()

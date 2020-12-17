@@ -191,7 +191,17 @@ public class AddBoxFragment extends Fragment {
             onCallBack.SaveBox(box, editable);
         });
 
+        try {
+            roozh jCal = new roozh();
+            Calendar cal = Calendar.getInstance();
+            int dayOfMonth1 = cal.get(Calendar.DAY_OF_MONTH);
+            int month1 = cal.get(Calendar.MONTH);
+            int year1 = cal.get(Calendar.YEAR);
+            jCal.GregorianToPersian(year1, month1, dayOfMonth1);
+            edt1_5.setText(jCal.getYear() + "-" + jCal.getMonth() + "-" + jCal.getDay());
+        }catch (Exception e){
 
+        }
         calendarBtn.setOnClickListener(v -> {
             DatePicker.Builder builder = new DatePicker
                     .Builder()

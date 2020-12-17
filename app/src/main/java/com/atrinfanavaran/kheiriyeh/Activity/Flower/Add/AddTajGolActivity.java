@@ -33,6 +33,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetStrin
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
 
 import com.atrinfanavaran.kheiriyeh.Room.Domian.DeceasedNameR;
@@ -100,9 +101,9 @@ public class AddTajGolActivity extends BaseActivity {
                 if (donatorSpinner.getSelectedItem().toString().equals("انتخاب کنید")) {
                     Toast.makeText(getActivity(), "لطفا اهدا کننده را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (inturducedSpinner.getSelectedItem().toString().equals("انتخاب کنید")) {
-                    Toast.makeText(getActivity(), "لطفا معرف را انتخاب نمائید", Toast.LENGTH_SHORT).show();
-                    return;
+//                } else if (inturducedSpinner.getSelectedItem().toString().equals("انتخاب کنید")) {
+//                    Toast.makeText(getActivity(), "لطفا معرف را انتخاب نمائید", Toast.LENGTH_SHORT).show();
+//                    return;
                 } else if (deceasedNameSpinner.getSelectedItem().toString().equals("انتخاب کنید")) {
                     Toast.makeText(getActivity(), "لطفا نام متوفی را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                     return;
@@ -217,7 +218,17 @@ public class AddTajGolActivity extends BaseActivity {
                 finish();
             }
         });
+        try {
+            roozh jCal = new roozh();
+            Calendar cal = Calendar.getInstance();
+            int dayOfMonth1 = cal.get(Calendar.DAY_OF_MONTH);
+            int month1 = cal.get(Calendar.MONTH);
+            int year1 = cal.get(Calendar.YEAR);
+            jCal.GregorianToPersian(year1, month1, dayOfMonth1);
+            edt2.setText(jCal.getYear() + "/" + jCal.getMonth() + "/" + jCal.getDay());
+        }catch (Exception e){
 
+        }
         calendarBtn.setOnClickListener(v -> {
             DatePicker.Builder builder = new DatePicker
                     .Builder()

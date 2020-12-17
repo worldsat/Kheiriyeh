@@ -175,7 +175,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
         btn1Save = view.findViewById(R.id.btn_1);
         btn1Save.setOnClickListener(v -> {
 
-            if (edt1_3.getText().toString().trim().isEmpty()) {
+            if (edt1_3.getText().toString().trim().isEmpty() && status.equals("3")) {
                 Toast.makeText(getActivity(), "لطفا مبلغ را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
             } else if (edt1_6.getText().toString().trim().isEmpty()) {
@@ -228,7 +228,17 @@ public class AddBoxIncomeFragment1 extends Fragment {
             onCallBackBoxIncome1.SaveBoxIncome1(boxIncome, editable);
         });
 
+        try {
+            roozh jCal = new roozh();
+            Calendar cal = Calendar.getInstance();
+            int dayOfMonth1 = cal.get(Calendar.DAY_OF_MONTH);
+            int month1 = cal.get(Calendar.MONTH);
+            int year1 = cal.get(Calendar.YEAR);
+            jCal.GregorianToPersian(year1, month1, dayOfMonth1);
+            edt1_4.setText(jCal.getYear() + "/" + jCal.getMonth() + "/" + jCal.getDay());
+        }catch (Exception e){
 
+        }
         calendarBtn.setOnClickListener(v -> {
             DatePicker.Builder builder = new DatePicker
                     .Builder()

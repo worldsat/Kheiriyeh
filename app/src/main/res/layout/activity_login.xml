@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="#525252">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/red_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,28 +18,46 @@
             android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/behdad"
             android:text="قاصدک"
             android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="36sp"
+            android:textColor="@color/yellow_700"
+            android:textSize="50sp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/behdad"
-            android:text="اپلیکیشن مدیریت صندوق های خیریه"
+            android:text="شرکت آرتین حساب سپهر"
             android:textAlignment="center"
             android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/textView12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.48000002" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/behdad"
+            android:text="ArtinHesabSepehr.ir"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/textView12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -111,9 +129,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+
+            android:textColorHint="@color/amber_50"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="202dp">
@@ -133,8 +152,12 @@
                 android:inputType="text"
                 android:maxLength="11"
                 android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/amber_400"
+                android:textColorHint="@color/amber_400"
+                android:textColorLink="@color/amber_400"
                 android:textDirection="rtl"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -145,6 +168,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:textColorHint="@color/amber_50"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="202dp">
@@ -164,30 +188,37 @@
                 android:inputType="textPassword"
                 android:maxLength="11"
                 android:textAlignment="textStart"
+                android:textColor="#ffffff"
+                android:textColorHighlight="@color/amber_400"
+                android:textColorLink="@color/amber_400"
                 android:textDirection="rtl"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/loginBtn"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="15dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="26dp"
             android:background="@drawable/background_circle_red2"
             android:fontFamily="@font/behdad"
-            android:text="ورود به حساب کاربری"
+            android:gravity="center"
+            android:text="ورود"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/remember"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/behdad"
-            android:text="فراموشی رمز عبور"
+            android:text="بازیابی رمز عبور"
             android:textAlignment="center"
-            android:textColor="@color/blue_grey_800"
+            android:textColor="@color/blue_grey_50"
             android:textSize="14sp" />
 
         <ProgressBar
@@ -206,6 +237,7 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/behdad"
         android:text="مشاهده قوانین و مقررات"
+        android:textColor="#ffffff"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"

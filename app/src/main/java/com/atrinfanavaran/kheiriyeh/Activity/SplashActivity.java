@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
@@ -23,11 +24,13 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class SplashActivity extends BaseActivity {
@@ -47,6 +50,8 @@ public class SplashActivity extends BaseActivity {
         setVariable();
         setLogo();
 //        timer();
+
+
     }
 
     private void setLogo() {
@@ -101,7 +106,7 @@ public class SplashActivity extends BaseActivity {
 
                 @Override
                 public void onError(String error) {
-
+                    Toast.makeText(SplashActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             });
 

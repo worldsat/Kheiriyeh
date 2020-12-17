@@ -73,9 +73,9 @@ public class AddContributionActivity extends BaseActivity {
                 if (edt1.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getActivity(), "لطفا مبلغ را وارد نمائید", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (edt2.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "لطفا توضیحات را وارد نمائید", Toast.LENGTH_SHORT).show();
-                    return;
+//                } else if (edt2.getText().toString().trim().isEmpty()) {
+//                    Toast.makeText(getActivity(), "لطفا توضیحات را وارد نمائید", Toast.LENGTH_SHORT).show();
+//                    return;
                 }else if (edt3.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getActivity(), "لطفا کد دستگاه را وارد نمائید", Toast.LENGTH_SHORT).show();
                     return;
