@@ -57,7 +57,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
     private SearchableSpinner spinner;
     private String numberSelected;
     private String guidBox;
-
+    private LinearLayout filterBtn;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -280,7 +280,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
             }).show(getActivity().getSupportFragmentManager(), "");
 
         });
-
+        filterBtn.setVisibility(View.GONE);
     }
 
     private String getPosition(int position) {
@@ -318,6 +318,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
         radio3 = view.findViewById(R.id.radioButton3);
         calendarBtn = view.findViewById(R.id.calendar);
         spinner = view.findViewById(R.id.spinner2);
+        filterBtn = getActivity().findViewById(R.id.filterButton);
     }
 
     public void afterTextChanged(Editable view) {

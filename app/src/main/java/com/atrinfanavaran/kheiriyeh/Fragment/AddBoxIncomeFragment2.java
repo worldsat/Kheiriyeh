@@ -48,7 +48,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
     private MapView mMapView;
     private BoxIncome boxIncome;
     private boolean editable = false;
-
+    private LinearLayout filterBtn;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +78,8 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn2Save = view.findViewById(R.id.btn_2);
+        filterBtn = getActivity().findViewById(R.id.filterButton);
+        filterBtn.setVisibility(View.GONE);
         btn2Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
