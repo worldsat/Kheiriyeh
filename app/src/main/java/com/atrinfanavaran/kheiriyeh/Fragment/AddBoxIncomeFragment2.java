@@ -126,10 +126,10 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
                 // For showing a move to my location button
                 googlemap.setMyLocationEnabled(true);
 
-                googlemap.setOnCameraMoveStartedListener(i -> {
+//                googlemap.setOnCameraMoveStartedListener(i -> {
 //                    googlemap.setOnMapLoadedCallback(this);
 //                    progressBar.setVisibility(View.VISIBLE);
-                });
+//                });
                 googlemap.getUiSettings().setMyLocationButtonEnabled(true);
                 googlemap.getUiSettings().setZoomControlsEnabled(true);
 //                googlemap.setOnMyLocationChangeListener(myLocationChangeListener);
