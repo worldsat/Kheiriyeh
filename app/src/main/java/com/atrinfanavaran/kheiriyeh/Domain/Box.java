@@ -19,9 +19,27 @@ public class Box extends BaseDomain {
     private String address;
     private String guidDischargeRoute;
     private String guidBox;
+    private String day;
+    private String boxKind;
     private int id;
     private String dischargeRouteId;
     private int boxId;
+
+    public String getboxKind() {
+        return boxKind;
+    }
+
+    public void setboxKind(String boxKind) {
+        this.boxKind = boxKind;
+    }
+
+    public String getday() {
+        return day;
+    }
+
+    public void setday(String day) {
+        this.day = day;
+    }
 
     public String getguidBox() {
         return guidBox;

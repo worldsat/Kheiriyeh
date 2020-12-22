@@ -105,7 +105,9 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
                         boxR.lat = box.getLat();
                         boxR.lon = box.getLng();
                         boxR.number = box.getNumber();
-//                        boxR.dischargeRouteId = box.getDischargeRouteId();
+                        boxR.day = box.getday();
+                        boxR.boxKind = box.getboxKind();
+                        boxR.dischargeRouteId = box.getDischargeRouteId();
                         boxR.guidDischargeRoute = box.getguidDischargeRoute();
                         boxR.guidBox = box.getguidBox();
                         if (editable) {

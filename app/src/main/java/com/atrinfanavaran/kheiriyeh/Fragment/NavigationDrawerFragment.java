@@ -266,7 +266,7 @@ public class NavigationDrawerFragment extends Fragment {
                 params = new JSONObject();
 //                params.put("id", data.get(i).id);
                 params.put("code", data.get(i).code);
-                params.put("day", Integer.valueOf(data.get(i).day));
+//                params.put("day", Integer.valueOf(data.get(i).day));
                 params.put("address", data.get(i).address);
                 params.put("lat", data.get(i).lat);
                 params.put("lon", data.get(i).lon);
@@ -314,6 +314,7 @@ public class NavigationDrawerFragment extends Fragment {
             try {
                 params = new JSONObject();
 //                params.put("code", data.get(i).code);
+                params.put("day", Integer.valueOf(data.get(i).day));
                 params.put("number", Integer.valueOf(data.get(i).number));
                 params.put("fullName", data.get(i).fullName);
                 params.put("mobile", new BigInteger(data.get(i).mobile));
@@ -324,8 +325,10 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("lon", Double.valueOf(data.get(i).lon));
 //                params.put("dischargeRouteId", Integer.valueOf(data.get(i).dischargeRouteId));
                 params.put("guidDischargeRoute", data.get(i).guidDischargeRoute);
+                params.put("boxKind", data.get(i).boxKind);
                 params.put("guidBox", data.get(i).guidBox);
                 params.put("charityId", settingsBll.getCharityId());
+
                 params2.put(params);
             } catch (Exception e) {
                 Log.i("moh3n", "sendBox: " + e);
@@ -745,6 +748,8 @@ public class NavigationDrawerFragment extends Fragment {
                     data.lon = response.get(i).getlon();
                     data.dischargeRouteId = response.get(i).getdischargeRouteId();
                     data.guidDischargeRoute = response.get(i).getGuidDischargeRoute();
+                    data.day = response.get(i).getday();
+                    data.boxKind = response.get(i).getboxKind();
                     data.guidBox = response.get(i).getguidBox();
 
                     try {
@@ -972,7 +977,7 @@ public class NavigationDrawerFragment extends Fragment {
                     data.id = Integer.valueOf(response.get(i).getid());
                     data.code = response.get(i).getcode();
                     data.address = response.get(i).getaddress();
-                    data.day = response.get(i).getday();
+//                    data.day = response.get(i).getday();
                     data.guidDischargeRoute = response.get(i).getguidDischargeRoute();
                     try {
                         db.RouteDao().insertBox(data);

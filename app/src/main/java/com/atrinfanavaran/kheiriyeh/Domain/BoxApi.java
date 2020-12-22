@@ -17,11 +17,29 @@ public class BoxApi extends BaseDomain {
     private String guidDischargeRoute;
     private String guidBox;
     private String boxId;
+    private String day;
+    private String boxKind;
 
 
 
     public BoxApi() {
         setApiAddresss("api/Box");
+    }
+
+    public String getboxKind() {
+        return boxKind;
+    }
+
+    public void setboxKind(String boxKind) {
+        this.boxKind = boxKind;
+    }
+
+    public String getday() {
+        return day;
+    }
+
+    public void setday(String day) {
+        this.day = day;
     }
 
     public String getguidBox() {

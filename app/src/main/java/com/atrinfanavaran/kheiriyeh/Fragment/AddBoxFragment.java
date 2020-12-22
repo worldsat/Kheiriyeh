@@ -44,7 +44,7 @@ public class AddBoxFragment extends Fragment {
 
     private Button btn1Save;
     private onCallBackAddBox onCallBack;
-    private EditText edt1_1, edt1_2, edt1_3, edt1_5, edt1_6;
+    private EditText edt1_1, edt1_2, edt1_3, edt1_5, edt1_6,edt1_7,edt1_8;
     private Box box;
     private boolean editable = false;
     private SearchableSpinner spinner;
@@ -105,6 +105,8 @@ public class AddBoxFragment extends Fragment {
             edt1_3.setText(box.getMobile());
             edt1_6.setText(box.getAddress());
             edt1_5.setText(box.getassignmentDate());
+            edt1_7.setText(box.getday());
+            edt1_8.setText(box.getboxKind());
 
         }
         if (box != null && box.getguidDischargeRoute() != null) {
@@ -137,6 +139,12 @@ public class AddBoxFragment extends Fragment {
             } else if (edt1_5.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا تاریخ واگذاری را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (edt1_7.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا تاریخ در ماه را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (edt1_8.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا نوع صندوق را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
             } else if (spinner.getSelectedItem().toString().equals("انتخاب کنید")) {
                 Toast.makeText(getActivity(), "لطفا کد مسیر را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                 return;
@@ -145,16 +153,20 @@ public class AddBoxFragment extends Fragment {
             box.fullName = edt1_1.getText().toString().trim();
             box.number = edt1_2.getText().toString().trim();
             box.mobile = edt1_3.getText().toString().trim();
+            box.day = edt1_7.getText().toString().trim();
+            box.boxKind = edt1_8.getText().toString().trim();
             String[] code = spinner.getSelectedItem().toString().split(":");
             box.code = code[0];
             String str = "";
+            String strID = "";
             for (int i = 0; i < Routes.size(); i++) {
                 if (Routes.get(i).code.equals(code[0])) {
                     str = String.valueOf(RoutesGuid.get(i));
+                    strID = String.valueOf(RoutesId.get(i));
                 }
             }
 
-//            box.dischargeRouteId = str;
+            box.dischargeRouteId = strID;
             box.guidDischargeRoute = str;
 
 
@@ -257,6 +269,8 @@ public class AddBoxFragment extends Fragment {
         edt1_3 = view.findViewById(R.id.edt1_3);
         edt1_5 = view.findViewById(R.id.edt1_5);
         edt1_6 = view.findViewById(R.id.edt1_6);
+        edt1_7 = view.findViewById(R.id.edt1_7);
+        edt1_8 = view.findViewById(R.id.edt1_8);
         spinner = view.findViewById(R.id.spinner);
         calendarBtn = view.findViewById(R.id.calendar);
     }

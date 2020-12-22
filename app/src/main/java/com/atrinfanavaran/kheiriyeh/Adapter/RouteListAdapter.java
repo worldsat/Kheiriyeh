@@ -45,7 +45,7 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
         String Url = settingsBll.getUrlAddress();
         holder.address.setText(array_object.get(position).address);
         holder.code.setText(array_object.get(position).code);
-        holder.day.setText(array_object.get(position).day);
+//        holder.day.setText(array_object.get(position).day);
 
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);

@@ -56,6 +56,8 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
 
         holder.assignmentDate.setText(array_object.get(position).assignmentDate);
         holder.address.setText(array_object.get(position).address);
+        holder.tarikhdarmah.setText(array_object.get(position).day);
+        holder.sandogh.setText(array_object.get(position).boxKind);
 
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
@@ -110,7 +112,7 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView fullName, number, mobile, code, assignmentDate,address;
+        TextView fullName, number, mobile, code, assignmentDate,address,tarikhdarmah,sandogh;
         ImageView moreOption;
 
         private ViewHolder(View itemView) {
@@ -122,6 +124,8 @@ public class BoxListAdapter extends RecyclerView.Adapter<BoxListAdapter.ViewHold
             code = itemView.findViewById(R.id.code);
             assignmentDate = itemView.findViewById(R.id.assignmentDate);
             address = itemView.findViewById(R.id.address);
+            tarikhdarmah = itemView.findViewById(R.id.tarikhdarmah);
+            sandogh = itemView.findViewById(R.id.sandogh);
 
         }
     }

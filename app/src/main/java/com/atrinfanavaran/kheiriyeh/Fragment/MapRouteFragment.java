@@ -97,7 +97,7 @@ public class MapRouteFragment extends Fragment implements LocationListener, Goog
                     } else {
                         RouteR routeR = new RouteR();
                         routeR.code = route.getcode();
-                        routeR.day = route.getday();
+//                        routeR.day = route.getday();
                         routeR.address = route.getaddress();
                         routeR.lat = route.getlat();
                         routeR.lon = route.getlon();

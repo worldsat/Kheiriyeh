@@ -12,8 +12,8 @@ public class RouteR {
     @ColumnInfo(name = "code")
     public String code;
 
-    @ColumnInfo(name = "day")
-    public String day;
+//    @ColumnInfo(name = "day")
+//    public String day;
 
     @ColumnInfo(name = "address")
     public String address;

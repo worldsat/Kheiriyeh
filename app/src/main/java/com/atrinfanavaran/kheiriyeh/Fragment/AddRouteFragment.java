@@ -68,9 +68,9 @@ public class AddRouteFragment extends Fragment {
             if (edt1_1.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا کد مسیر را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
-            } else if (edt1_2.getText().toString().trim().isEmpty()) {
-                Toast.makeText(getActivity(), "لطفا تاریح در ماه را وارد نمائید", Toast.LENGTH_SHORT).show();
-                return;
+//            } else if (edt1_2.getText().toString().trim().isEmpty()) {
+////                Toast.makeText(getActivity(), "لطفا تاریح در ماه را وارد نمائید", Toast.LENGTH_SHORT).show();
+////                return;
             }else if (edt1_3.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا آدرس مسیر را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
@@ -78,7 +78,7 @@ public class AddRouteFragment extends Fragment {
 
             RouteR routeR = new RouteR();
             routeR.code = edt1_1.getText().toString().trim();
-            routeR.day = edt1_2.getText().toString().trim();
+//            routeR.day = edt1_2.getText().toString().trim();
             routeR.address = edt1_3.getText().toString().trim();
             if (editable) {
                 routeR.id = this.route.getid();

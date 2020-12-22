@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 //                    alertQuestion(MainActivity.this, "link", false);
 
                     int lastVerisionCode = Integer.parseInt(androidVersion.getData().getCurrVersion());
-                    String link = Url +"/"+ androidVersion.getData().getAppAndroidUrl();
+                    String link = Url + "/" + androidVersion.getData().getAppAndroidUrl();
 
                     PackageInfo phoneVersion = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
 
@@ -388,7 +388,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         for (int i = 0; i < boxIncomes.size(); i++) {
             Log.i(TAG, "SaveBoxIncome2: " + boxIncomes.get(i).price);
         }
-        fragment .getFragmentManager().popBackStack();
+        fragment.getFragmentManager().popBackStack();
         fragment = new BoxIncomeListFragment();
 
         setFragment();
@@ -397,7 +397,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
     @Override
     public void SaveBoxIncome1(BoxIncome boxIncome, boolean editable) {
-        fragment .getFragmentManager().popBackStack();
+        fragment.getFragmentManager().popBackStack();
         fragment = new AddBoxIncomeFragment2();
         Bundle bundle1 = new Bundle();
         bundle1.putSerializable("BoxIncome", boxIncome);
@@ -422,7 +422,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveBox(BoxR boxR, boolean editable) {
 
-        fragment .getFragmentManager().popBackStack();
+        fragment.getFragmentManager().popBackStack();
         fragment = new MapBoxFragment();
         Bundle bundle1 = new Bundle();
         Box box = new Box();
@@ -437,6 +437,8 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         box.setguidDischargeRoute(boxR.guidDischargeRoute);
         box.setguidBox(boxR.guidBox);
         box.setBoxId(boxR.boxId);
+        box.setday(boxR.day);
+        box.setboxKind(boxR.boxKind);
 
         bundle1.putSerializable("Box", box);
         bundle1.putBoolean("editable", editable);
@@ -448,14 +450,14 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveBox2(BoxR boxR, boolean editable) {
         if (editable) {
-            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon, boxR.guidDischargeRoute);
+            db.BoxDao().update(boxR.fullName, boxR.day, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon, boxR.guidDischargeRoute, boxR.boxKind,boxR.dischargeRouteId);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
 
             db.BoxDao().insertBox(boxR);
             Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         }
-        fragment .getFragmentManager().popBackStack();
+        fragment.getFragmentManager().popBackStack();
         fragment = new BoxListFragment();
         setFragment();
     }
@@ -469,13 +471,13 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveRoute1(RouteR router, boolean editable) {
         if (editable) {
-            db.RouteDao().update(router.code, router.day, router.address, router.id, router.isNew);
+            db.RouteDao().update(router.code, router.address, router.id, router.isNew);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
             db.RouteDao().insertBox(router);
             Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         }
-        fragment .getFragmentManager().popBackStack();
+        fragment.getFragmentManager().popBackStack();
         fragment = new RouteListFragment();
         setFragment();
     }
@@ -533,6 +535,8 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         box.setguidDischargeRoute(boxR.guidDischargeRoute);
         box.setBoxId(boxR.boxId);
         box.setguidBox(boxR.guidBox);
+        box.setboxKind(boxR.boxKind);
+        box.setday(boxR.day);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("Box", box);
@@ -549,7 +553,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         Route route = new Route();
         route.setaddress(routerR.address);
         route.setcode(routerR.code);
-        route.setday(routerR.day);
+//        route.setday(routerR.day);
         route.setid(routerR.id);
         route.setlat(routerR.lat);
         route.setlon(routerR.lon);

@@ -20,6 +20,11 @@ public class BoxR {
 
     @ColumnInfo(name = "code")
     public String code;
+    @ColumnInfo(name = "day")
+    public String day;
+
+    @ColumnInfo(name = "boxKind")
+    public String boxKind;
 
     @ColumnInfo(name = "assignmentDate")
     public String assignmentDate;

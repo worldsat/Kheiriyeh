@@ -26,9 +26,9 @@ public interface FlowerCrownTypeDao {
     @Query("delete FROM FlowerCrownTypeR")
     void deleteAll();
 
-    @Query("update  RouteR set code=:code,day=:day,address=:address,code=:code,isNew=:isnew" +
+    @Query("update  RouteR set code=:code,address=:address,code=:code,isNew=:isnew" +
             " WHERE id like (:id)")
-    void update(String code, String day, String address, int id, String isnew);
+    void update(String code,  String address, int id, String isnew);
 
     @Query("Delete from  FlowerCrownTypeR  " +
             " WHERE id like (:id)")

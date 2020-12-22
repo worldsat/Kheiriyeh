@@ -30,9 +30,9 @@ public interface RouteDao {
     @Query("delete FROM RouteR Where Isnew  not like 'true' ")
     void deleteAllOld();
 
-    @Query("update  RouteR set code=:code,day=:day,address=:address,code=:code,isNew=:isnew" +
+    @Query("update  RouteR set code=:code,address=:address,code=:code,isNew=:isnew" +
             " WHERE id like (:id)")
-    void update(String code, String day, String address, int id,String isnew);
+    void update(String code, String address, int id,String isnew);
 
     @Query("Delete from  RouteR  " +
             " WHERE id like (:id)")

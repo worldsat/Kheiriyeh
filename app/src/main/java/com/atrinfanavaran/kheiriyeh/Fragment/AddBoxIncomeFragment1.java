@@ -47,7 +47,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
 
     private Button btn1Save;
     private onCallBackBoxIncome1 onCallBackBoxIncome1;
-    private EditText edt1_1, edt1_3, edt1_4, edt1_8, edt1_6, edt1_7;
+    private EditText edt1_1, edt1_3, edt1_4, edt1_8, edt1_6, edt1_7,edt1_9,edt1_10;
     private RadioGroup statusGroup;
     private RadioButton radio1, radio2, radio3;
     private String status = "1";
@@ -129,6 +129,8 @@ public class AddBoxIncomeFragment1 extends Fragment {
                         edt1_6.setText(boxR1.fullName);
                         edt1_7.setText(boxR1.mobile);
                         edt1_8.setText(boxR1.address);
+                        edt1_9.setText(boxR1.day);
+                        edt1_10.setText(boxR1.boxKind);
                         guidBox = boxR1.guidBox;
                     }
                 }
@@ -187,6 +189,9 @@ public class AddBoxIncomeFragment1 extends Fragment {
             } else if (edt1_8.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا آدرس را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (edt1_9.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getActivity(), "لطفا تاریخ در ماه را وارد نمائید", Toast.LENGTH_SHORT).show();
+                return;
             } else if (edt1_4.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا تاریخ ثبت را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
@@ -199,6 +204,7 @@ public class AddBoxIncomeFragment1 extends Fragment {
             boxIncome.setnumber(numberSelected);
             boxIncome.setprice(NumberTextWatcherForThousand.trimCommaOfString(edt1_3.getText().toString().trim()));
             boxIncome.setassignmentDate(edt1_4.getText().toString().trim());
+            boxIncome.setday(edt1_9.getText().toString().trim());
             boxIncome.setGuidBox(guidBox);
 
             String[] date = edt1_4.getText().toString().trim().split("/");
@@ -304,6 +310,8 @@ public class AddBoxIncomeFragment1 extends Fragment {
         edt1_6 = view.findViewById(R.id.edt1_6);
         edt1_7 = view.findViewById(R.id.edt1_7);
         edt1_8 = view.findViewById(R.id.edt1_8);
+        edt1_9 = view.findViewById(R.id.edt1_9);
+        edt1_10 = view.findViewById(R.id.edt1_10);
         statusGroup = view.findViewById(R.id.radioButtonGroup);
         radio1 = view.findViewById(R.id.radioButton1);
         radio2 = view.findViewById(R.id.radioButton2);
