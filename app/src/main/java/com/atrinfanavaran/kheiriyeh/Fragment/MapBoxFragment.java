@@ -1,14 +1,18 @@
 package com.atrinfanavaran.kheiriyeh.Fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +84,7 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn2Save = view.findViewById(R.id.btn_2);
-        LinearLayout filterBtn= getActivity().findViewById(R.id.filterButton);
+        LinearLayout filterBtn = getActivity().findViewById(R.id.filterButton);
         filterBtn.setVisibility(View.GONE);
         LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
         refreshBtn.setVisibility(View.GONE);
@@ -150,6 +154,17 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
                 googlemap = mMap;
 
                 // For showing a move to my location button
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    Toast.makeText(context, "دسترسی برای دریافت موقعیت داده نشده", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 googlemap.setMyLocationEnabled(true);
 
                 googlemap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -193,22 +208,30 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
 
         @Override
         public void onConnected(Bundle arg0) {
+            try {
+                if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//                googlemap.setMyLocationEnabled(true);
 
-            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                googlemap.setMyLocationEnabled(true);
+                    if (mLastLocation != null && safecompPOS == null) {
 
-                if (mLastLocation != null && safecompPOS == null) {
-
-                    safecompPOS = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                    googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
-
-                    //   map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                        safecompPOS = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                        if (googlemap != null) {
+                            googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
+                        }
+                        //   map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                    }
                 }
+
+                safecompPOS = new LatLng(32.656358, 51.669068);
+                if (googlemap != null) {
+                    googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
+                }
+            } catch (Exception e) {
+
+                Toast.makeText(context, "خطا در زوم نقشه", Toast.LENGTH_SHORT).show();
             }
 
-            safecompPOS = new LatLng(32.656358, 51.669068);
-            googlemap.moveCamera(CameraUpdateFactory.newLatLngZoom(safecompPOS, 12));
 
         }
     };

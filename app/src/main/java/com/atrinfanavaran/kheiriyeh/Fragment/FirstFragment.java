@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atrinfanavaran.kheiriyeh.Adapter.BoxIncomeListHorizontalAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.QuickListAdapter;
@@ -115,7 +116,7 @@ public class FirstFragment extends Fragment {
         List<BoxIncomeR> routes = db.BoxIncomeDao().getAll();
         if (routes.size() == 0) {
             row2Layout.setVisibility(View.GONE);
-        }else{
+        } else {
 //            row2Layout.setVisibility(View.VISIBLE);
         }
         adapter2 = new BoxIncomeListHorizontalAdapter(routes);
@@ -144,9 +145,15 @@ public class FirstFragment extends Fragment {
                     DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
                     DefaultSliderView
                             .setOnSliderClickListener(slider -> {
-                                Intent i1 = new Intent(Intent.ACTION_VIEW);
-                                i1.setData(Uri.parse(Url));
-                                startActivity(i1);
+                                try {
+
+
+                                    Intent i1 = new Intent(Intent.ACTION_VIEW);
+                                    i1.setData(Uri.parse(Url));
+                                    startActivity(i1);
+                                } catch (Exception e) {
+                                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                                }
                             })
                             .image(settingsBll.getUrlAddress() + "/" + response.get(i).getimage())
                             .setScaleType(BaseSliderView.ScaleType.Fit);
