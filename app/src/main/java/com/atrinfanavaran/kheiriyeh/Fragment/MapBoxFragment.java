@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
+import androidx.room.Update;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,6 +89,8 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
         filterBtn.setVisibility(View.GONE);
         LinearLayout refreshBtn = getActivity().findViewById(R.id.refreshBtn);
         refreshBtn.setVisibility(View.GONE);
+
+
         btn2Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +134,7 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
 
         context = getActivity();
 
-        String languageToLoad = "fa_IR";
+       /* String languageToLoad = "fa_IR";
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -196,7 +199,7 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
                 .build();
 
         createLocationRequest();
-
+*/
     }
 
     GoogleApiClient.ConnectionCallbacks connectionListener = new GoogleApiClient.ConnectionCallbacks() {
@@ -255,38 +258,38 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
 
     public void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+//        mGoogleApiClient.connect();
     }
 
     public void onStop() {
         super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+//        if (mGoogleApiClient.isConnected()) {
+//            mGoogleApiClient.disconnect();
+//        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
+//        mMapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMapView.onPause();
+//        mMapView.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+//        mMapView.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+//        mMapView.onLowMemory();
     }
 
     @Override
@@ -320,8 +323,32 @@ public class MapBoxFragment extends Fragment implements LocationListener, Google
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
-        if (getActivity() instanceof onCallBackAddBox2)
+        if (getActivity() instanceof onCallBackAddBox2) {
             onCallBack = (onCallBackAddBox2) getActivity();
+            //******************
+            BoxR boxR = new BoxR();
+            boxR.code = box.getCode();
+
+            boxR.assignmentDate = box.getassignmentDate();
+            boxR.mobile = box.getMobile();
+            boxR.address = box.getAddress();
+            boxR.fullName = box.getFullName();
+            boxR.lat ="0";
+            boxR.lon = "0";
+            boxR.number = box.getNumber();
+            boxR.day = box.getday();
+            boxR.boxKind = box.getboxKind();
+            boxR.dischargeRouteId = box.getDischargeRouteId();
+            boxR.guidDischargeRoute = box.getguidDischargeRoute();
+            boxR.guidBox = box.getguidBox();
+            if (editable) {
+                boxR.id = box.getBoxId();
+            } else {
+                boxR.isNew = "true";
+            }
+            onCallBack.SaveBox2(boxR, editable);
+            //**************************************
+        }
     }
 
 

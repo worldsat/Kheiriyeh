@@ -477,7 +477,7 @@
                     android:layout_margin="16dp"
                     android:background="@drawable/background_circle_red2"
                     android:fontFamily="@font/behdad"
-                    android:text="مرحله بعدی"
+                    android:text="ذخیره"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>

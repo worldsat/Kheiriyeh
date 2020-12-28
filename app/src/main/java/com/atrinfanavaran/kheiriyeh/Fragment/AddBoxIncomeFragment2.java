@@ -5,10 +5,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
     private BoxIncome boxIncome;
     private boolean editable = false;
     private LinearLayout filterBtn;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,8 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
         if (bundle != null) {
             boxIncome = (BoxIncome) bundle.get("BoxIncome");
             editable = (boolean) bundle.get("editable");
+
+
         }
 
     }
@@ -80,6 +85,8 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
         btn2Save = view.findViewById(R.id.btn_2);
         filterBtn = getActivity().findViewById(R.id.filterButton);
         filterBtn.setVisibility(View.GONE);
+
+
         btn2Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +110,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
 
         context = getActivity();
 
-        String languageToLoad = "fa_IR";
+      /*  String languageToLoad = "fa_IR";
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -183,7 +190,7 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
                 .build();
 
         createLocationRequest();
-
+*/
     }
 
     GoogleApiClient.ConnectionCallbacks connectionListener = new GoogleApiClient.ConnectionCallbacks() {
@@ -234,38 +241,38 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
 
     public void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+//        mGoogleApiClient.connect();
     }
 
     public void onStop() {
         super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+//        if (mGoogleApiClient.isConnected()) {
+//            mGoogleApiClient.disconnect();
+//        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
+//        mMapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMapView.onPause();
+//        mMapView.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+//        mMapView.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+//        mMapView.onLowMemory();
     }
 
     @Override
@@ -299,8 +306,16 @@ public class AddBoxIncomeFragment2 extends Fragment implements LocationListener,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //getActivity() is fully created in onActivityCreated and instanceOf differentiate it between different Activities
-        if (getActivity() instanceof onCallBackBoxIncome2)
+        if (getActivity() instanceof onCallBackBoxIncome2) {
             onCallBackBoxIncome2 = (onCallBackBoxIncome2) getActivity();
+
+            //********************
+            boxIncome.setlat("0");
+            boxIncome.setlon("0");
+            onCallBackBoxIncome2.SaveBoxIncome2(boxIncome, editable);
+
+            //********************
+        }
     }
 
 
