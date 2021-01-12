@@ -142,9 +142,7 @@ public class AddBoxFragment extends Fragment {
             } else if (edt1_7.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "لطفا تاریخ در ماه را وارد نمائید", Toast.LENGTH_SHORT).show();
                 return;
-            } else if (edt1_8.getText().toString().trim().isEmpty()) {
-                Toast.makeText(getActivity(), "لطفا نوع صندوق را وارد نمائید", Toast.LENGTH_SHORT).show();
-                return;
+
             } else if (spinner.getSelectedItem().toString().equals("انتخاب کنید")) {
                 Toast.makeText(getActivity(), "لطفا کد مسیر را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                 return;

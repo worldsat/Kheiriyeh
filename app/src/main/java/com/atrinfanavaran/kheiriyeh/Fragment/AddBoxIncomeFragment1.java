@@ -91,12 +91,18 @@ public class AddBoxIncomeFragment1 extends Fragment {
             switch (checkedId) {
                 case R.id.radioButton1:
                     status = "1";
+                    edt1_3.setVisibility(View.GONE);
+                    edt1_3.setText("0");
                     break;
                 case R.id.radioButton2:
                     status = "2";
+                    edt1_3.setVisibility(View.GONE);
+                    edt1_3.setText("0");
                     break;
                 case R.id.radioButton3:
                     status = "3";
+                    edt1_3.setVisibility(View.VISIBLE);
+                    edt1_3.setText("");
                     break;
             }
         });
@@ -164,10 +170,12 @@ public class AddBoxIncomeFragment1 extends Fragment {
                 }
                 case "2": {
                     radio2.setChecked(true);
+
                     break;
                 }
                 case "3": {
                     radio3.setChecked(true);
+
                     break;
                 }
             }

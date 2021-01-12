@@ -2,6 +2,7 @@ package com.atrinfanavaran.kheiriyeh.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.net.Uri;
@@ -16,13 +17,16 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
+import com.atrinfanavaran.kheiriyeh.Domain.Charity;
 import com.atrinfanavaran.kheiriyeh.Domain.Login;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.kheiriyeh.R;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +41,7 @@ public class LoginActivity extends BaseActivity {
     private SettingsBll settingsBll;
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +93,9 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String result) {
                         settingsBll.setLoging(true);
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        waitingProgressbar.setVisibility(View.GONE);
+//                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        checkAccess();
+//                        waitingProgressbar.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -105,6 +111,49 @@ public class LoginActivity extends BaseActivity {
         rememberPassBtn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RememberPasswordActivity.class)));
     }
 
+    private void checkAccess() {
+        controller().GetFromApi2("api/Charity", new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Log.i(TAG, "onSuccess1: " + resultStr);
+                try {
+                    Gson gson = new Gson();
+
+                    Charity charity = gson.fromJson(resultStr, Charity.class);
+                    Log.i(TAG, "onSuccess2: " + charity);
+
+                    settingsBll.setAccessBox(charity.isIsAccessBox());
+                    settingsBll.setActive(charity.isIsActive());
+                    settingsBll.setAccessFinancialAid(charity.isIsAccessFinancialAid());
+                    settingsBll.setAccessFlowerCrown(charity.isIsAccessFlowerCrown());
+                    settingsBll.setAccessSponsor(charity.isIsAccessSponsor());
+                    if (settingsBll.isAccessBox()) {
+
+                        SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
+                        if (sp != null) {
+                            if (settingsBll.getLoging()) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            } else {
+                                Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    } else {
+                        SnakBar("حساب کاربری شما مسدود می باشد");
+                    }
+
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccess4: " + e);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void initView() {
         userEdt = findViewById(R.id.UserEdt);
         passEdt = findViewById(R.id.passEdt);
@@ -114,11 +163,6 @@ public class LoginActivity extends BaseActivity {
         rememberPassBtn = findViewById(R.id.remember);
 
     }
-
-
-
-
-
 
 
 }

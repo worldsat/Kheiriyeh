@@ -735,7 +735,7 @@ public class NavigationDrawerFragment extends Fragment {
 
                 for (int i = 0; i < response.size(); i++) {
                     BoxR data = new BoxR();
-                    data.id = Integer.valueOf(response.get(i).getid());
+//                    data.id = Integer.valueOf(response.get(i).getid());
                     data.boxId = Integer.valueOf(response.get(i).getid());
                     data.fullName = response.get(i).getfullName();
                     data.mobile = response.get(i).getmobile();
@@ -1062,6 +1062,7 @@ public class NavigationDrawerFragment extends Fragment {
         controller.GetFromApi2("api/FinancialServiceType/" + settingsBll.getCharityId(), new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
+                Log.i("moh3n", "FinancialServiceType: "+resultStr);
                 Gson gson = new Gson();
                 FlowerCrownTypeApi response = gson.fromJson(resultStr, FlowerCrownTypeApi.class);
 

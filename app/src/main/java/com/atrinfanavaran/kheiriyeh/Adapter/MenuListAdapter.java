@@ -45,12 +45,15 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.ViewHo
             public void onClick(View v) {
                 if (position == 0) {
                     Intent intent = new Intent(holder.itemView.getContext(), TajGolListItemActivity.class);
+                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_7));
                     holder.itemView.getContext().startActivity(intent);
                 } else if (position == 1) {
                     Intent intent = new Intent(holder.itemView.getContext(), DonatorListItemActivity.class);
+                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_6));
                     holder.itemView.getContext().startActivity(intent);
                 } else if (position == 2) {
                     Intent intent = new Intent(holder.itemView.getContext(), DeceasedNameListItemActivity.class);
+                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_8));
                     holder.itemView.getContext().startActivity(intent);
                 }
             }

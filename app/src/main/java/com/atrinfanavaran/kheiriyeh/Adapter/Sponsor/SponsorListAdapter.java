@@ -44,9 +44,11 @@ public class SponsorListAdapter extends RecyclerView.Adapter<SponsorListAdapter.
             public void onClick(View v) {
                 if (position == 0) {
                     Intent intent = new Intent(holder.itemView.getContext(), ContributionListItemActivity.class);
+                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_1));
                     holder.itemView.getContext().startActivity(intent);
                 } else if (position == 1) {
                     Intent intent = new Intent(holder.itemView.getContext(), SponsorListItemActivity.class);
+                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_6));
                     holder.itemView.getContext().startActivity(intent);
                 } else if (position == 2) {
 //                    Intent intent = new Intent(holder.itemView.getContext(), DeceasedNameListItemActivity.class);
