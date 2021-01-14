@@ -39,6 +39,13 @@ public class SponsorListAdapter extends RecyclerView.Adapter<SponsorListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.title.setText(array_object.get(position));
+
+        if (position == 0) {
+            holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_1));
+        } else if (position == 1) {
+            holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_6));
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
