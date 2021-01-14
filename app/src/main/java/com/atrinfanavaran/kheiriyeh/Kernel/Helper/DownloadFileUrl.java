@@ -179,14 +179,14 @@ public class DownloadFileUrl extends BaseActivity {
                         8192);
 
                 // Output stream
-                File root = new File(Environment.getExternalStorageDirectory() + "/ghasedakn/files/", "");
+                File root = new File(Environment.getExternalStorageDirectory() + "/Ghasedak/files/", "");
                 if (!root.exists()) {
                     root.setReadable(true);
                     root.setWritable(true);
                     root.mkdirs();
                 }
 
-                String mPath = Environment.getExternalStorageDirectory().toString() + "/ghasedakn/files/" + fileName;
+                String mPath = Environment.getExternalStorageDirectory().toString() + "/Ghasedak/files/" + fileName;
                 File imageFile = new File(mPath);
                 FileOutputStream output = new FileOutputStream(imageFile);
                 byte data[] = new byte[1024];
