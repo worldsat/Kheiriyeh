@@ -617,6 +617,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_NETWORK_STATE
                         , Manifest.permission.ACCESS_FINE_LOCATION
+                        , Manifest.permission.REQUEST_INSTALL_PACKAGES
                         , Manifest.permission.ACCESS_COARSE_LOCATION
 
                 )
