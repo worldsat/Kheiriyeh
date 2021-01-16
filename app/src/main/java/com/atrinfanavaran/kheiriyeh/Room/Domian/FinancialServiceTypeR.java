@@ -14,6 +14,8 @@ public class FinancialServiceTypeR {
 
     @ColumnInfo(name = "charityId")
     public int charityId;
+    @ColumnInfo(name = "payType")
+    public int payType;
 
     @ColumnInfo(name = "isNew")
     public String isNew;

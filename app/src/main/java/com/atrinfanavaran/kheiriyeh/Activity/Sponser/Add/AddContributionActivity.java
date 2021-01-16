@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,9 @@ public class AddContributionActivity extends BaseActivity {
     private ContributionR object;
 
     private String donator, deceasedName, flowerCrownType, ceremonyType, Introduced;
-
+    private RadioGroup payGroup;
+    private RadioButton radio1, radio2;
+    private int payType =1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,17 @@ public class AddContributionActivity extends BaseActivity {
 
     private void setvariable() {
         titleToolbar.setText("افزودن مشارکت");
+        payGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.radioButton1:
+                    payType = 1;
+                    break;
+                case R.id.radioButton2:
+                    payType = 2;
+                    break;
+
+            }
+        });
         edt1.addTextChangedListener(new NumberTextWatcherForThousand(edt1));
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,11 +122,12 @@ public class AddContributionActivity extends BaseActivity {
                 obj.phone = sponsorR.getPhone();
                 obj.address = sponsorR.getAddress();
                 obj.birthDate = sponsorR.getBirthDate();
+                obj.payType = sponsorR.getPayType();
 
                 if (editable) {
                     obj.id = object.getId();
                     db().ContributaionDao().update(obj.price, obj.description, obj.deviceCode, obj.terminalCode, obj.recieverCode, obj.fullName, obj.code,
-                            obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id);
+                            obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id,  obj.payType);
                     Toast.makeText(AddContributionActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
                     obj.isNew = "true";
@@ -129,6 +145,11 @@ public class AddContributionActivity extends BaseActivity {
             edt3.setText("" + object.getDeviceCode());
             edt4.setText("" + object.getTerminalCode());
             edt5.setText("" + object.getRecieverCode());
+            if (object.getPayType() == 1) {
+                radio1.setChecked(true);
+            } else if (object.getPayType() == 2) {
+                radio2.setChecked(true);
+            }
         }
         filterIcon.setVisibility(View.GONE);
         backIcon.setVisibility(View.VISIBLE);
@@ -189,7 +210,9 @@ public class AddContributionActivity extends BaseActivity {
         filterIcon = findViewById(R.id.filterButton);
         backIcon = findViewById(R.id.backButton);
         spin1 = findViewById(R.id.spinner1);
-
+        payGroup = findViewById(R.id.radioButtonGroup);
+        radio1 = findViewById(R.id.radioButton1);
+        radio2 = findViewById(R.id.radioButton2);
     }
 
     private void NavigationDrawer() {

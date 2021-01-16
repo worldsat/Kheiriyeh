@@ -29,10 +29,11 @@ public interface ContributaionDao {
     void deleteAllOld();
 
     @Query("update  ContributionR set price=:price,description=:description,deviceCode=:deviceCode,terminalCode=:terminalCode,recieverCode=:recieverCode,fullName=:fullName,code=:code," +
-            "nationalcode=:nationalcode,mobile=:mobile,phone=:phone,address=:address,birthDate=:birthDate WHERE id like (:id)")
+            "nationalcode=:nationalcode,mobile=:mobile,phone=:phone,address=:address,birthDate=:birthDate,payType=:payType WHERE id like (:id)")
+
 
     void update(int price, String description, int deviceCode, int terminalCode, int recieverCode, String fullName, String code
-            , String nationalcode, String mobile, String phone, String address, String birthDate, int id);
+            , String nationalcode, String mobile, String phone, String address, String birthDate, int id, int payType);
 
     @Query("Delete from  ContributionR  " +
             " WHERE id like (:id)")

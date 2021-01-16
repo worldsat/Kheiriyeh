@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,9 @@ public class AddFinancialAidActivity extends BaseActivity {
     private FinancialAidR object;
 
     private String FinancialServiceType;
-
+    private RadioGroup payGroup;
+    private RadioButton radio1, radio2;
+    private int payType =1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,17 @@ public class AddFinancialAidActivity extends BaseActivity {
 
     private void setvariable() {
         titleToolbar.setText("افزودن کمک نقدی");
+        payGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.radioButton1:
+                    payType = 1;
+                    break;
+                case R.id.radioButton2:
+                    payType = 2;
+                    break;
+
+            }
+        });
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,11 +101,12 @@ public class AddFinancialAidActivity extends BaseActivity {
                 obj.financialServiceType = FinancialServiceType;
                 obj.price = Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt2.getText().toString().trim()));
                 obj.name = edt1.getText().toString();
+                obj.payType = payType;
 
 
                 if (editable) {
                     obj.id = object.getId();
-                    db().FinancialAidDao().update(obj.name, obj.price, obj.financialServiceTypeId, obj.id);
+                    db().FinancialAidDao().update(obj.name, obj.price, obj.financialServiceTypeId, obj.id,  obj.payType);
                     Toast.makeText(AddFinancialAidActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
                     obj.isNew = "true";
@@ -106,10 +122,15 @@ public class AddFinancialAidActivity extends BaseActivity {
         if (object != null && editable) {
             edt1.setText(object.getName());
             edt2.setText("" + object.getPrice());
-
+            if (object.getPayType() == 1) {
+                radio1.setChecked(true);
+            } else if (object.getPayType() == 2) {
+                radio2.setChecked(true);
+            }
         }
         edt2.addTextChangedListener(new NumberTextWatcherForThousand(edt2));
         filterIcon.setVisibility(View.GONE);
+        backIcon.setVisibility(View.VISIBLE);
         backIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,7 +186,9 @@ public class AddFinancialAidActivity extends BaseActivity {
         filterIcon = findViewById(R.id.filterButton);
         backIcon = findViewById(R.id.backButton);
         spin1 = findViewById(R.id.spinner1);
-
+        payGroup = findViewById(R.id.radioButtonGroup);
+        radio1 = findViewById(R.id.radioButton1);
+        radio2 = findViewById(R.id.radioButton2);
     }
 
     private void NavigationDrawer() {

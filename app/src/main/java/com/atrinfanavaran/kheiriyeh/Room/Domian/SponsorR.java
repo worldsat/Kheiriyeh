@@ -52,10 +52,20 @@ public class SponsorR implements Serializable {
 
     @ColumnInfo(name = "isNew")
     public String isNew;
+    @ColumnInfo(name = "payType")
+    public int payType;
 
     @Override
     public String toString() {
         return fullName;
+    }
+
+    public int getPayType() {
+        return payType;
+    }
+
+    public void setPayType(int payType) {
+        this.payType = payType;
     }
 
     public int getId() {

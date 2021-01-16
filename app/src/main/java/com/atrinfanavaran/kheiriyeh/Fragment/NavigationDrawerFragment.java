@@ -545,6 +545,7 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("guidDonator", list.get(i).getGuidDonator());
                 params.put("guidIntroduced", list.get(i).getGuidIntroduced());
                 params.put("guidDeceasedName", list.get(i).getGuidDeceasedName());
+                params.put("payType", list.get(i).getPayType());
 
             } catch (Exception e) {
                 Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی تاج گل", Toast.LENGTH_SHORT).show();
@@ -601,9 +602,10 @@ public class NavigationDrawerFragment extends Fragment {
                 params.put("deviceCode", list.get(i).deviceCode);
                 params.put("recieverCode", list.get(i).recieverCode);
                 params.put("terminalCode", list.get(i).terminalCode);
+                params.put("payType", list.get(i).payType);
 
-                SponsorR sponsorR = db.SponsorDao().getSponsorById( list.get(i).getSponsorId());
-                if(sponsorR.getIsNew()==null|| !sponsorR.getIsNew().equals("true")){
+                SponsorR sponsorR = db.SponsorDao().getSponsorById(list.get(i).getSponsorId());
+                if (sponsorR.getIsNew() == null || !sponsorR.getIsNew().equals("true")) {
                     params.put("sponsorId", list.get(i).getSponsorId());
                 }
             } catch (Exception e) {
@@ -845,6 +847,7 @@ public class NavigationDrawerFragment extends Fragment {
                         data.donatorId = response.getData().get(i).getDonatorId();
                         data.IntroducedId = response.getData().get(i).getIntroducedId();
                         data.registerDate = response.getData().get(i).getRegisterDate();
+                        data.payType = response.getData().get(i).getPayType();
 
                         try {
                             db.FlowerCrownDao().insertFlowerCrown(data);
@@ -1062,7 +1065,7 @@ public class NavigationDrawerFragment extends Fragment {
         controller.GetFromApi2("api/FinancialServiceType/" + settingsBll.getCharityId(), new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
-                Log.i("moh3n", "FinancialServiceType: "+resultStr);
+                Log.i("moh3n", "FinancialServiceType: " + resultStr);
                 Gson gson = new Gson();
                 FlowerCrownTypeApi response = gson.fromJson(resultStr, FlowerCrownTypeApi.class);
 
@@ -1072,6 +1075,7 @@ public class NavigationDrawerFragment extends Fragment {
                     data.id = Integer.valueOf(response.getData().get(i).getId());
                     data.charityId = Integer.valueOf(response.getData().get(i).getCharityId());
                     data.title = response.getData().get(i).getTitle();
+                    data.payType = response.getData().get(i).getPayType();
 
                     try {
                         db.FinancialServiceTypeDao().insertBox(data);

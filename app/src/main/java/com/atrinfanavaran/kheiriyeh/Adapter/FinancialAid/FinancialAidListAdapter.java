@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.atrinfanavaran.kheiriyeh.Activity.Financial.Add.AddFinancialAidActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddDonateActivity;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackBoxEdit;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
@@ -54,6 +55,13 @@ public class FinancialAidListAdapter extends RecyclerView.Adapter<FinancialAidLi
         holder.title.setText(array_object.get(position).name);
         holder.t1.setText(formatter.format(Long.valueOf(array_object.get(position).price)) + " تومان ");
         holder.t2.setText(array_object.get(position).financialServiceType);
+        String patType = "-";
+        if (array_object.get(position).payType == 1) {
+            patType = "نقدی";
+        } else if (array_object.get(position).payType == 2) {
+            patType = "دستگاه Pos";
+        }
+        holder.t3.setText(patType);
 
 
         holder.moreOption.setOnClickListener(v -> {
@@ -63,7 +71,7 @@ public class FinancialAidListAdapter extends RecyclerView.Adapter<FinancialAidLi
                 switch (item.getItemId()) {
                     case R.id.popup_edit:
 
-                        Intent intent = new Intent(holder.itemView.getContext(), AddDonateActivity.class);
+                        Intent intent = new Intent(holder.itemView.getContext(), AddFinancialAidActivity.class);
                         intent.putExtra("object", array_object.get(position));
                         intent.putExtra("editable", true);
                         holder.itemView.getContext().startActivity(intent);
@@ -113,7 +121,7 @@ public class FinancialAidListAdapter extends RecyclerView.Adapter<FinancialAidLi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title, t1, t2;
+        TextView title, t1, t2, t3;
         ImageView moreOption;
 
         private ViewHolder(View itemView) {
@@ -122,7 +130,7 @@ public class FinancialAidListAdapter extends RecyclerView.Adapter<FinancialAidLi
             title = itemView.findViewById(R.id.title);
             t1 = itemView.findViewById(R.id.t1);
             t2 = itemView.findViewById(R.id.t2);
-
+            t3 = itemView.findViewById(R.id.t3);
 
         }
     }

@@ -56,6 +56,13 @@ public class TajGolListAdapter extends RecyclerView.Adapter<TajGolListAdapter.Vi
 
         holder.t5.setText("" + array_object.get(position).getFlowerCrownType());
         holder.t6.setText(array_object.get(position).getRegisterDate());
+        String patType = "-";
+        if (array_object.get(position).getPayType() == 1) {
+            patType = "نقدی";
+        } else if (array_object.get(position).getPayType() == 2) {
+            patType = "دستگاه Pos";
+        }
+        holder.t7.setText(patType);
 
         String CeremonyType = "";
         switch (array_object.get(position).getCeremonyType()) {
@@ -141,7 +148,7 @@ public class TajGolListAdapter extends RecyclerView.Adapter<TajGolListAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title, t1, t2, t3, t4, t5, t6;
+        TextView title, t1, t2, t3, t4, t5, t6,t7;
         ImageView moreOption;
 
         private ViewHolder(View itemView) {
@@ -154,6 +161,7 @@ public class TajGolListAdapter extends RecyclerView.Adapter<TajGolListAdapter.Vi
             t4 = itemView.findViewById(R.id.t4);
             t5 = itemView.findViewById(R.id.t5);
             t6 = itemView.findViewById(R.id.t6);
+            t7 = itemView.findViewById(R.id.t7);
 
         }
     }

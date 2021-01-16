@@ -132,6 +132,7 @@ public class FlowerCrownApi extends BaseDomain {
         private int id;
         private int price;
         private int ceremonyType;
+        private int payType;
         private int charityId;
         private String charity;
         private int opratorId;
@@ -145,6 +146,14 @@ public class FlowerCrownApi extends BaseDomain {
         private String donatorName;
         private String deceasedFullName;
         private String introducedName;
+
+        public int getPayType() {
+            return payType;
+        }
+
+        public void setPayType(int payType) {
+            this.payType = payType;
+        }
 
         public String getDonatorName() {
             return donatorName;

@@ -71,7 +71,17 @@ public class ContributionR implements Serializable {
     @ColumnInfo(name = "isNew")
     public String isNew;
 
+    @ColumnInfo(name = "payType")
+    public int payType;
 
+
+    public int getPayType() {
+        return payType;
+    }
+
+    public void setPayType(int payType) {
+        this.payType = payType;
+    }
 
     public int getSponsorId() {
         return SponsorId;

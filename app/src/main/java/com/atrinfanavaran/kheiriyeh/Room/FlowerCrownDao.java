@@ -25,9 +25,9 @@ public interface FlowerCrownDao {
     @Query("delete FROM FlowerCrownR")
     void deleteAll();
 
-    @Query("update  FlowerCrownR set guidIntroduced=:guidIntroduced,guidDeceasedName=:guidDeceasedName,guidDonator=:guidDonator,flowerCrownType=:flowerCrownType,deceasedName=:deceasedName,charity=:charity,donator=:donator,donatorId=:donatorId,donatorId=:donatorId,ceremonyTypeId=:ceremonyTypeId,ceremonyType=:ceremonyType,price=:price,registerDate=:registerDate,registerDateEn=:registerDateEn,flowerCrownTypeId=:flowerCrownTypeId,deceasedNameId=:deceasedNameId,IntroducedId=:IntroducedId,Introduced=:Introduced" +
+    @Query("update  FlowerCrownR set guidIntroduced=:guidIntroduced,guidDeceasedName=:guidDeceasedName,guidDonator=:guidDonator,flowerCrownType=:flowerCrownType,deceasedName=:deceasedName,charity=:charity,donator=:donator,donatorId=:donatorId,donatorId=:donatorId,ceremonyTypeId=:ceremonyTypeId,ceremonyType=:ceremonyType,price=:price,registerDate=:registerDate,registerDateEn=:registerDateEn,flowerCrownTypeId=:flowerCrownTypeId,deceasedNameId=:deceasedNameId,IntroducedId=:IntroducedId,Introduced=:Introduced,payType=:payType" +
             " WHERE id like (:id)")
-    void update(String guidIntroduced, String guidDeceasedName, String guidDonator, String flowerCrownType, String deceasedName, String charity, String donator, int donatorId, int ceremonyTypeId, String ceremonyType, int price, String registerDate, String registerDateEn, int flowerCrownTypeId, int deceasedNameId, int id, int IntroducedId, String Introduced);
+    void update(String guidIntroduced, String guidDeceasedName, String guidDonator, String flowerCrownType, String deceasedName, String charity, String donator, int donatorId, int ceremonyTypeId, String ceremonyType, int price, String registerDate, String registerDateEn, int flowerCrownTypeId, int deceasedNameId, int id, int IntroducedId, String Introduced,int payType);
 
     @Query("Delete from  FlowerCrownR  " +
             " WHERE id like (:id)")

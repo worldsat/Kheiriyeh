@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
-import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.DonatorListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.TajGolListItemActivity;
-import com.atrinfanavaran.kheiriyeh.Adapter.Flower.DonatorListAdapter;
 import com.atrinfanavaran.kheiriyeh.Domain.CeremonyType;
 import com.atrinfanavaran.kheiriyeh.Domain.DeceasedNameApi;
 import com.atrinfanavaran.kheiriyeh.Domain.DonatorApi;
@@ -36,10 +36,7 @@ import com.atrinfanavaran.kheiriyeh.Kernel.Helper.SearchableField;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.roozh;
 import com.atrinfanavaran.kheiriyeh.R;
 
-import com.atrinfanavaran.kheiriyeh.Room.Domian.DeceasedNameR;
-import com.atrinfanavaran.kheiriyeh.Room.Domian.DonatorR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.FlowerCrownR;
-import com.atrinfanavaran.kheiriyeh.Room.Domian.FlowerCrownTypeR;
 import com.google.gson.Gson;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -51,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 public class AddTajGolActivity extends BaseActivity {
 
@@ -69,8 +65,10 @@ public class AddTajGolActivity extends BaseActivity {
     private String donatorGuId, DeceasedNameGuId, IntroducedGuId;
     private boolean editable = false;
     private FlowerCrownR object;
-
+    private RadioGroup payGroup;
+    private RadioButton radio1, radio2;
     private String donator, deceasedName, flowerCrownType, ceremonyType, Introduced;
+    private int payType = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +92,18 @@ public class AddTajGolActivity extends BaseActivity {
 
     private void setvariable() {
         titleToolbar.setText("افزودن تاج گل");
+        payGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.radioButton1:
+                    payType = 1;
+                    break;
+                case R.id.radioButton2:
+                    payType =2;
+                    break;
+
+            }
+        });
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,6 +177,7 @@ public class AddTajGolActivity extends BaseActivity {
                     params.put("guidDonator", donatorGuId);
                     params.put("guidIntroduced", IntroducedGuId);
                     params.put("guidDeceasedName", DeceasedNameGuId);
+                    params.put("payType", payType);
 
                 } catch (Exception e) {
                     Toast.makeText(AddTajGolActivity.this, "خطا در پارامتر های ارسالی ", Toast.LENGTH_SHORT).show();
@@ -207,6 +218,11 @@ public class AddTajGolActivity extends BaseActivity {
             edt1.setText("" + object.getPrice());
             edt2.setText(object.getRegisterDate());
 
+            if (object.getPayType() == 1) {
+                radio1.setChecked(true);
+            } else if (object.getPayType() == 2) {
+                radio2.setChecked(true);
+            }
 
         }
         edt1.addTextChangedListener(new NumberTextWatcherForThousand(edt1));
@@ -226,7 +242,7 @@ public class AddTajGolActivity extends BaseActivity {
             int year1 = cal.get(Calendar.YEAR);
             jCal.GregorianToPersian(year1, month1, dayOfMonth1);
             edt2.setText(jCal.getYear() + "/" + jCal.getMonth() + "/" + jCal.getDay());
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         calendarBtn.setOnClickListener(v -> {
@@ -508,6 +524,9 @@ public class AddTajGolActivity extends BaseActivity {
         calendarBtn = findViewById(R.id.calendar);
         FlowerCrownTypeSpinner = findViewById(R.id.spinner4);
         inturducedSpinner = findViewById(R.id.spinner5);
+        payGroup = findViewById(R.id.radioButtonGroup);
+        radio1 = findViewById(R.id.radioButton1);
+        radio2 = findViewById(R.id.radioButton2);
     }
 
     private void NavigationDrawer() {

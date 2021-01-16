@@ -70,7 +70,17 @@ public class FlowerCrownR implements Serializable {
     @ColumnInfo(name = "guidDonator")
     public String guidDonator;
 
+    @ColumnInfo(name = "payType")
+    public int payType;
 
+
+    public int getPayType() {
+        return payType;
+    }
+
+    public void setPayType(int payType) {
+        this.payType = payType;
+    }
 
     public String getGuidIntroduced() {
         return guidIntroduced;

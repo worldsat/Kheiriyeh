@@ -25,6 +25,8 @@ public class FinancialAidR implements Serializable {
 
     @ColumnInfo(name = "opratorId")
     public int opratorId;
+    @ColumnInfo(name = "payType")
+    public int payType;
 
     @ColumnInfo(name = "financialServiceTypeId")
     public int financialServiceTypeId;
@@ -46,6 +48,14 @@ public class FinancialAidR implements Serializable {
     @Override
     public String toString() {
         return financialServiceType;
+    }
+
+    public int getPayType() {
+        return payType;
+    }
+
+    public void setPayType(int payType) {
+        this.payType = payType;
     }
 
     public int getId() {
