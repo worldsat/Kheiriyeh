@@ -187,10 +187,10 @@ public class FirstFragment extends Fragment {
         SettingsBll settingsBll = new SettingsBll(getActivity());
         ArrayList<String> list = new ArrayList<>();
         if (settingsBll.isAccessBox()) {
-            list.add("تخلیه صندوق");
-            list.add("افزودن صندوق");
-            list.add("آدرس ها");
-            list.add("افزودن آدرس");
+            list.add("صندوق ها");
+//            list.add("افزودن صندوق");
+//            list.add("آدرس ها");
+//            list.add("افزودن آدرس");
         }
         if (settingsBll.isAccessFlowerCrown()) {
             list.add("تاج گل");

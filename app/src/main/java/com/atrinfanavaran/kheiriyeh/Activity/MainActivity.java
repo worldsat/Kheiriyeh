@@ -16,6 +16,7 @@ import android.os.Bundle;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.kheiriyeh.Activity.Financial.List.FinancialAidListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.FlowerCrownListActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.SandoghSadaghat.SandoghListActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.SponsorListActivity;
 import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
@@ -570,36 +571,38 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     public void goTo(String page) {
         switch (page) {
             case "0": {
-                fragment = new BoxIncomeListFragment();
-                setFragment();
+//                fragment = new BoxIncomeListFragment();
+//                setFragment();
+                Intent intent = new Intent(MainActivity.this, SandoghListActivity.class);
+                startActivity(intent);
                 break;
             }
+//            case "1": {
+//                fragment = new BoxListFragment();
+//                setFragment();
+//                break;
+//            }
+//            case "2": {
+//                fragment = new MapFragment();
+//                setFragment();
+//                break;
+//            }
+//            case "3": {
+//                fragment = new RouteListFragment();
+//                setFragment();
+//                break;
+//            }
             case "1": {
-                fragment = new BoxListFragment();
-                setFragment();
-                break;
-            }
-            case "2": {
-                fragment = new MapFragment();
-                setFragment();
-                break;
-            }
-            case "3": {
-                fragment = new RouteListFragment();
-                setFragment();
-                break;
-            }
-            case "4": {
                 Intent intent = new Intent(MainActivity.this, FlowerCrownListActivity.class);
                 startActivity(intent);
                 break;
             }
-            case "5": {
+            case "2": {
                 Intent intent = new Intent(MainActivity.this, SponsorListActivity.class);
                 startActivity(intent);
                 break;
             }
-            case "6": {
+            case "3": {
                 Intent intent = new Intent(MainActivity.this, FinancialAidListItemActivity.class);
                 startActivity(intent);
                 break;

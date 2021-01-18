@@ -84,7 +84,7 @@ public class SplashActivity extends BaseActivity {
                         settingsBll.setAccessFinancialAid(charity.isIsAccessFinancialAid());
                         settingsBll.setAccessFlowerCrown(charity.isIsAccessFlowerCrown());
                         settingsBll.setAccessSponsor(charity.isIsAccessSponsor());
-                        if (settingsBll.isAccessBox()) {
+//                        if (settingsBll.isAccessBox()) {
 
                             SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
                             if (sp != null) {
@@ -95,9 +95,9 @@ public class SplashActivity extends BaseActivity {
                                     startActivity(intent);
                                 }
                             }
-                        } else {
-                            SnakBar("حساب کاربری شما مسدود می باشد");
-                        }
+//                        } else {
+//                            SnakBar("حساب کاربری شما مسدود می باشد");
+//                        }
 
                     } catch (Exception e) {
                         Log.i(TAG, "onSuccess4: " + e);

@@ -37,36 +37,36 @@ public class QuickListAdapter extends RecyclerView.Adapter<QuickListAdapter.View
         holder.title.setText(array_object.get(position));
         switch (position) {
             case 0: {
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_9));
+                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_5));
                 holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("0"));
                 break;
             }
+//            case 1: {
+//                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_12));
+//                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("1"));
+//                break;
+//            }
+//            case 2: {
+//                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_11));
+//                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("2"));
+//                break;
+//            }
+//            case 3: {
+//                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_10));
+//                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("3"));
+//                break;
+//            }
             case 1: {
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_12));
-                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("1"));
-                break;
-            }
-            case 2: {
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_11));
-                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("2"));
-                break;
-            }
-            case 3: {
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_10));
-                holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("3"));
-                break;
-            }
-            case 4: {
                 holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_2));
                 holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("4"));
                 break;
             }
-            case 5: {
+            case 2: {
                 holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_4));
                 holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("5"));
                 break;
             }
-            case 6: {
+            case 3: {
                 holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_5));
                 holder.itemView.setOnClickListener(v -> onCallBackQuickList.goTo("6"));
                 break;

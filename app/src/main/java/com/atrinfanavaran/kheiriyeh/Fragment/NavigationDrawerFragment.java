@@ -674,7 +674,7 @@ public class NavigationDrawerFragment extends Fragment {
                 public void onSuccess(String result) {
                     Log.i("moh3n", "sendFinancialAid: " + result);
                     Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                    db.FinancialServiceTypeDao().deleteAll();
+                    db.FinancialAidDao().deleteAll();
                     wait.dismiss();
                 }
 

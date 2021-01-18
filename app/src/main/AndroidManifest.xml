@@ -22,6 +22,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".Activity.Flower.Add.AddTajGolActivity"></activity>
+        <activity android:name=".Activity.SandoghSadaghat.SandoghListActivity"></activity>
         <activity android:name=".Activity.Flower.Add.AddDeceasedNameActivity"></activity>
         <activity android:name=".Activity.Flower.List.DeceasedNameListItemActivity"></activity>
         <activity android:name=".Activity.Financial.List.FinancialAidListItemActivity"></activity>
