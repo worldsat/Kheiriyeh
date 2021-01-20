@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.DeceasedNameListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.DonatorListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.TajGolListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.MainActivity;
 import com.atrinfanavaran.kheiriyeh.Interface.onCallBackQuickList;
 import com.atrinfanavaran.kheiriyeh.R;
 
@@ -53,19 +54,17 @@ public class SandoghListAdapter extends RecyclerView.Adapter<SandoghListAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), MainActivity.class);
                 if (position == 0) {
-                    Intent intent = new Intent(holder.itemView.getContext(), TajGolListItemActivity.class);
-                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_7));
-                    holder.itemView.getContext().startActivity(intent);
+                intent.putExtra("page","sandogh1");
                 } else if (position == 1) {
-                    Intent intent = new Intent(holder.itemView.getContext(), DonatorListItemActivity.class);
-                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_6));
-                    holder.itemView.getContext().startActivity(intent);
+                    intent.putExtra("page","sandogh2");
                 } else if (position == 2) {
-                    Intent intent = new Intent(holder.itemView.getContext(), DeceasedNameListItemActivity.class);
-                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.mipmap.ic_8));
-                    holder.itemView.getContext().startActivity(intent);
+                    intent.putExtra("page","sandogh3");
+                } else if (position == 3) {
+                    intent.putExtra("page","sandogh4");
                 }
+                holder.itemView.getContext().startActivity(intent);
             }
         });
 

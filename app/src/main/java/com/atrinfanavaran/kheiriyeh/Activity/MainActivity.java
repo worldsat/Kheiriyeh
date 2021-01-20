@@ -102,6 +102,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     private AppDatabase db;
     private ImageView imageView;
     private LinearLayout filterIcon;
+    private String sandogh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,34 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         getSetting();
 //        setFilter();
         checkVersion();
+        getSandogh();
+    }
+
+    private void getSandogh() {
+        sandogh = getIntent().getStringExtra("page");
+        if (sandogh == null) return;
+        switch (sandogh) {
+            case "sandogh1": {
+                fragment = new BoxIncomeListFragment();
+                setFragment();
+                break;
+            }
+            case "sandogh2": {
+                fragment = new BoxListFragment();
+                setFragment();
+                break;
+            }
+            case "sandogh3": {
+                fragment = new MapFragment();
+                setFragment();
+                break;
+            }
+            case "sandogh4": {
+                fragment = new RouteListFragment();
+                setFragment();
+                break;
+            }
+        }
 
     }
 
@@ -334,7 +363,9 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment hm = getSupportFragmentManager().findFragmentByTag("subPage");
-
+        if (sandogh != null) {
+          finish();
+        }
         if (hm != null) {
             if (hm.isVisible()) {
                 if (fm.getBackStackEntryCount() > 1) {
@@ -451,7 +482,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     @Override
     public void SaveBox2(BoxR boxR, boolean editable) {
         if (editable) {
-            db.BoxDao().update(boxR.fullName, boxR.day, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon, boxR.guidDischargeRoute, boxR.boxKind,boxR.dischargeRouteId);
+            db.BoxDao().update(boxR.fullName, boxR.day, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon, boxR.guidDischargeRoute, boxR.boxKind, boxR.dischargeRouteId);
             Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
         } else {
 
