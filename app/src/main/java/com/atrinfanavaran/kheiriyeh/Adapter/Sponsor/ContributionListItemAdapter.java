@@ -29,10 +29,11 @@ public class ContributionListItemAdapter extends RecyclerView.Adapter<Contributi
     private final List<ContributionR> array_object;
     private onCallBackBoxEdit onCallBackBoxEdit;
     private DecimalFormat formatter = new DecimalFormat("###,###,###,###");
-    public ContributionListItemAdapter(List<ContributionR> result) {
+    private boolean showOnly = false;
+    public ContributionListItemAdapter(boolean showOnly,List<ContributionR> result) {
 
         this.array_object = result;
-
+        this.showOnly = showOnly;
     }
 
     @NonNull
@@ -55,7 +56,9 @@ public class ContributionListItemAdapter extends RecyclerView.Adapter<Contributi
         holder.t3.setText("" + array_object.get(position).terminalCode);
         holder.t4.setText("" +array_object.get(position).recieverCode);
         holder.t5.setText( array_object.get(position).description);
-
+        if (showOnly) {
+            holder.moreOption.setVisibility(View.GONE);
+        }
 
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);

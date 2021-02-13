@@ -103,7 +103,7 @@ public class SponsorListItemActivity extends BaseActivity {
         list.addAll(db().SponsorDao().getAll());
         if (list.size() > 0) {
             emptyText.setVisibility(View.GONE);
-            adapter1 = new SponsorListItemAdapter(list);
+            adapter1 = new SponsorListItemAdapter(false,list);
             row1.setAdapter(adapter1);
 
         } else {
@@ -177,7 +177,7 @@ public class SponsorListItemActivity extends BaseActivity {
                         emptyText.setVisibility(View.GONE);
                     }
 
-                    adapter1 = new SponsorListItemAdapter(list);
+                    adapter1 = new SponsorListItemAdapter(false,list);
                     row1.setAdapter(adapter1);
 
                 });

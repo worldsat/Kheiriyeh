@@ -7,18 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
 import com.atrinfanavaran.kheiriyeh.Domain.Sliders;
 import com.atrinfanavaran.kheiriyeh.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.kheiriyeh.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LastDischargeListAdapter extends RecyclerView.Adapter<LastDischargeListAdapter.ViewHolder> {
 
-    private final ArrayList<Sliders> array_object;
+    private final List<FlowerCrownApi.Data> array_object;
 
 
-    public LastDischargeListAdapter(ArrayList<Sliders> result) {
+    public LastDischargeListAdapter(  List<FlowerCrownApi.Data> result) {
         this.array_object = result;
     }
 
