@@ -30,7 +30,8 @@ public class ContributionListItemAdapter extends RecyclerView.Adapter<Contributi
     private onCallBackBoxEdit onCallBackBoxEdit;
     private DecimalFormat formatter = new DecimalFormat("###,###,###,###");
     private boolean showOnly = false;
-    public ContributionListItemAdapter(boolean showOnly,List<ContributionR> result) {
+
+    public ContributionListItemAdapter(boolean showOnly, List<ContributionR> result) {
 
         this.array_object = result;
         this.showOnly = showOnly;
@@ -51,15 +52,31 @@ public class ContributionListItemAdapter extends RecyclerView.Adapter<Contributi
         String Url = settingsBll.getUrlAddress();
 
         holder.title.setText(formatter.format(Long.valueOf(array_object.get(position).price)) + " ریال ");
-        holder.t1.setText( array_object.get(position).fullName);
+        holder.t1.setText(array_object.get(position).fullName);
         holder.t2.setText("" + array_object.get(position).deviceCode);
         holder.t3.setText("" + array_object.get(position).terminalCode);
-        holder.t4.setText("" +array_object.get(position).recieverCode);
-        holder.t5.setText( array_object.get(position).description);
+        holder.t4.setText("" + array_object.get(position).recieverCode);
+        holder.t5.setText(array_object.get(position).description);
         if (showOnly) {
             holder.moreOption.setVisibility(View.GONE);
         }
-
+        if (array_object.get(position).getPayType() == 1) {
+            holder.t6.setText("نقدی");
+            holder.title5.setVisibility(View.GONE);
+            holder.title6.setVisibility(View.GONE);
+            holder.title8.setVisibility(View.GONE);
+            holder.t2.setVisibility(View.GONE);
+            holder.t3.setVisibility(View.GONE);
+            holder.t4.setVisibility(View.GONE);
+        } else if (array_object.get(position).getPayType() == 2) {
+            holder.t6.setText("دستگاه Pos");
+            holder.title5.setVisibility(View.VISIBLE);
+            holder.title6.setVisibility(View.VISIBLE);
+            holder.title8.setVisibility(View.VISIBLE);
+            holder.t2.setVisibility(View.VISIBLE);
+            holder.t3.setVisibility(View.VISIBLE);
+            holder.t4.setVisibility(View.VISIBLE);
+        }
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 
@@ -119,6 +136,7 @@ public class ContributionListItemAdapter extends RecyclerView.Adapter<Contributi
 
         TextView title, t1, t2, t3, t4, t5, t6, t7;
         ImageView moreOption;
+        TextView title5, title6, title8;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -131,6 +149,9 @@ public class ContributionListItemAdapter extends RecyclerView.Adapter<Contributi
             t5 = itemView.findViewById(R.id.t5);
             t6 = itemView.findViewById(R.id.t6);
             t7 = itemView.findViewById(R.id.t7);
+            title5 = itemView.findViewById(R.id.title5);
+            title6 = itemView.findViewById(R.id.title6);
+            title8 = itemView.findViewById(R.id.title8);
 
         }
     }

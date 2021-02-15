@@ -62,10 +62,19 @@ public class FlowerCrownTypeApi {
         private String title;
         private int charityId;
         private int payType;
+        private int price;
 
         public Data(int id, String title) {
             this.id = id;
             this.title = title;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
+        public void setPrice(int price) {
+            this.price = price;
         }
 
         public int getPayType() {
