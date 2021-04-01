@@ -98,7 +98,7 @@ public class AddTajGolActivity extends BaseActivity {
                     payType = 1;
                     break;
                 case R.id.radioButton2:
-                    payType =2;
+                    payType = 2;
                     break;
 
             }
@@ -340,6 +340,7 @@ public class AddTajGolActivity extends BaseActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         FlowerCrownTypeId = ((FlowerCrownTypeApi.Data) FlowerCrownTypeSpinner.getSelectedItem()).getId();
                         flowerCrownType = ((FlowerCrownTypeApi.Data) FlowerCrownTypeSpinner.getSelectedItem()).getTitle();
+                        edt1.setText(""+((FlowerCrownTypeApi.Data) FlowerCrownTypeSpinner.getSelectedItem()).getPrice());
 
                     }
 

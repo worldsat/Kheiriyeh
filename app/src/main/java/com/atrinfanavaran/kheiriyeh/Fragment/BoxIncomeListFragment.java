@@ -125,7 +125,7 @@ public class BoxIncomeListFragment extends Fragment {
         } else {
             emptyText.setVisibility(View.GONE);
         }
-        adapter = new BoxIncomeListAdapter(list, new onCallBackBoxIncomeEdit() {
+        adapter = new BoxIncomeListAdapter(false,list, new onCallBackBoxIncomeEdit() {
             @Override
             public void EditBoxIncome(BoxIncomeR boxIncome) {
                 onCallBackBoxIncomeEdit.EditBoxIncome(boxIncome);
@@ -188,7 +188,7 @@ public class BoxIncomeListFragment extends Fragment {
                         emptyText.setVisibility(View.GONE);
                     }
 
-                    adapter = new BoxIncomeListAdapter(list, new onCallBackBoxIncomeEdit() {
+                    adapter = new BoxIncomeListAdapter(false,list, new onCallBackBoxIncomeEdit() {
                         @Override
                         public void EditBoxIncome(BoxIncomeR boxIncome) {
                             onCallBackBoxIncomeEdit.EditBoxIncome(boxIncome);

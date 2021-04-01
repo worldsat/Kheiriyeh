@@ -1,9 +1,12 @@
 package com.atrinfanavaran.kheiriyeh.Adapter;
 
 import androidx.room.Room;
+
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +29,12 @@ public class BoxIncomeListAdapter extends RecyclerView.Adapter<BoxIncomeListAdap
     private final List<BoxIncomeR> array_object;
     private onCallBackBoxIncomeEdit onCallBackBoxIncomeEdit;
     private DecimalFormat formatter = new DecimalFormat("###,###,###,###");
+    private boolean showOnly = false;
 
-    public BoxIncomeListAdapter(List<BoxIncomeR> result, onCallBackBoxIncomeEdit onCallBackBoxIncomeEdit) {
+    public BoxIncomeListAdapter(boolean showOnly, List<BoxIncomeR> result, onCallBackBoxIncomeEdit onCallBackBoxIncomeEdit) {
 
         this.array_object = result;
+        this.showOnly = showOnly;
         this.onCallBackBoxIncomeEdit = onCallBackBoxIncomeEdit;
     }
 
@@ -75,7 +80,9 @@ public class BoxIncomeListAdapter extends RecyclerView.Adapter<BoxIncomeListAdap
         }
         holder.status.setText(statusStr);
 
-
+        if (showOnly) {
+            holder.moreOption.setVisibility(View.GONE);
+        }
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 

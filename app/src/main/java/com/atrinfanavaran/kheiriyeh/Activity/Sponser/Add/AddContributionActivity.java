@@ -94,18 +94,20 @@ public class AddContributionActivity extends BaseActivity {
 //                } else if (edt2.getText().toString().trim().isEmpty()) {
 //                    Toast.makeText(getActivity(), "لطفا توضیحات را وارد نمائید", Toast.LENGTH_SHORT).show();
 //                    return;
-//                }else if (edt3.getText().toString().trim().isEmpty()) {
-//                    Toast.makeText(getActivity(), "لطفا کد دستگاه را وارد نمائید", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }else if (edt4.getText().toString().trim().isEmpty()) {
-//                    Toast.makeText(getActivity(), "لطفا کد ترمینال را وارد نمائید", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }else if (edt5.getText().toString().trim().isEmpty()) {
-//                    Toast.makeText(getActivity(), "لطفا کد دریافتی را وارد نمائید", Toast.LENGTH_SHORT).show();
-//                    return;
                 } else if (spin1.getSelectedItem().toString().equals("انتخاب کنید")) {
                     Toast.makeText(getActivity(), "لطفا حامی را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                     return;
+                } else if (payType == 2) {
+                    if (edt3.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(getActivity(), "لطفا کد دستگاه را وارد نمائید", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (edt4.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(getActivity(), "لطفا کد ترمینال را وارد نمائید", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (edt5.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(getActivity(), "لطفا کد دریافتی را وارد نمائید", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
 
                 ContributionR obj = new ContributionR();
@@ -113,9 +115,9 @@ public class AddContributionActivity extends BaseActivity {
                 obj.SponsorId = SponsorId;
                 obj.price = Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString()));
                 obj.description = edt2.getText().toString();
-                obj.deviceCode = Integer.parseInt(edt3.getText().toString());
-                obj.terminalCode = Integer.parseInt(edt4.getText().toString());
-                obj.recieverCode = Integer.parseInt(edt5.getText().toString());
+//                obj.deviceCode = Integer.parseInt(edt3.getText().toString());
+//                obj.terminalCode = Integer.parseInt(edt4.getText().toString());
+//                obj.recieverCode = Integer.parseInt(edt5.getText().toString());
 
                 SponsorR sponsorR = db().SponsorDao().getSponsorById(SponsorId);
                 obj.fullName = sponsorR.getFullName();
@@ -125,7 +127,7 @@ public class AddContributionActivity extends BaseActivity {
                 obj.phone = sponsorR.getPhone();
                 obj.address = sponsorR.getAddress();
                 obj.birthDate = sponsorR.getBirthDate();
-                obj.payType = sponsorR.getPayType();
+                obj.payType = payType;
 
                 if (editable) {
                     obj.id = object.getId();

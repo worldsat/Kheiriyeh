@@ -29,11 +29,11 @@ public class SponsorListItemAdapter extends RecyclerView.Adapter<SponsorListItem
 
     private final List<SponsorR> array_object;
     private onCallBackBoxEdit onCallBackBoxEdit;
-
-    public SponsorListItemAdapter(List<SponsorR> result) {
+    private boolean showOnly = false;
+    public SponsorListItemAdapter(boolean showOnly,List<SponsorR> result) {
 
         this.array_object = result;
-
+        this.showOnly = showOnly;
     }
 
     @NonNull
@@ -57,7 +57,9 @@ public class SponsorListItemAdapter extends RecyclerView.Adapter<SponsorListItem
         holder.t4.setText(array_object.get(position).phone);
         holder.t5.setText("" + array_object.get(position).birthDate);
         holder.t7.setText("" + array_object.get(position).address);
-
+        if (showOnly) {
+            holder.moreOption.setVisibility(View.GONE);
+        }
         holder.moreOption.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(holder.itemView.getContext(), v);
 

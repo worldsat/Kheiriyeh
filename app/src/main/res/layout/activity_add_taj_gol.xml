@@ -274,6 +274,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:checked="true"
                                 android:fontFamily="@font/behdad"
                                 android:text="نقدی"
                                 android:textColor="@color/grey_700"
