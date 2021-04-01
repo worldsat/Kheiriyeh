@@ -649,6 +649,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
         Dexter.withActivity(getActivity())
                 .withPermissions(
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_NETWORK_STATE
                         , Manifest.permission.ACCESS_FINE_LOCATION
                         , Manifest.permission.REQUEST_INSTALL_PACKAGES
@@ -678,6 +679,7 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
     private void checkRunTimePermission() {
         String[] permissionArrays = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
                 , Manifest.permission.ACCESS_NETWORK_STATE
+                , Manifest.permission.READ_EXTERNAL_STORAGE
                 , Manifest.permission.ACCESS_FINE_LOCATION
                 , Manifest.permission.ACCESS_COARSE_LOCATION
         };

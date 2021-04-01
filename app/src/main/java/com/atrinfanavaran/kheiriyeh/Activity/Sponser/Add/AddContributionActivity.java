@@ -16,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.ContributionListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.TAGS;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.TransactionType;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
@@ -39,7 +41,7 @@ public class AddContributionActivity extends BaseActivity {
     private TextView titleToolbar;
     private LinearLayout filterIcon, backIcon;
     private SearchableSpinner spin1;
-
+    public static int iTotalPay = 0;
     private int ceremonyTypeId = 0, SponsorId = 0, donatorId = 0, DeceasedNameId = 0, IntroducedId = 0;
     private boolean editable = false;
     private ContributionR object;
@@ -47,7 +49,8 @@ public class AddContributionActivity extends BaseActivity {
     private String donator, deceasedName, flowerCrownType, ceremonyType, Introduced;
     private RadioGroup payGroup;
     private RadioButton radio1, radio2;
-    private int payType =1;
+    private int payType = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,16 +94,16 @@ public class AddContributionActivity extends BaseActivity {
 //                } else if (edt2.getText().toString().trim().isEmpty()) {
 //                    Toast.makeText(getActivity(), "لطفا توضیحات را وارد نمائید", Toast.LENGTH_SHORT).show();
 //                    return;
-                }else if (edt3.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "لطفا کد دستگاه را وارد نمائید", Toast.LENGTH_SHORT).show();
-                    return;
-                }else if (edt4.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "لطفا کد ترمینال را وارد نمائید", Toast.LENGTH_SHORT).show();
-                    return;
-                }else if (edt5.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "لطفا کد دریافتی را وارد نمائید", Toast.LENGTH_SHORT).show();
-                    return;
-                }else if (spin1.getSelectedItem().toString().equals("انتخاب کنید")) {
+//                }else if (edt3.getText().toString().trim().isEmpty()) {
+//                    Toast.makeText(getActivity(), "لطفا کد دستگاه را وارد نمائید", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }else if (edt4.getText().toString().trim().isEmpty()) {
+//                    Toast.makeText(getActivity(), "لطفا کد ترمینال را وارد نمائید", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }else if (edt5.getText().toString().trim().isEmpty()) {
+//                    Toast.makeText(getActivity(), "لطفا کد دریافتی را وارد نمائید", Toast.LENGTH_SHORT).show();
+//                    return;
+                } else if (spin1.getSelectedItem().toString().equals("انتخاب کنید")) {
                     Toast.makeText(getActivity(), "لطفا حامی را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -127,15 +130,24 @@ public class AddContributionActivity extends BaseActivity {
                 if (editable) {
                     obj.id = object.getId();
                     db().ContributaionDao().update(obj.price, obj.description, obj.deviceCode, obj.terminalCode, obj.recieverCode, obj.fullName, obj.code,
-                            obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id,  obj.payType);
+                            obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id, obj.payType);
                     Toast.makeText(AddContributionActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
                     obj.isNew = "true";
                     db().ContributaionDao().insertBox(obj);
                     Toast.makeText(AddContributionActivity.this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 }
-                finish();
-                startActivity(new Intent(AddContributionActivity.this, ContributionListItemActivity.class));
+                if (payType == 1) {
+                    finish();
+                    startActivity(new Intent(AddContributionActivity.this, ContributionListItemActivity.class));
+                } else if (payType == 2) {
+                    iTotalPay = obj.price;
+                    Intent i = new Intent(TAGS.Action);
+                    i.putExtra(TransactionType.transactionType, TransactionType.Sale);
+                    i.putExtra(TAGS.CompanyName, "");
+                    i.putExtra(TAGS.AM,  obj.price);
+                    startActivity(i);
+                }
             }
         });
 
