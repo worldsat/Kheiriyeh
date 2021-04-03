@@ -4,10 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.room.Room;
 
 import com.atrinfanavaran.kheiriyeh.Activity.MainActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddContributionActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
+import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.ContributionR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.SponsorR;
 
 import java.util.List;
 
@@ -34,56 +44,54 @@ public class MyBroadCast extends BroadcastReceiver {
         response.PO = intent.getStringArrayExtra(Response.GetPositionInfo);
 
         boolean b = true;
-        if(response.ER != null)      { str = str + "Error : " + response.ER; }
-        else if(response.SC != null) { str = str + "SwipeCard : " + response.SC; b = false; }
-        else if(response.TO != null)   str = str + "TimeOut : " + response.TO;
-        else if(response.BR != null)   str = str + "BarCodeStatus : " + response.BR;
-        else if(response.CP != null)   str = str + "CheckPaper : " + response.CP;
-        else if(response.PS != null)   str = str + "PrintStatus : " + response.PS;
-        else if(response.GI != null)   str = str + "MerchantInfo : \n"
-                                                 + "merchantName :" + response.GI[0] + "\n"
-                                                 + "merchantTell :" + response.GI[1] + "\n"
-                                                 + "terminalID :"   + response.GI[2] + "\n"
-                                                 + "serialNumber :" + response.GI[3];
+        if (response.ER != null) {
+            str = str + "Error : " + response.ER;
+        } else if (response.SC != null) {
+            str = str + "SwipeCard : " + response.SC;
+            b = false;
+        } else if (response.TO != null) str = str + "TimeOut : " + response.TO;
+        else if (response.BR != null) str = str + "BarCodeStatus : " + response.BR;
+        else if (response.CP != null) str = str + "CheckPaper : " + response.CP;
+        else if (response.PS != null) str = str + "PrintStatus : " + response.PS;
+        else if (response.GI != null) str = str + "MerchantInfo : \n"
+                + "merchantName :" + response.GI[0] + "\n"
+                + "merchantTell :" + response.GI[1] + "\n"
+                + "terminalID :" + response.GI[2] + "\n"
+                + "serialNumber :" + response.GI[3];
 
-        else if(response.PO != null)   str = str + "PositionInfo : \n"
-                                                 + "Latitude :" + response.PO[0] + "\n"
-                                                 + "Longitude :" + response.PO[1];
-        else if(response.MI != null) {
+        else if (response.PO != null) str = str + "PositionInfo : \n"
+                + "Latitude :" + response.PO[0] + "\n"
+                + "Longitude :" + response.PO[1];
+        else if (response.MI != null) {
             List<Mifare> mifareList = Mifare.getMifare(response.MI);
             int len = mifareList.size();
             str = str + "MifareResult len : " + len + "\n";
-            for(int i = 0; i < len; i++) str = str + mifareList.get(i).toString() + "\n";
-        }
-        else if(response.RS != null) {
+            for (int i = 0; i < len; i++) str = str + mifareList.get(i).toString() + "\n";
+        } else if (response.RS != null) {
             str = str + "ResponseCode : " + response.RS + "\n";
-            if(response.RS.equals("05")) {
+            if (response.RS.equals("05")) {
                 String qrResult = intent.getStringExtra("QR_Result");
-                if(qrResult != null) {
-                    if(qrResult.equals("success")) {
+                if (qrResult != null) {
+                    if (qrResult.equals("success")) {
                         int qrAM = intent.getIntExtra("QR_AM", 0);
                         response._RRN = intent.getStringExtra(Response.RRN);
                         response.SN = intent.getStringExtra(Response.SerialNumber);
                         response.DT = intent.getStringExtra(Response.DateTime);
-                        if(qrAM == iTotalPay) {
+                        if (qrAM == iTotalPay) {
                             str = str + "پرداخت QR موفق بوده است." + "\n" +
-                                        "شماره مرجع : "  + response._RRN + "\n" +
-                                        "شماره سریال : " + response.SN   + "\n" +
-                                        "تاریخ-زمان : "  + response.DT   + "\n";
-                        }
-                        else str = str + "عدم تطابق مبلغ پرداختی و مبلغ استعلام شده";
-                    }
-                    else if(qrResult.equals("failed")) str = str + "پرداخت QR ناموفق بوده است.";
-                }
-                else str = str + "Transaction Cancelled";
-            }
-            else {
+                                    "شماره مرجع : " + response._RRN + "\n" +
+                                    "شماره سریال : " + response.SN + "\n" +
+                                    "تاریخ-زمان : " + response.DT + "\n";
+                        } else str = str + "عدم تطابق مبلغ پرداختی و مبلغ استعلام شده";
+                    } else if (qrResult.equals("failed")) str = str + "پرداخت QR ناموفق بوده است.";
+                } else str = str + "Transaction Cancelled";
+            } else {
                 response.trxType = intent.getStringExtra(Response.TransactionType);
-                response.CN      = intent.getStringExtra(Response.CardNumber);
-                response._RRN    = intent.getStringExtra(Response.RRN);
-                response.SN      = intent.getStringExtra(Response.SerialNumber);
-                response.DT      = intent.getStringExtra(Response.DateTime);
-                response.TN      = intent.getStringExtra(Response.TerminalNumber);
+                response.CN = intent.getStringExtra(Response.CardNumber);
+                response._RRN = intent.getStringExtra(Response.RRN);
+                response.SN = intent.getStringExtra(Response.SerialNumber);
+                response.DT = intent.getStringExtra(Response.DateTime);
+                response.TN = intent.getStringExtra(Response.TerminalNumber);
                 switch (response.trxType) {
                     case "Sale":
                     case "BillPayment":
@@ -94,10 +102,48 @@ public class MyBroadCast extends BroadcastReceiver {
             }
         }
         Log.e("AAAAAA", "******* " + response.toString());
-        if(b) {
+        if (b) {
 //            MainActivity.sc.setVisibility(View.GONE);
 //            MainActivity.txt.setText(str);
 //            MainActivity.scTxt.setVisibility(View.VISIBLE);
+            AppDatabase db = Room.databaseBuilder(context,
+                    AppDatabase.class, "RoomDb")
+                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
+                    .build();
+            SharedPreferences sp = context.getSharedPreferences("POS", 0);
+            if (sp.getBoolean("AddContributionActivity", false)) {
+
+                ContributionR obj = new ContributionR();
+
+                obj.SponsorId = sp.getInt("SponsorId", 0);
+                obj.price = sp.getInt("", 0);
+                obj.description = sp.getString("description", "");
+                obj.deviceCode = Integer.parseInt(response.TN);
+                obj.terminalCode = Integer.parseInt(response.TN);
+                obj.recieverCode = Integer.parseInt(response.TN);
+                obj.fullName = sp.getString("fullName", "");
+                obj.code = sp.getString("code", "");
+                obj.nationalcode = sp.getString("nationalcode", "");
+                obj.mobile = sp.getString("mobile", "");
+                obj.phone = sp.getString("phone", "");
+                obj.address = sp.getString("address", "");
+                obj.birthDate = sp.getString("birthDate", "");
+                obj.payType = sp.getInt("payType", 0);
+
+
+                if(sp.getBoolean("editable",false)){
+                    obj.id = sp.getInt("id", 0);
+                    db.ContributaionDao().update(obj.price, obj.description, obj.deviceCode, obj.terminalCode, obj.recieverCode, obj.fullName, obj.code,
+                            obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id, obj.payType);
+                    Toast.makeText(context, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                }else{
+                    obj.isNew = "true";
+                    db.ContributaionDao().insertBox(obj);
+                    Toast.makeText(context, "عملیات Pos با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                }
+                sp.edit().clear().apply();
+            }
         }
     }
 }

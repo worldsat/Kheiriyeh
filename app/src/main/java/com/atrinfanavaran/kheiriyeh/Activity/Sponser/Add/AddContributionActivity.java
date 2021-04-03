@@ -1,6 +1,7 @@
 package com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -98,16 +99,16 @@ public class AddContributionActivity extends BaseActivity {
                     Toast.makeText(getActivity(), "لطفا حامی را انتخاب نمائید", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (payType == 2) {
-                    if (edt3.getText().toString().trim().isEmpty()) {
-                        Toast.makeText(getActivity(), "لطفا کد دستگاه را وارد نمائید", Toast.LENGTH_SHORT).show();
-                        return;
-                    } else if (edt4.getText().toString().trim().isEmpty()) {
-                        Toast.makeText(getActivity(), "لطفا کد ترمینال را وارد نمائید", Toast.LENGTH_SHORT).show();
-                        return;
-                    } else if (edt5.getText().toString().trim().isEmpty()) {
-                        Toast.makeText(getActivity(), "لطفا کد دریافتی را وارد نمائید", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+//                    if (edt3.getText().toString().trim().isEmpty()) {
+//                        Toast.makeText(getActivity(), "لطفا کد دستگاه را وارد نمائید", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    } else if (edt4.getText().toString().trim().isEmpty()) {
+//                        Toast.makeText(getActivity(), "لطفا کد ترمینال را وارد نمائید", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    } else if (edt5.getText().toString().trim().isEmpty()) {
+//                        Toast.makeText(getActivity(), "لطفا کد دریافتی را وارد نمائید", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
                 }
 
                 ContributionR obj = new ContributionR();
@@ -129,25 +130,42 @@ public class AddContributionActivity extends BaseActivity {
                 obj.birthDate = sponsorR.getBirthDate();
                 obj.payType = payType;
 
-                if (editable) {
-                    obj.id = object.getId();
-                    db().ContributaionDao().update(obj.price, obj.description, obj.deviceCode, obj.terminalCode, obj.recieverCode, obj.fullName, obj.code,
-                            obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id, obj.payType);
-                    Toast.makeText(AddContributionActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-                } else {
-                    obj.isNew = "true";
-                    db().ContributaionDao().insertBox(obj);
-                    Toast.makeText(AddContributionActivity.this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-                }
+
                 if (payType == 1) {
+                    if (editable) {
+                        obj.id = object.getId();
+                        db().ContributaionDao().update(obj.price, obj.description, obj.deviceCode, obj.terminalCode, obj.recieverCode, obj.fullName, obj.code,
+                                obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id, obj.payType);
+                        Toast.makeText(AddContributionActivity.this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                    } else {
+                        obj.isNew = "true";
+                        db().ContributaionDao().insertBox(obj);
+                        Toast.makeText(AddContributionActivity.this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                    }
+
                     finish();
                     startActivity(new Intent(AddContributionActivity.this, ContributionListItemActivity.class));
                 } else if (payType == 2) {
+                    SharedPreferences sp = getApplicationContext().getSharedPreferences("POS", 0);
+                    sp.edit().putInt("SponsorId",  obj.SponsorId).apply();
+                    sp.edit().putInt("price",  obj.price).apply();
+                    sp.edit().putString("description",  obj.description).apply();
+                    sp.edit().putString("fullName",  obj.fullName).apply();
+                    sp.edit().putString("code",  obj.code).apply();
+                    sp.edit().putString("nationalcode",  obj.nationalcode).apply();
+                    sp.edit().putString("mobile",  obj.mobile).apply();
+                    sp.edit().putString("phone",  obj.phone).apply();
+                    sp.edit().putString("address",  obj.address).apply();
+                    sp.edit().putString("birthDate",  obj.birthDate).apply();
+                    sp.edit().putInt("payType",  obj.payType).apply();
+                    sp.edit().putInt("id",  obj.id).apply();
+                    sp.edit().putBoolean("AddContributionActivity", true).apply();
+                    sp.edit().putBoolean("editable", editable).apply();
                     iTotalPay = obj.price;
                     Intent i = new Intent(TAGS.Action);
                     i.putExtra(TransactionType.transactionType, TransactionType.Sale);
                     i.putExtra(TAGS.CompanyName, "");
-                    i.putExtra(TAGS.AM,  obj.price);
+                    i.putExtra(TAGS.AM, obj.price);
                     startActivity(i);
                 }
             }
