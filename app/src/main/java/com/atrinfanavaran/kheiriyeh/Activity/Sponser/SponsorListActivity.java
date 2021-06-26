@@ -1,5 +1,6 @@
 package com.atrinfanavaran.kheiriyeh.Activity.Sponser;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.atrinfanavaran.kheiriyeh.Activity.MainActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.ContributionListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Adapter.BoxIncomeListAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.Sponsor.ContributionListItemAdapter;
 import com.atrinfanavaran.kheiriyeh.Adapter.Sponsor.SponsorListAdapter;
@@ -50,7 +53,10 @@ public class SponsorListActivity extends BaseActivity {
         setvariable();
         getDate();
     }
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SponsorListActivity.this, MainActivity.class));
+    }
     private void setvariable() {
         title.setText("مشارکت");
         LinearLayout backButton = findViewById(R.id.backButton);

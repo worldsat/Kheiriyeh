@@ -2,6 +2,7 @@ package com.atrinfanavaran.kheiriyeh.Activity.Flower.Add;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -175,64 +176,78 @@ public class AddTajGolActivity extends BaseActivity {
 //                finish();
 //                startActivity(new Intent(AddTajGolActivity.this, TajGolListItemActivity.class));
 
+                if (payType == 1) {
+                    JSONObject params = new JSONObject();
 
-                JSONObject params = new JSONObject();
+                    try {
 
-                try {
+                        params.put("price", Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString())));
+                        params.put("CeremonyType", ceremonyTypeId);
+                        params.put("registerDate", edt2.getText().toString());
+                        params.put("flowerCrownTypeId", FlowerCrownTypeId);
+                        params.put("guidDonator", donatorGuId);
+                        params.put("guidIntroduced", IntroducedGuId);
+                        params.put("guidDeceasedName", DeceasedNameGuId);
+                        params.put("payType", payType);
 
-                    params.put("price", Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString())));
-                    params.put("CeremonyType", ceremonyTypeId);
-                    params.put("registerDate", edt2.getText().toString());
-                    params.put("flowerCrownTypeId", FlowerCrownTypeId);
-                    params.put("guidDonator", donatorGuId);
-                    params.put("guidIntroduced", IntroducedGuId);
-                    params.put("guidDeceasedName", DeceasedNameGuId);
-                    params.put("payType", payType);
+                    } catch (Exception e) {
+                        Toast.makeText(AddTajGolActivity.this, "خطا در پارامتر های ارسالی ", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                } catch (Exception e) {
-                    Toast.makeText(AddTajGolActivity.this, "خطا در پارامتر های ارسالی ", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                    if (params != null) {
+                        Log.i("moh3n", "sendFlowerCrown: " + params.toString());
+                    }
 
-                if (params != null) {
-                    Log.i("moh3n", "sendFlowerCrown: " + params.toString());
-                }
+                    MaterialDialog wait = alertWaiting2(getActivity(), "در حال ارسال  اطلاعات...");
+                    wait.show();
+                    controller().Operation("", FlowerCrownApi.class, getActivity(), params.toString(), new CallbackOperation() {
+                        @Override
+                        public void onSuccess(String result) {
+                            Log.i("moh3n", "sendFlowerCrown: " + result);
+                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
 
-                MaterialDialog wait = alertWaiting2(getActivity(), "در حال ارسال  اطلاعات...");
-                wait.show();
-                controller().Operation("", FlowerCrownApi.class, getActivity(), params.toString(), new CallbackOperation() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.i("moh3n", "sendFlowerCrown: " + result);
-                        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                        try {
 
-                            int iTotalPay = Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString()));
-                            Intent i = new Intent(TAGS.Action);
-                            i.putExtra(TransactionType.transactionType, TransactionType.Sale);
-                            i.putExtra(TAGS.CompanyName, donator);
-                            i.putExtra(TAGS.AM, String.valueOf(iTotalPay));
-                            i.putExtra("paymentType", "CARD");
-                            startActivity(i);
-                        } catch (Exception e) {
-                            Toast.makeText(AddTajGolActivity.this, "خطا در انجام عملیات بانکی", Toast.LENGTH_SHORT).show();
+                            wait.dismiss();
+                            finish();
+                            startActivity(new Intent(AddTajGolActivity.this, TajGolListItemActivity.class));
                         }
 
-                        wait.dismiss();
-                        finish();
-                        startActivity(new Intent(AddTajGolActivity.this, TajGolListItemActivity.class));
+                        @Override
+                        public void onError(String error) {
+                            Log.i("moh3n", "onError: " + error);
+                            wait.dismiss();
+                            Toast.makeText(getActivity(), "خطا در ارسال اطلاعات", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else if (payType == 2) {
+                    try {
+                        SharedPreferences sp = getApplicationContext().getSharedPreferences("POS", 0);
+
+                        sp.edit().putInt("price", Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString()))).apply();
+                        sp.edit().putInt("CeremonyType", ceremonyTypeId).apply();
+                        sp.edit().putString("registerDate",  edt2.getText().toString()).apply();
+                        sp.edit().putInt("flowerCrownTypeId",FlowerCrownTypeId).apply();
+                        sp.edit().putString("guidDonator", donatorGuId).apply();
+                        sp.edit().putString("guidIntroduced", IntroducedGuId).apply();
+                        sp.edit().putString("guidDeceasedName",DeceasedNameGuId).apply();
+                        sp.edit().putInt("payType",payType).apply();
+                        sp.edit().putBoolean("AddTajGolActivity", true).apply();
+                        sp.edit().putBoolean("editable", editable).apply();
+
+                        int iTotalPay = Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString()));
+                        Intent i = new Intent(TAGS.Action);
+                        i.putExtra(TransactionType.transactionType, TransactionType.Sale);
+                        i.putExtra(TAGS.CompanyName, donator);
+                        i.putExtra(TAGS.AM, String.valueOf(iTotalPay));
+                        i.putExtra("paymentType", "CARD");
+                        startActivity(i);
+                    } catch (Exception e) {
+                        Toast.makeText(AddTajGolActivity.this, "خطا در انجام عملیات بانکی", Toast.LENGTH_SHORT).show();
                     }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.i("moh3n", "onError: " + error);
-                        wait.dismiss();
-                        Toast.makeText(getActivity(), "خطا در ارسال اطلاعات", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
+                }
             }
         });
 

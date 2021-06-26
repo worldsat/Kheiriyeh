@@ -1,6 +1,7 @@
 package com.atrinfanavaran.kheiriyeh.Activity.pos;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,20 +14,29 @@ import android.widget.Toast;
 
 import androidx.room.Room;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.kheiriyeh.Activity.Financial.List.FinancialAidListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Flower.Add.AddTajGolActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.TajGolListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.MainActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddContributionActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.ContributionListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
+import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.ContributionR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.FinancialAidR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.SponsorR;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import static com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddContributionActivity.iTotalPay;
+import static com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity.alertWaiting2;
 
 
 public class MyBroadCast extends BroadcastReceiver {
@@ -173,7 +183,7 @@ public class MyBroadCast extends BroadcastReceiver {
 
                 if (sp.getBoolean("editable", false)) {
                     obj.id = sp.getInt("id", 0);
-                    db.FinancialAidDao().update(obj.name, obj.price, obj.financialServiceTypeId, obj.id,  obj.payType);
+                    db.FinancialAidDao().update(obj.name, obj.price, obj.financialServiceTypeId, obj.id, obj.payType);
                     Toast.makeText(context, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 } else {
                     obj.isNew = "true";
@@ -192,6 +202,53 @@ public class MyBroadCast extends BroadcastReceiver {
 
                 sp.edit().clear().apply();
                 context.startActivity(new Intent(context, FinancialAidListItemActivity.class));
+            } else if (sp.getBoolean("AddTajGolActivity", false)) {
+
+                JSONObject params = new JSONObject();
+
+                try {
+
+                    params.put("price", sp.getInt("price", 0));
+                    params.put("CeremonyType", sp.getInt("CeremonyType", 0));
+                    params.put("registerDate", sp.getString("registerDate", ""));
+                    params.put("flowerCrownTypeId", sp.getInt("flowerCrownTypeId", 0));
+                    params.put("guidDonator", sp.getString("guidDonator", ""));
+                    params.put("guidIntroduced", sp.getString("guidIntroduced", ""));
+                    params.put("guidDeceasedName", sp.getString("guidDeceasedName", ""));
+                    params.put("payType", sp.getInt("payType", 0));
+
+                } catch (Exception e) {
+                    Toast.makeText(context, "خطا در پارامتر های ارسالی ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (params != null) {
+                    Log.i("moh3n", "sendFlowerCrown: " + params.toString());
+                }
+
+                MaterialDialog wait = alertWaiting2(context, "در حال ارسال  اطلاعات...");
+                wait.show();
+                Controller controller = new Controller(context);
+                controller.Operation("", FlowerCrownApi.class, context, params.toString(), new CallbackOperation() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.i("moh3n", "sendFlowerCrown: " + result);
+                        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+
+
+                        wait.dismiss();
+                        ((Activity) context).finish();
+                        context.startActivity(new Intent(context, TajGolListItemActivity.class));
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.i("moh3n", "onError: " + error);
+                        wait.dismiss();
+                        Toast.makeText(context, "خطا در ارسال اطلاعات", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
     }
