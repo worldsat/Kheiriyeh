@@ -7,6 +7,12 @@ public class TAGS {
 
 
 
+    public static final String paymentType = "paymentType";
+    public static final String barCode = "barCode";
+    public static final String checkPaper = "checkPaper";
+    public static final String mifare = "mifare";
+    public static final String getInfo = "getInfo";
+
     public static final String AM = "AM";
     public static final String ID = "ID";
     public static final String GovID = "GovID";

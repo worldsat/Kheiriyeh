@@ -28,7 +28,7 @@ public class Mifare {
                 JSONArray jsonarray = new JSONArray(jsonStr);
                 for (int i = 0; i < jsonarray.length(); i++) {
                     JSONObject json = jsonarray.getJSONObject(i);
-                    com.pec.cpsdk.Mifare mifare = new com.pec.cpsdk.Mifare();
+                    Mifare mifare = new Mifare();
                     mifare.serial = json.getString("serial");
                     mifare.keyA = json.getString("keyA");
                     mifare.keyB = json.getString("keyB");
@@ -43,7 +43,7 @@ public class Mifare {
             }
             else {
                 JSONObject json = new JSONObject(jsonStr);
-                com.pec.cpsdk.Mifare mifare = new com.pec.cpsdk.Mifare();
+                Mifare mifare = new Mifare();
                 mifare.serial = json.getString("serial");
                 mifare.keyA = json.getString("keyA");
                 mifare.keyB = json.getString("keyB");

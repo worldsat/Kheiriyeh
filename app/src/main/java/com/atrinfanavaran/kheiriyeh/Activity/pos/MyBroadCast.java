@@ -2,21 +2,26 @@ package com.atrinfanavaran.kheiriyeh.Activity.pos;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.room.Room;
 
+import com.atrinfanavaran.kheiriyeh.Activity.Financial.List.FinancialAidListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.MainActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddContributionActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.ContributionListItemActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
 import com.atrinfanavaran.kheiriyeh.Room.AppDatabase;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.ContributionR;
+import com.atrinfanavaran.kheiriyeh.Room.Domian.FinancialAidR;
 import com.atrinfanavaran.kheiriyeh.Room.Domian.SponsorR;
 
 import java.util.List;
@@ -31,6 +36,7 @@ public class MyBroadCast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String str = "Hi I got your message : \n";
+//        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
         Response response = new Response();
         response.ER = intent.getStringExtra(Response.Error);
         response.TO = intent.getStringExtra(Response.TimeOut);
@@ -117,11 +123,11 @@ public class MyBroadCast extends BroadcastReceiver {
                 ContributionR obj = new ContributionR();
 
                 obj.SponsorId = sp.getInt("SponsorId", 0);
-                obj.price = sp.getInt("", 0);
+                obj.price = sp.getInt("price", 0);
                 obj.description = sp.getString("description", "");
-                obj.deviceCode = Integer.parseInt(response.TN);
+                obj.deviceCode = Integer.parseInt(response.SN);
                 obj.terminalCode = Integer.parseInt(response.TN);
-                obj.recieverCode = Integer.parseInt(response.TN);
+                obj.recieverCode = Integer.parseInt(response.RS);
                 obj.fullName = sp.getString("fullName", "");
                 obj.code = sp.getString("code", "");
                 obj.nationalcode = sp.getString("nationalcode", "");
@@ -132,17 +138,60 @@ public class MyBroadCast extends BroadcastReceiver {
                 obj.payType = sp.getInt("payType", 0);
 
 
-                if(sp.getBoolean("editable",false)){
+                if (sp.getBoolean("editable", false)) {
                     obj.id = sp.getInt("id", 0);
                     db.ContributaionDao().update(obj.price, obj.description, obj.deviceCode, obj.terminalCode, obj.recieverCode, obj.fullName, obj.code,
                             obj.nationalcode, obj.mobile, obj.phone, obj.address, obj.birthDate, obj.id, obj.payType);
                     Toast.makeText(context, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     obj.isNew = "true";
                     db.ContributaionDao().insertBox(obj);
                     Toast.makeText(context, "عملیات Pos با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                 }
+
+                ComponentName cName = new ComponentName("com.pec.smartpos", "com.pec.smartpos.cpsdk.PecService");
+                intent.setComponent(cName);
+                intent.putExtra(PrintType.printType, PrintType.receiptSale);
+                intent.putExtra(TAGS.RRN, response._RRN);
+                intent.putExtra(TAGS.respCode, response.RS);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(intent);
+                }
+
                 sp.edit().clear().apply();
+                context.startActivity(new Intent(context, ContributionListItemActivity.class));
+
+            } else if (sp.getBoolean("AddFinancialAidActivity", false)) {
+                FinancialAidR obj = new FinancialAidR();
+
+                obj.financialServiceTypeId = sp.getInt("financialServiceTypeId", 0);
+                obj.price = sp.getInt("price", 0);
+                obj.name = sp.getString("name", "");
+                obj.id = sp.getInt("id", 0);
+                obj.payType = sp.getInt("payType", 0);
+
+
+                if (sp.getBoolean("editable", false)) {
+                    obj.id = sp.getInt("id", 0);
+                    db.FinancialAidDao().update(obj.name, obj.price, obj.financialServiceTypeId, obj.id,  obj.payType);
+                    Toast.makeText(context, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                } else {
+                    obj.isNew = "true";
+                    db.FinancialAidDao().insertBox(obj);
+                    Toast.makeText(context, "عملیات Pos با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                }
+
+                ComponentName cName = new ComponentName("com.pec.smartpos", "com.pec.smartpos.cpsdk.PecService");
+                intent.setComponent(cName);
+                intent.putExtra(PrintType.printType, PrintType.receiptSale);
+                intent.putExtra(TAGS.RRN, response._RRN);
+                intent.putExtra(TAGS.respCode, response.RS);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(intent);
+                }
+
+                sp.edit().clear().apply();
+                context.startActivity(new Intent(context, FinancialAidListItemActivity.class));
             }
         }
     }

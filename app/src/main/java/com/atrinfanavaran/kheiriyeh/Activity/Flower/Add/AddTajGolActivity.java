@@ -1,6 +1,7 @@
 package com.atrinfanavaran.kheiriyeh.Activity.Flower.Add;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.List.TajGolListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.MyBroadCast;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.TAGS;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.TransactionType;
 import com.atrinfanavaran.kheiriyeh.Domain.CeremonyType;
 import com.atrinfanavaran.kheiriyeh.Domain.DeceasedNameApi;
 import com.atrinfanavaran.kheiriyeh.Domain.DonatorApi;
@@ -69,12 +73,18 @@ public class AddTajGolActivity extends BaseActivity {
     private RadioButton radio1, radio2;
     private String donator, deceasedName, flowerCrownType, ceremonyType, Introduced;
     private int payType = 1;
+    private MyBroadCast myBroadCast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_taj_gol);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.pec.ThirdCompany");
+        myBroadCast = new MyBroadCast();
+        registerReceiver(myBroadCast, intentFilter);
 
         getBundle();
         initView();
@@ -195,6 +205,18 @@ public class AddTajGolActivity extends BaseActivity {
                     public void onSuccess(String result) {
                         Log.i("moh3n", "sendFlowerCrown: " + result);
                         Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                        try {
+
+                            int iTotalPay = Integer.parseInt(NumberTextWatcherForThousand.trimCommaOfString(edt1.getText().toString()));
+                            Intent i = new Intent(TAGS.Action);
+                            i.putExtra(TransactionType.transactionType, TransactionType.Sale);
+                            i.putExtra(TAGS.CompanyName, donator);
+                            i.putExtra(TAGS.AM, String.valueOf(iTotalPay));
+                            i.putExtra("paymentType", "CARD");
+                            startActivity(i);
+                        } catch (Exception e) {
+                            Toast.makeText(AddTajGolActivity.this, "خطا در انجام عملیات بانکی", Toast.LENGTH_SHORT).show();
+                        }
 
                         wait.dismiss();
                         finish();
@@ -340,7 +362,7 @@ public class AddTajGolActivity extends BaseActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         FlowerCrownTypeId = ((FlowerCrownTypeApi.Data) FlowerCrownTypeSpinner.getSelectedItem()).getId();
                         flowerCrownType = ((FlowerCrownTypeApi.Data) FlowerCrownTypeSpinner.getSelectedItem()).getTitle();
-                        edt1.setText(""+((FlowerCrownTypeApi.Data) FlowerCrownTypeSpinner.getSelectedItem()).getPrice());
+                        edt1.setText("" + ((FlowerCrownTypeApi.Data) FlowerCrownTypeSpinner.getSelectedItem()).getPrice());
 
                     }
 

@@ -60,11 +60,11 @@ dependencies {
     api 'com.google.guava:guava:27.0.1-android'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-    implementation 'androidx.room:room-runtime:2.0.0'
-    annotationProcessor 'androidx.room:room-compiler:2.0.0'
+    implementation 'androidx.room:room-runtime:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.nineoldandroids:library:2.4.0'
-    implementation 'pub.devrel:easypermissions:2.0.1'
+
 
 }

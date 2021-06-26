@@ -7,6 +7,7 @@ import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import com.atrinfanavaran.kheiriyeh.Activity.Financial.List.FinancialAidListItem
 import com.atrinfanavaran.kheiriyeh.Activity.Flower.FlowerCrownListActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.SandoghSadaghat.SandoghListActivity;
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.SponsorListActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.MyBroadCast;
 import com.atrinfanavaran.kheiriyeh.Domain.AndroidVersion;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Controller;
 import com.atrinfanavaran.kheiriyeh.Kernel.Controller.Interface.CallbackGet;
@@ -112,6 +114,9 @@ public class MainActivity extends BaseActivity implements onCallBackBoxIncome1, 
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "RoomDb").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+
+
+
 
 //        getApplicationContext().deleteDatabase("RoomDb");
         RunPermissionDownload();

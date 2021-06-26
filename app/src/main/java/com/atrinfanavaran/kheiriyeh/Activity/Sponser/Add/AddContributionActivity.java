@@ -1,6 +1,7 @@
 package com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.List.ContributionListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.MyBroadCast;
 import com.atrinfanavaran.kheiriyeh.Activity.pos.TAGS;
 import com.atrinfanavaran.kheiriyeh.Activity.pos.TransactionType;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
@@ -51,12 +53,18 @@ public class AddContributionActivity extends BaseActivity {
     private RadioGroup payGroup;
     private RadioButton radio1, radio2;
     private int payType = 1;
+    private MyBroadCast myBroadCast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contributaion);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.pec.ThirdCompany");
+        myBroadCast = new MyBroadCast();
+        registerReceiver(myBroadCast, intentFilter);
 
         getBundle();
         initView();
@@ -147,25 +155,28 @@ public class AddContributionActivity extends BaseActivity {
                     startActivity(new Intent(AddContributionActivity.this, ContributionListItemActivity.class));
                 } else if (payType == 2) {
                     SharedPreferences sp = getApplicationContext().getSharedPreferences("POS", 0);
-                    sp.edit().putInt("SponsorId",  obj.SponsorId).apply();
-                    sp.edit().putInt("price",  obj.price).apply();
-                    sp.edit().putString("description",  obj.description).apply();
-                    sp.edit().putString("fullName",  obj.fullName).apply();
-                    sp.edit().putString("code",  obj.code).apply();
-                    sp.edit().putString("nationalcode",  obj.nationalcode).apply();
-                    sp.edit().putString("mobile",  obj.mobile).apply();
-                    sp.edit().putString("phone",  obj.phone).apply();
-                    sp.edit().putString("address",  obj.address).apply();
-                    sp.edit().putString("birthDate",  obj.birthDate).apply();
-                    sp.edit().putInt("payType",  obj.payType).apply();
-                    sp.edit().putInt("id",  obj.id).apply();
+                    sp.edit().putInt("SponsorId", obj.SponsorId).apply();
+                    sp.edit().putInt("price", obj.price).apply();
+                    sp.edit().putString("description", obj.description).apply();
+                    sp.edit().putString("fullName", obj.fullName).apply();
+                    sp.edit().putString("code", obj.code).apply();
+                    sp.edit().putString("nationalcode", obj.nationalcode).apply();
+                    sp.edit().putString("mobile", obj.mobile).apply();
+                    sp.edit().putString("phone", obj.phone).apply();
+                    sp.edit().putString("address", obj.address).apply();
+                    sp.edit().putString("birthDate", obj.birthDate).apply();
+                    sp.edit().putInt("payType", obj.payType).apply();
+                    sp.edit().putInt("id", obj.id).apply();
                     sp.edit().putBoolean("AddContributionActivity", true).apply();
                     sp.edit().putBoolean("editable", editable).apply();
+
+
                     iTotalPay = obj.price;
                     Intent i = new Intent(TAGS.Action);
                     i.putExtra(TransactionType.transactionType, TransactionType.Sale);
-                    i.putExtra(TAGS.CompanyName, "");
-                    i.putExtra(TAGS.AM, obj.price);
+                    i.putExtra(TAGS.CompanyName, obj.fullName);
+                    i.putExtra(TAGS.AM, String.valueOf(iTotalPay));
+                    i.putExtra("paymentType", "CARD");
                     startActivity(i);
                 }
             }
@@ -255,5 +266,9 @@ public class AddContributionActivity extends BaseActivity {
         my_nav.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), my_toolbar);
 
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myBroadCast);
+    }
 }

@@ -1,6 +1,8 @@
 package com.atrinfanavaran.kheiriyeh.Activity.Financial.Add;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +18,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Financial.List.FinancialAidListItemActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.MyBroadCast;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.TAGS;
+import com.atrinfanavaran.kheiriyeh.Activity.pos.TransactionType;
 import com.atrinfanavaran.kheiriyeh.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.kheiriyeh.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.kheiriyeh.Kernel.Helper.NumberTextWatcherForThousand;
@@ -48,11 +53,17 @@ public class AddFinancialAidActivity extends BaseActivity {
     private RadioGroup payGroup;
     private RadioButton radio1, radio2;
     private int payType =1;
+    private MyBroadCast myBroadCast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_financial_aid);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.pec.ThirdCompany");
+        myBroadCast = new MyBroadCast();
+        registerReceiver(myBroadCast, intentFilter);
 
         getBundle();
         initView();
@@ -103,7 +114,7 @@ public class AddFinancialAidActivity extends BaseActivity {
                 obj.name = edt1.getText().toString();
                 obj.payType = payType;
 
-
+                if (payType == 1) {
                 if (editable) {
                     obj.id = object.getId();
                     db().FinancialAidDao().update(obj.name, obj.price, obj.financialServiceTypeId, obj.id,  obj.payType);
@@ -116,6 +127,27 @@ public class AddFinancialAidActivity extends BaseActivity {
 
                 startActivity(new Intent(AddFinancialAidActivity.this, FinancialAidListItemActivity.class));
                 finish();
+                } else if (payType == 2) {
+                    SharedPreferences sp = getApplicationContext().getSharedPreferences("POS", 0);
+                    sp.edit().putInt("financialServiceTypeId", obj.financialServiceTypeId).apply();
+                    sp.edit().putString("financialServiceType", obj.financialServiceType).apply();
+                    sp.edit().putInt("price", obj.price).apply();
+                    sp.edit().putString("name", obj.name).apply();
+                    sp.edit().putString("isNew", obj.isNew).apply();
+                    sp.edit().putInt("payType", obj.payType).apply();
+                    sp.edit().putInt("id", obj.id).apply();
+                    sp.edit().putBoolean("AddFinancialAidActivity", true).apply();
+                    sp.edit().putBoolean("editable", editable).apply();
+
+
+                  int  iTotalPay = obj.price;
+                    Intent i = new Intent(TAGS.Action);
+                    i.putExtra(TransactionType.transactionType, TransactionType.Sale);
+                    i.putExtra(TAGS.CompanyName, obj.name);
+                    i.putExtra(TAGS.AM, String.valueOf(iTotalPay));
+                    i.putExtra("paymentType", "CARD");
+                    startActivity(i);
+                }
             }
         });
 

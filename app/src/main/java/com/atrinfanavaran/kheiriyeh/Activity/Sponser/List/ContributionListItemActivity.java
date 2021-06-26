@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.atrinfanavaran.kheiriyeh.Activity.Sponser.Add.AddContributionActivity;
+import com.atrinfanavaran.kheiriyeh.Activity.Sponser.SponsorListActivity;
 import com.atrinfanavaran.kheiriyeh.Adapter.Sponsor.ContributionListItemAdapter;
 import com.atrinfanavaran.kheiriyeh.Domain.ContributionApi;
 import com.atrinfanavaran.kheiriyeh.Domain.FlowerCrownApi;
@@ -99,7 +100,7 @@ public class ContributionListItemActivity extends BaseActivity {
         list.addAll(db().ContributaionDao().getAll());
         if (list.size() > 0) {
             emptyText.setVisibility(View.GONE);
-            adapter1 = new ContributionListItemAdapter(false,list);
+            adapter1 = new ContributionListItemAdapter(false, list);
             row1.setAdapter(adapter1);
 
         } else {
@@ -110,7 +111,7 @@ public class ContributionListItemActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        startActivity(new Intent(ContributionListItemActivity.this, SponsorListActivity.class));
     }
 
     private void initView() {
@@ -173,7 +174,7 @@ public class ContributionListItemActivity extends BaseActivity {
                         emptyText.setVisibility(View.GONE);
                     }
 
-                    adapter1 = new ContributionListItemAdapter(false,list);
+                    adapter1 = new ContributionListItemAdapter(false, list);
                     row1.setAdapter(adapter1);
 
                 });
