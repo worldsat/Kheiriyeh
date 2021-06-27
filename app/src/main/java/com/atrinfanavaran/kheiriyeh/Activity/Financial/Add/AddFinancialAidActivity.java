@@ -144,7 +144,7 @@ public class AddFinancialAidActivity extends BaseActivity {
                     Intent i = new Intent(TAGS.Action);
                     i.putExtra(TransactionType.transactionType, TransactionType.Sale);
                     i.putExtra(TAGS.CompanyName, obj.name);
-                    i.putExtra(TAGS.AM, String.valueOf(iTotalPay));
+                    i.putExtra(TAGS.AM, String.valueOf(iTotalPay)+"0");
                     i.putExtra("paymentType", "CARD");
                     startActivity(i);
                 }

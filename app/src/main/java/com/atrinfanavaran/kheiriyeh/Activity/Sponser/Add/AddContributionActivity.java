@@ -175,7 +175,7 @@ public class AddContributionActivity extends BaseActivity {
                     Intent i = new Intent(TAGS.Action);
                     i.putExtra(TransactionType.transactionType, TransactionType.Sale);
                     i.putExtra(TAGS.CompanyName, obj.fullName);
-                    i.putExtra(TAGS.AM, String.valueOf(iTotalPay));
+                    i.putExtra(TAGS.AM, String.valueOf(iTotalPay)+"0");
                     i.putExtra("paymentType", "CARD");
                     startActivity(i);
                 }
